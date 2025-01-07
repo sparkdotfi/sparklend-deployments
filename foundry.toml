@@ -14,6 +14,7 @@ fs_permissions = [
     { access = "read-write", path = "./script/output/"},
     { access = "write", path = "./reports" }
 ]
+evm_version = 'shanghai'
 solc_version = '0.8.10'
 optimizer = true
 optimizer_runs = 100000
