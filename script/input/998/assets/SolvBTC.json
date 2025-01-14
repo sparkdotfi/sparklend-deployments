@@ -1,0 +1,5 @@
+{
+    "ltv": 7000,
+    "liquidationThreshold": 7500,
+    "liquidationBonus": 10750
+}

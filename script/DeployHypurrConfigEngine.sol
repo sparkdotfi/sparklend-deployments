@@ -92,7 +92,7 @@ library DeployRatesFactoryLib {
     }
 }
 
-contract DeploySparkConfigEngine is Script {
+contract DeployHypurrConfigEngine is Script {
 
     using stdJson for string;
     using ScriptTools for string;

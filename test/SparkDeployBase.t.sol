@@ -69,7 +69,7 @@ abstract contract SparkDeployBaseTest is Test {
     RewardsController incentivesImpl;
     UiPoolDataProviderV3 uiPoolDataProvider;
     UiIncentiveDataProviderV3 uiIncentiveDataProvider;
-    WrappedTokenGatewayV3 wethGateway;
+    WrappedTokenGatewayV3 wrappedTokenGateway;
     WalletBalanceProvider walletBalanceProvider;
 
     function setUp() public {
@@ -108,7 +108,7 @@ abstract contract SparkDeployBaseTest is Test {
 
         uiPoolDataProvider      = UiPoolDataProviderV3(deployedContracts.readAddress(".uiPoolDataProvider"));
         uiIncentiveDataProvider = UiIncentiveDataProviderV3(deployedContracts.readAddress(".uiIncentiveDataProvider"));
-        wethGateway             = WrappedTokenGatewayV3(payable(deployedContracts.readAddress(".wethGateway")));
+        wrappedTokenGateway             = WrappedTokenGatewayV3(payable(deployedContracts.readAddress(".wrappedTokenGateway")));
         walletBalanceProvider   = WalletBalanceProvider(payable(deployedContracts.readAddress(".walletBalanceProvider")));
     }
 
@@ -217,8 +217,8 @@ abstract contract SparkDeployBaseTest is Test {
         assertEq(address(uiPoolDataProvider.networkBaseTokenPriceInUsdProxyAggregator()),        nativeTokenOracle);
         assertEq(address(uiPoolDataProvider.marketReferenceCurrencyPriceInUsdProxyAggregator()), nativeTokenOracle);
 
-        assertEq(wethGateway.owner(),          admin);
-        assertEq(wethGateway.getWETHAddress(), nativeToken);
+        assertEq(wrappedTokenGateway.owner(),          admin);
+        assertEq(wrappedTokenGateway.getWETHAddress(), nativeToken);
     }
 
     function test_spark_deploy_oracles() public {

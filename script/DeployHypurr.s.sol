@@ -32,8 +32,10 @@ import {WrappedTokenGatewayV3} from "aave-v3-periphery/misc/WrappedTokenGatewayV
 import {IPool} from "aave-v3-core/contracts/interfaces/IPool.sol";
 import {WalletBalanceProvider} from "aave-v3-periphery/misc/WalletBalanceProvider.sol";
 import {IEACAggregatorProxy} from "aave-v3-periphery/misc/interfaces/IEACAggregatorProxy.sol";
+import {DefaultReserveInterestRateStrategy} from "aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol";
+import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAddressesProvider.sol";
 
-contract DeploySpark is Script {
+contract DeployHypurr is Script {
 
     using stdJson for string;
     using ScriptTools for string;
@@ -69,12 +71,14 @@ contract DeploySpark is Script {
 
     UiPoolDataProviderV3 uiPoolDataProvider;
     UiIncentiveDataProviderV3 uiIncentiveDataProvider;
-    WrappedTokenGatewayV3 wethGateway;
+    WrappedTokenGatewayV3 wrappedTokenGateway;
     WalletBalanceProvider walletBalanceProvider;
 
     InitializableAdminUpgradeabilityProxy incentivesProxy;
     RewardsController rewardsController;
     IEACAggregatorProxy proxy;
+
+    DefaultReserveInterestRateStrategy interestRateStrategy;
 
     function run() external {
         //vm.createSelectFork(vm.envString("ETH_RPC_URL"));     // Multi-chain not supported in Foundry yet (use CLI arg for now)
@@ -86,7 +90,7 @@ contract DeploySpark is Script {
         admin    = config.readAddress(".admin");
         deployer = msg.sender;
 
-        vm.startBroadcast();
+        vm.startBroadcast(vm.envUint('PRIVATE_KEY'));
 
         // 1. Deploy and configure registry and addresses provider
 
@@ -177,7 +181,7 @@ contract DeploySpark is Script {
         proxy                   = IEACAggregatorProxy(config.readAddress(".nativeTokenOracle"));
         uiPoolDataProvider      = new UiPoolDataProviderV3(proxy, proxy);
         uiIncentiveDataProvider = new UiIncentiveDataProviderV3();
-        wethGateway             = new WrappedTokenGatewayV3(config.readAddress(".nativeToken"), admin, IPool(address(pool)));
+        wrappedTokenGateway     = new WrappedTokenGatewayV3(config.readAddress(".nativeToken"), admin, IPool(address(pool)));
         walletBalanceProvider   = new WalletBalanceProvider();
 
         // 14. Set up oracle.
@@ -188,7 +192,7 @@ contract DeploySpark is Script {
             poolAddressesProvider,
             assets,
             oracles,
-            address(0),
+            address(0),  // no fallback oracle initially
             address(0),  // USD
             1e8
         );
@@ -198,15 +202,34 @@ contract DeploySpark is Script {
 
         aclManager.addEmergencyAdmin(admin);
         aclManager.addPoolAdmin(admin);
-        aclManager.removePoolAdmin(deployer);
+        if (admin != deployer) {
+            aclManager.removePoolAdmin(deployer);
+        }
         aclManager.grantRole(aclManager.DEFAULT_ADMIN_ROLE(), admin);
-        aclManager.revokeRole(aclManager.DEFAULT_ADMIN_ROLE(), deployer);
+        if (admin != deployer) {
+            aclManager.revokeRole(aclManager.DEFAULT_ADMIN_ROLE(), deployer);
+        }
 
         poolAddressesProvider.setACLAdmin(admin);
         poolAddressesProvider.transferOwnership(admin);
 
         registry.transferOwnership(admin);
         emissionManager.transferOwnership(admin);
+
+        // 16. Deploy interest rate strategy.
+
+        interestRateStrategy = new DefaultReserveInterestRateStrategy(
+            IPoolAddressesProvider(address(poolAddressesProvider)),
+            80_00 * (RAY / 100_00),         // optimal usage ratio: 80%
+            0,                              // base variable borrow rate: 0%
+            4_00 * (RAY / 100_00),          // variable rate slope1: 4%
+            75_00 * (RAY / 100_00),         // variable rate slope2: 75%
+            2_00 * (RAY / 100_00),          // stable rate slope1: 2%
+            75_00 * (RAY / 100_00),         // stable rate slope2: 75%
+            1_00 * (RAY / 100_00),          // base stable borrow rate: 1%
+            80 * (RAY / 100_00),            // stableRateExcessOffset: 0.8%
+            20_00 * (RAY / 100_00)          // optimalStableToTotalDebtRatio: 20%
+        );
 
         vm.stopBroadcast();
 
@@ -235,7 +258,8 @@ contract DeploySpark is Script {
         ScriptTools.exportContract(instanceId, "uiPoolDataProvider",      address(uiPoolDataProvider));
         ScriptTools.exportContract(instanceId, "variableDebtTokenImpl",   address(variableDebtTokenImpl));
         ScriptTools.exportContract(instanceId, "walletBalanceProvider",   address(walletBalanceProvider));
-        ScriptTools.exportContract(instanceId, "wethGateway",             address(wethGateway));
+        ScriptTools.exportContract(instanceId, "wrappedTokenGateway",             address(wrappedTokenGateway));
+        ScriptTools.exportContract(instanceId, "defaultInterestRateStrategy",    address(interestRateStrategy));
     }
 
     function createCollector(address _admin) internal returns (Collector collector, address impl) {
