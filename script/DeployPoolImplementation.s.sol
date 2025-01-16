@@ -3,7 +3,7 @@ pragma solidity 0.8.10;
 
 import "forge-std/Script.sol";
 import {stdJson} from "forge-std/StdJson.sol";
-import {ScriptTools} from "dss-test/ScriptTools.sol";
+import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 
 import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAddressesProvider.sol";
 import {Pool} from "aave-v3-core/contracts/protocol/pool/Pool.sol";
@@ -11,7 +11,7 @@ import {Pool} from "aave-v3-core/contracts/protocol/pool/Pool.sol";
 contract DeployPoolImplementation is Script {
 
     using stdJson for string;
-    using ScriptTools for string;
+    using DeployUtils for string;
 
     string deployedContracts;
     string instanceId;
@@ -24,7 +24,7 @@ contract DeployPoolImplementation is Script {
         instanceId = vm.envOr("INSTANCE_ID", string("primary"));
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
         
-        deployedContracts = ScriptTools.readOutput(instanceId);
+        deployedContracts = DeployUtils.readOutput(instanceId);
         
         poolAddressesProvider = IPoolAddressesProvider(deployedContracts.readAddress(".poolAddressesProvider"));
 
@@ -33,7 +33,7 @@ contract DeployPoolImplementation is Script {
         poolImpl.initialize(poolAddressesProvider);
         vm.stopBroadcast();
 
-        ScriptTools.exportContract(string(abi.encodePacked(instanceId, "-pool")), "poolImpl", address(poolImpl));
+        DeployUtils.exportContract(string(abi.encodePacked(instanceId, "-pool")), "poolImpl", address(poolImpl));
     }
 
 }

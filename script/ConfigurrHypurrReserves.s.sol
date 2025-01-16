@@ -6,7 +6,7 @@ import 'forge-std/StdJson.sol';
 import 'forge-std/console.sol';
 
 import {HyperTestnetReservesConfigs} from 'src/deployments/configs/HyperTestnetReservesConfigs.sol';
-import {ScriptTools} from "dss-test/ScriptTools.sol";
+import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 
 contract ConfigurrHypurrReserves is HyperTestnetReservesConfigs, Script {
   using stdJson for string;
@@ -23,11 +23,11 @@ contract ConfigurrHypurrReserves is HyperTestnetReservesConfigs, Script {
   function run() external {
     vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
   
-    config            = ScriptTools.readInput(instanceId);
+    config            = DeployUtils.readInput(instanceId);
     if (instanceIdBlock > 0) {
-      deployedContracts = ScriptTools.readOutput(instanceId, instanceIdBlock);
+      deployedContracts = DeployUtils.readOutput(instanceId, instanceIdBlock);
     } else {
-      deployedContracts = ScriptTools.readOutput(instanceId);
+      deployedContracts = DeployUtils.readOutput(instanceId);
     }
 
     _setDeployRegistry(deployedContracts);

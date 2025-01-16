@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
 import {stdJson} from "forge-std/StdJson.sol";
-import {ScriptTools} from "dss-test/ScriptTools.sol";
+import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 
 import {AaveV3ConfigEngine}    from 'aave-helpers/v3-config-engine/AaveV3ConfigEngine.sol';
 import {V3RateStrategyFactory} from 'aave-helpers/v3-config-engine/V3RateStrategyFactory.sol';
@@ -95,7 +95,7 @@ library DeployRatesFactoryLib {
 contract DeployHypurrConfigEngine is Script {
 
     using stdJson for string;
-    using ScriptTools for string;
+    using DeployUtils for string;
 
     string config;
     string instanceId;
@@ -117,8 +117,8 @@ contract DeployHypurrConfigEngine is Script {
         outputName = string(abi.encodePacked(instanceId, "-sce"));
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
 
-        config                = ScriptTools.readInput(instanceId);
-        deployedContracts     = ScriptTools.readOutput(instanceId);
+        config                = DeployUtils.readInput(instanceId);
+        deployedContracts     = DeployUtils.readOutput(instanceId);
         poolAddressesProvider = IPoolAddressesProvider(deployedContracts.readAddress(".poolAddressesProvider"));
 
         admin    = config.readAddress(".admin");
@@ -153,12 +153,12 @@ contract DeployHypurrConfigEngine is Script {
 
         vm.stopBroadcast();
 
-        ScriptTools.exportContract(outputName, "admin",                   admin);
-        ScriptTools.exportContract(outputName, "deployer",                deployer);
-        ScriptTools.exportContract(outputName, "transparentProxyFactory", address(transparentProxyFactory));
-        ScriptTools.exportContract(outputName, "proxyAdmin",              address(proxyAdmin));
-        ScriptTools.exportContract(outputName, "ratesFactory",            address(ratesFactory));
-        ScriptTools.exportContract(outputName, "configEngine",            address(configEngine));
+        DeployUtils.exportContract(outputName, "admin",                   admin);
+        DeployUtils.exportContract(outputName, "deployer",                deployer);
+        DeployUtils.exportContract(outputName, "transparentProxyFactory", address(transparentProxyFactory));
+        DeployUtils.exportContract(outputName, "proxyAdmin",              address(proxyAdmin));
+        DeployUtils.exportContract(outputName, "ratesFactory",            address(ratesFactory));
+        DeployUtils.exportContract(outputName, "configEngine",            address(configEngine));
     }
 
 }

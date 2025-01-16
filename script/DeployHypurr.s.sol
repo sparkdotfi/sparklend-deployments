@@ -3,7 +3,7 @@ pragma solidity 0.8.10;
 
 import "forge-std/Script.sol";
 import {stdJson} from "forge-std/StdJson.sol";
-import {ScriptTools} from "dss-test/ScriptTools.sol";
+import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 
 import {InitializableAdminUpgradeabilityProxy} from 'aave-v3-core/contracts/dependencies/openzeppelin/upgradeability/InitializableAdminUpgradeabilityProxy.sol';
 
@@ -38,7 +38,7 @@ import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAdd
 contract DeployHypurr is Script {
 
     using stdJson for string;
-    using ScriptTools for string;
+    using DeployUtils for string;
 
     uint256 constant RAY = 10 ** 27;
 
@@ -85,7 +85,7 @@ contract DeployHypurr is Script {
         instanceId = vm.envOr("INSTANCE_ID", string("primary"));
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
 
-        config = ScriptTools.loadConfig(instanceId);
+        config = DeployUtils.loadConfig(instanceId);
 
         admin    = config.readAddress(".admin");
         deployer = msg.sender;
@@ -233,33 +233,33 @@ contract DeployHypurr is Script {
 
         vm.stopBroadcast();
 
-        ScriptTools.exportContract(instanceId, "aTokenImpl",      address(aTokenImpl));
-        ScriptTools.exportContract(instanceId, "aaveOracle",      address(aaveOracle));
-        ScriptTools.exportContract(instanceId, "aclManager",      address(aclManager));
-        ScriptTools.exportContract(instanceId, "admin",           address(admin));
-        ScriptTools.exportContract(instanceId, "deployer",        address(deployer));
-        ScriptTools.exportContract(instanceId, "emissionManager", address(emissionManager));
-        ScriptTools.exportContract(instanceId, "incentives",      address(incentives));
-        ScriptTools.exportContract(instanceId, "incentivesImpl",  address(rewardsController));
-        ScriptTools.exportContract(instanceId, "pool",            address(pool));
+        DeployUtils.exportContract(instanceId, "aTokenImpl",      address(aTokenImpl));
+        DeployUtils.exportContract(instanceId, "aaveOracle",      address(aaveOracle));
+        DeployUtils.exportContract(instanceId, "aclManager",      address(aclManager));
+        DeployUtils.exportContract(instanceId, "admin",           address(admin));
+        DeployUtils.exportContract(instanceId, "deployer",        address(deployer));
+        DeployUtils.exportContract(instanceId, "emissionManager", address(emissionManager));
+        DeployUtils.exportContract(instanceId, "incentives",      address(incentives));
+        DeployUtils.exportContract(instanceId, "incentivesImpl",  address(rewardsController));
+        DeployUtils.exportContract(instanceId, "pool",            address(pool));
 
-        ScriptTools.exportContract(instanceId, "poolAddressesProvider",         address(poolAddressesProvider));
-        ScriptTools.exportContract(instanceId, "poolAddressesProviderRegistry", address(registry));
+        DeployUtils.exportContract(instanceId, "poolAddressesProvider",         address(poolAddressesProvider));
+        DeployUtils.exportContract(instanceId, "poolAddressesProviderRegistry", address(registry));
 
-        ScriptTools.exportContract(instanceId, "poolConfigurator",        address(poolConfigurator));
-        ScriptTools.exportContract(instanceId, "poolConfiguratorImpl",    address(poolConfiguratorImpl));
-        ScriptTools.exportContract(instanceId, "poolImpl",                address(poolImpl));
-        ScriptTools.exportContract(instanceId, "protocolDataProvider",    address(protocolDataProvider));
-        ScriptTools.exportContract(instanceId, "stableDebtTokenImpl",     address(stableDebtTokenImpl));
-        ScriptTools.exportContract(instanceId, "treasury",                address(treasury));
-        ScriptTools.exportContract(instanceId, "treasuryController",      address(treasuryController));
-        ScriptTools.exportContract(instanceId, "treasuryImpl",            address(treasuryImpl));
-        ScriptTools.exportContract(instanceId, "uiIncentiveDataProvider", address(uiIncentiveDataProvider));
-        ScriptTools.exportContract(instanceId, "uiPoolDataProvider",      address(uiPoolDataProvider));
-        ScriptTools.exportContract(instanceId, "variableDebtTokenImpl",   address(variableDebtTokenImpl));
-        ScriptTools.exportContract(instanceId, "walletBalanceProvider",   address(walletBalanceProvider));
-        ScriptTools.exportContract(instanceId, "wrappedTokenGateway",             address(wrappedTokenGateway));
-        ScriptTools.exportContract(instanceId, "defaultInterestRateStrategy",    address(interestRateStrategy));
+        DeployUtils.exportContract(instanceId, "poolConfigurator",        address(poolConfigurator));
+        DeployUtils.exportContract(instanceId, "poolConfiguratorImpl",    address(poolConfiguratorImpl));
+        DeployUtils.exportContract(instanceId, "poolImpl",                address(poolImpl));
+        DeployUtils.exportContract(instanceId, "protocolDataProvider",    address(protocolDataProvider));
+        DeployUtils.exportContract(instanceId, "stableDebtTokenImpl",     address(stableDebtTokenImpl));
+        DeployUtils.exportContract(instanceId, "treasury",                address(treasury));
+        DeployUtils.exportContract(instanceId, "treasuryController",      address(treasuryController));
+        DeployUtils.exportContract(instanceId, "treasuryImpl",            address(treasuryImpl));
+        DeployUtils.exportContract(instanceId, "uiIncentiveDataProvider", address(uiIncentiveDataProvider));
+        DeployUtils.exportContract(instanceId, "uiPoolDataProvider",      address(uiPoolDataProvider));
+        DeployUtils.exportContract(instanceId, "variableDebtTokenImpl",   address(variableDebtTokenImpl));
+        DeployUtils.exportContract(instanceId, "walletBalanceProvider",   address(walletBalanceProvider));
+        DeployUtils.exportContract(instanceId, "wrappedTokenGateway",             address(wrappedTokenGateway));
+        DeployUtils.exportContract(instanceId, "defaultInterestRateStrategy",    address(interestRateStrategy));
     }
 
     function createCollector(address _admin) internal returns (Collector collector, address impl) {

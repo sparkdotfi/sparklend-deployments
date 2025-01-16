@@ -3,14 +3,14 @@ pragma solidity 0.8.10;
 
 import "forge-std/Script.sol";
 import {stdJson} from "forge-std/StdJson.sol";
-import {ScriptTools} from "dss-test/ScriptTools.sol";
+import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 
 import {WHYPE} from "src/tokens/WHYPE.sol";
 
 contract DeployPoolImplementation is Script {
 
     using stdJson for string;
-    using ScriptTools for string;
+    using DeployUtils for string;
 
     string deployedContracts;
     string instanceId;
@@ -28,6 +28,6 @@ contract DeployPoolImplementation is Script {
 
         vm.stopBroadcast();
 
-        ScriptTools.exportContract(string(abi.encodePacked(instanceId, "-WHYPE")), "wrappedHype", address(whype));
+        DeployUtils.exportContract(string(abi.encodePacked(instanceId, "-WHYPE")), "wrappedHype", address(whype));
     }
 }

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import {Script} from 'forge-std/Script.sol';
-import {ScriptTools} from "dss-test/ScriptTools.sol";
+import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 import 'forge-std/StdJson.sol';
 import 'forge-std/console.sol';
 
@@ -11,7 +11,7 @@ import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAdd
 
 contract Default is Script {
   using stdJson for string;
-  using ScriptTools for string;
+  using DeployUtils for string;
 
   string deployedContracts;
   string instanceId;
@@ -27,7 +27,7 @@ contract Default is Script {
     instanceId = vm.envOr("INSTANCE_ID", string("primary"));
     vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
         
-    deployedContracts = ScriptTools.readOutput(instanceId);
+    deployedContracts = DeployUtils.readOutput(instanceId);
         
     poolAddressesProvider = IPoolAddressesProvider(deployedContracts.readAddress(".poolAddressesProvider"));
 
@@ -37,6 +37,6 @@ contract Default is Script {
     
     vm.stopBroadcast();
 
-    ScriptTools.exportContract(string(abi.encodePacked(instanceId, "-capAutomator")), "capAutomator", address(capAutomator));
+    DeployUtils.exportContract(string(abi.encodePacked(instanceId, "-capAutomator")), "capAutomator", address(capAutomator));
   }
 }
