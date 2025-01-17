@@ -145,7 +145,7 @@ contract DeployHypurrConfigEngine is Script {
             IAaveOracle(deployedContracts.readAddress(".aaveOracle")),
             deployedContracts.readAddress(".aTokenImpl"),
             deployedContracts.readAddress(".variableDebtTokenImpl"),
-            deployedContracts.readAddress(".stableDebtTokenImpl"),
+            deployedContracts.readAddress(".disabledStableDebtTokenImpl"),
             deployedContracts.readAddress(".incentives"),
             deployedContracts.readAddress(".treasury"),
             ratesFactory

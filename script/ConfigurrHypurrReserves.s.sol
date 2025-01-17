@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: AGPL-3.0
 pragma solidity ^0.8.0;
 
 import {Script} from 'forge-std/Script.sol';
@@ -40,20 +40,23 @@ contract ConfigurrHypurrReserves is HyperTestnetReservesConfigs, Script {
 
     vm.startBroadcast(vm.envUint('PRIVATE_KEY'));
 
-    tokens = _fetchTestnetTokens();
+    tokens = _fetchStableTokens();
 
-    oracles = _fetchTestnetOracles();
+    // oracles = _fetchTestnetOracles();
 
-    // set oracles
-    _getAaveOracle().setAssetSources(tokens, oracles);
+    // // set oracles
+    // _getAaveOracle().set AssetSources(tokens, oracles);
 
     // set reserve config
     _initReserves(tokens);
 
-    _enableCollateral(tokens);
+    // disable stable debt
+    _disableStableDebt(tokens);
+
+    // _enableCollateral(tokens);
     
-    // enable borrowing
-    _enableBorrowing(tokens);
+    // // enable borrowing
+    // _enableBorrowing(tokens);
 
     vm.stopBroadcast();
   }

@@ -19,7 +19,7 @@ interface IDeployConfigTypes {
         address poolConfiguratorImpl;
         address poolImpl;
         address protocolDataProvider;
-        address stableDebtTokenImpl;
+        address disabledStableDebtTokenImpl;
         address treasury;
         address treasuryImpl;
         address uiIncentiveDataProvider;

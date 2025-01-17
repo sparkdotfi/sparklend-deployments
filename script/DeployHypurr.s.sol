@@ -16,7 +16,7 @@ import {ACLManager} from "aave-v3-core/contracts/protocol/configuration/ACLManag
 import {AaveOracle} from 'aave-v3-core/contracts/misc/AaveOracle.sol';
 
 import {AToken} from "aave-v3-core/contracts/protocol/tokenization/AToken.sol";
-import {StableDebtToken} from "aave-v3-core/contracts/protocol/tokenization/StableDebtToken.sol";
+import {DisabledStableDebtToken} from "src/contracts/protocol/tokenization/DisabledStableDebtToken.sol";
 import {VariableDebtToken} from "aave-v3-core/contracts/protocol/tokenization/VariableDebtToken.sol";
 
 import {IAaveIncentivesController} from "aave-v3-core/contracts/interfaces/IAaveIncentivesController.sol";
@@ -59,7 +59,7 @@ contract DeployHypurr is Script {
     AaveOracle aaveOracle;
 
     AToken aTokenImpl;
-    StableDebtToken stableDebtTokenImpl;
+    DisabledStableDebtToken disabledStableDebtTokenImpl;
     VariableDebtToken variableDebtTokenImpl;
 
     Collector treasury;
@@ -138,10 +138,10 @@ contract DeployHypurr is Script {
         aTokenImpl = new AToken(pool);
         aTokenImpl.initialize(pool, address(0), address(0), IAaveIncentivesController(address(0)), 0, "SPTOKEN_IMPL", "SPTOKEN_IMPL", "");
 
-        // 9. Deploy and initialize stableDebtToken instance
+        // 9. Deploy and initialize disabledStableDebtToken instance
 
-        stableDebtTokenImpl = new StableDebtToken(pool);
-        stableDebtTokenImpl.initialize(pool, address(0), IAaveIncentivesController(address(0)), 0, "STABLE_DEBT_TOKEN_IMPL", "STABLE_DEBT_TOKEN_IMPL", "");
+        disabledStableDebtTokenImpl = new DisabledStableDebtToken(pool);
+        disabledStableDebtTokenImpl.initialize(pool, address(0), IAaveIncentivesController(address(0)), 0, "STABLE_DEBT_TOKEN_IMPL", "STABLE_DEBT_TOKEN_IMPL", "");
 
         // 9. Deploy and initialize variableDebtToken instance
 
@@ -250,7 +250,7 @@ contract DeployHypurr is Script {
         DeployUtils.exportContract(instanceId, "poolConfiguratorImpl",    address(poolConfiguratorImpl));
         DeployUtils.exportContract(instanceId, "poolImpl",                address(poolImpl));
         DeployUtils.exportContract(instanceId, "protocolDataProvider",    address(protocolDataProvider));
-        DeployUtils.exportContract(instanceId, "stableDebtTokenImpl",     address(stableDebtTokenImpl));
+        DeployUtils.exportContract(instanceId, "disabledStableDebtTokenImpl",     address(disabledStableDebtTokenImpl));
         DeployUtils.exportContract(instanceId, "treasury",                address(treasury));
         DeployUtils.exportContract(instanceId, "treasuryController",      address(treasuryController));
         DeployUtils.exportContract(instanceId, "treasuryImpl",            address(treasuryImpl));
