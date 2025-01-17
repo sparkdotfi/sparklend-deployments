@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 import {MockAggregator} from 'aave-v3-core/contracts/mocks/oracle/CLAggregators/MockAggregator.sol';
 import {MintableLimitERC20} from 'src/testnet/MintableLimitERC20.sol';
+import {WrappedTokenGatewayV3} from "aave-v3-periphery/misc/WrappedTokenGatewayV3.sol";
 import {IAaveOracle} from 'aave-v3-core/contracts/interfaces/IAaveOracle.sol';
 import {IPoolConfigurator} from 'aave-v3-core/contracts/interfaces/IPoolConfigurator.sol';
 import {IPool} from 'aave-v3-core/contracts/interfaces/IPool.sol';
@@ -74,13 +75,13 @@ contract HyperTestnetReservesConfigs {
         address[] memory tokens
     )
   { 
-    tokens  = new address[](5);
+    tokens  = new address[](1);
 
-    tokens[0] = address(0x4B85aCF84b2593D67f6593D18504dBb3A337D3D8); // SolvBTC
-    tokens[1] = address(0x8bf86549d308e50Db889cF843AEBd6b7B0d7BB9a); // WHYPE
-    tokens[2] = address(0xe2FbC9cB335A65201FcDE55323aE0F4E8A96A616); // stHYPE (stTESTH on testnet)
-    tokens[3] = address(0x6fDbAF3102eFC67ceE53EeFA4197BE36c8E1A094); // USDC
-    tokens[4] = address(0x2222C34A8dd4Ea29743bf8eC4fF165E059839782); // sUSDe
+    // tokens[0] = address(0x4B85aCF84b2593D67f6593D18504dBb3A337D3D8); // SolvBTC
+    tokens[0] = address(0xa42aa6a5a373dC4bD140eC20efeE5C669f9883f9); // WHYPE
+    // tokens[2] = address(0xe2FbC9cB335A65201FcDE55323aE0F4E8A96A616); // stHYPE (stTESTH on testnet)
+    // tokens[3] = address(0x6fDbAF3102eFC67ceE53EeFA4197BE36c8E1A094); // USDC
+    // tokens[4] = address(0x2222C34A8dd4Ea29743bf8eC4fF165E059839782); // sUSDe
 
     //0x9edA7E43821EedFb677A69066529F16DB3A2dD73 USDXL
 
@@ -93,13 +94,13 @@ contract HyperTestnetReservesConfigs {
         address[] memory oracles
     )
   { 
-    oracles  = new address[](5);
+    oracles  = new address[](1);
 
-    oracles[0] = address(0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D); // SolvBTC
-    oracles[1] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // WHYPE
-    oracles[2] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // stHYPE (stTESTH on testnet); using redstone HYPE oracle on testnet
-    oracles[3] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // USDC
-    oracles[4] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // sUSDe
+    // oracles[0] = address(0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D); // SolvBTC
+    oracles[0] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // WHYPE
+    // oracles[2] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // stHYPE (stTESTH on testnet); using redstone HYPE oracle on testnet
+    // oracles[3] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // USDC
+    // oracles[4] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // sUSDe
 
     // USDXL uses a static oracle price of 1e8
 
@@ -192,9 +193,9 @@ contract HyperTestnetReservesConfigs {
       string memory tokenConfig = DeployUtils.readTokenConfig(tokens[i]);
       _getPoolConfigurator().configureReserveAsCollateral(
         tokens[i],
-        tokenConfig.readUint('.ltv'), // LTV (80%)
-        tokenConfig.readUint('.liquidationThreshold'), // Liq. threshold (90%)
-        tokenConfig.readUint('.liquidationBonus') // Liq. bonus (5% tax)
+        tokenConfig.readUint('.ltv'),
+        tokenConfig.readUint('.liquidationThreshold'),
+        tokenConfig.readUint('.liquidationBonus')
       );
       unchecked { i++; }
     }
@@ -232,6 +233,18 @@ contract HyperTestnetReservesConfigs {
         i++;
       }
     }
+  }
+
+  function _supplyNative(
+    uint256 amount,
+    address onBehalfOf
+  ) internal
+  {
+    _getWrappedTokenGateway().depositETH{value: amount}(
+      deployRegistry.pool,
+      onBehalfOf,
+      0
+    );
   }
 
   function _addPoolAdmin(
@@ -313,6 +326,16 @@ contract HyperTestnetReservesConfigs {
     )
   {
     return IPool(_getMarketReport().pool);
+  }
+
+  function _getWrappedTokenGateway()
+    internal
+    view
+    returns (
+      WrappedTokenGatewayV3
+    )
+  {
+    return WrappedTokenGatewayV3(payable(deployRegistry.wrappedTokenGateway));
   }
 
   function _getMarketReport()
