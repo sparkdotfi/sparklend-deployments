@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 pragma solidity >=0.8.0;
 
-import { IPool } from "aave-v3-core/contracts/interfaces/IPool.sol";
-import { IPoolConfigurator } from "aave-v3-core/contracts/interfaces/IPoolConfigurator.sol";
+import {IPool} from "aave-v3-core/contracts/interfaces/IPool.sol";
+import {IPoolConfigurator} from "aave-v3-core/contracts/interfaces/IPoolConfigurator.sol";
 
 interface ICapAutomator {
-
-    /**********************************************************************************************/
-    /*** Events                                                                                 ***/
-    /**********************************************************************************************/
+    /**
+     *
+     */
+    /**
+     * Events                                                                                 **
+     */
+    /**
+     *
+     */
 
     /**
      *  @dev   Event to log the setting of a new supply cap config.
@@ -56,9 +61,15 @@ interface ICapAutomator {
      */
     event UpdateBorrowCap(address indexed asset, uint256 oldBorrowCap, uint256 newBorrowCap);
 
-    /**********************************************************************************************/
-    /*** Storage Variables                                                                      ***/
-    /**********************************************************************************************/
+    /**
+     *
+     */
+    /**
+     * Storage Variables                                                                      **
+     */
+    /**
+     *
+     */
 
     /**
      *  @dev    Returns the address of the pool configurator.
@@ -81,13 +92,10 @@ interface ICapAutomator {
      *  @return lastUpdateBlock  The block of the last cap update.
      *  @return lastIncreaseTime The timestamp of the last cap increase.
      */
-    function supplyCapConfigs(address asset) external view returns (
-        uint48 max,
-        uint48 gap,
-        uint48 increaseCooldown,
-        uint48 lastUpdateBlock,
-        uint48 lastIncreaseTime
-    );
+    function supplyCapConfigs(address asset)
+        external
+        view
+        returns (uint48 max, uint48 gap, uint48 increaseCooldown, uint48 lastUpdateBlock, uint48 lastIncreaseTime);
 
     /**
      *  @dev    Returns current configuration for automatic borrow cap management.
@@ -98,17 +106,20 @@ interface ICapAutomator {
      *  @return lastUpdateBlock  The block of the last cap update.
      *  @return lastIncreaseTime The timestamp of the last cap increase.
      */
-    function borrowCapConfigs(address asset) external view returns (
-        uint48 max,
-        uint48 gap,
-        uint48 increaseCooldown,
-        uint48 lastUpdateBlock,
-        uint48 lastIncreaseTime
-    );
+    function borrowCapConfigs(address asset)
+        external
+        view
+        returns (uint48 max, uint48 gap, uint48 increaseCooldown, uint48 lastUpdateBlock, uint48 lastIncreaseTime);
 
-    /**********************************************************************************************/
-    /*** Owner Functions                                                                        ***/
-    /**********************************************************************************************/
+    /**
+     *
+     */
+    /**
+     * Owner Functions                                                                        **
+     */
+    /**
+     *
+     */
 
     /**
      *  @dev   Function creating (or re-setting) a configuration for automatic supply cap management.
@@ -117,12 +128,7 @@ interface ICapAutomator {
      *  @param gap              A gap between the supply and the supply cap that is being maintained.
      *  @param increaseCooldown A minimum period of time that needs to elapse between consequent cap increases.
      */
-    function setSupplyCapConfig(
-        address asset,
-        uint256 max,
-        uint256 gap,
-        uint256 increaseCooldown
-    ) external;
+    function setSupplyCapConfig(address asset, uint256 max, uint256 gap, uint256 increaseCooldown) external;
 
     /**
      *  @dev   Function creating (or re-setting) a configuration for automatic borrow cap management.
@@ -131,12 +137,7 @@ interface ICapAutomator {
      *  @param gap              A gap between the borrows and the borrow cap that is being maintained.
      *  @param increaseCooldown A minimum period of time that needs to elapse between consequent cap increases.
      */
-    function setBorrowCapConfig(
-        address asset,
-        uint256 max,
-        uint256 gap,
-        uint256 increaseCooldown
-    ) external;
+    function setBorrowCapConfig(address asset, uint256 max, uint256 gap, uint256 increaseCooldown) external;
 
     /**
      *  @dev   Function removing a configuration for automatic supply cap management.
@@ -150,9 +151,15 @@ interface ICapAutomator {
      */
     function removeBorrowCapConfig(address asset) external;
 
-    /**********************************************************************************************/
-    /*** Public Functions                                                                       ***/
-    /**********************************************************************************************/
+    /**
+     *
+     */
+    /**
+     * Public Functions                                                                       **
+     */
+    /**
+     *
+     */
 
     /**
      *  @dev    A public function that updates supply cap on market of a given asset.

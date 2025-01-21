@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0
 pragma solidity 0.8.10;
 
-import {AggregatorInterface} from 'aave-v3-core/contracts/dependencies/chainlink/AggregatorInterface.sol';
-import {SafeCast} from 'aave-v3-core/contracts/dependencies/openzeppelin/contracts/SafeCast.sol';
+import {AggregatorInterface} from "aave-v3-core/contracts/dependencies/chainlink/AggregatorInterface.sol";
+import {SafeCast} from "aave-v3-core/contracts/dependencies/openzeppelin/contracts/SafeCast.sol";
 
 interface PotLike {
     function chi() external view returns (uint256);
@@ -52,5 +52,4 @@ contract SavingsDaiOracle is AggregatorInterface {
     function POT_ADDRESS() external view returns (address) {
         return address(_pot);
     }
-
 }

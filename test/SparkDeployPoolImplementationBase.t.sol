@@ -9,13 +9,12 @@ import {PoolAddressesProvider} from "aave-v3-core/contracts/protocol/configurati
 import {Pool} from "aave-v3-core/contracts/protocol/pool/Pool.sol";
 
 abstract contract SparkDeployPoolImplementationBaseTest is Test {
-
     using stdJson for string;
 
     // Configuration
     // Override this in the inheriting contract
-    string  instanceId = "primary";
-    string  rpcUrl;
+    string instanceId = "primary";
+    string rpcUrl;
     uint256 forkBlock;
     uint256 revisionNum;
 
@@ -31,18 +30,17 @@ abstract contract SparkDeployPoolImplementationBaseTest is Test {
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
 
         deployedContracts = ScriptTools.readOutput(instanceId);
-        upgradeContracts  = ScriptTools.readOutput(string(abi.encodePacked(instanceId, "-pool")));
+        upgradeContracts = ScriptTools.readOutput(string(abi.encodePacked(instanceId, "-pool")));
 
         poolAddressesProvider = PoolAddressesProvider(deployedContracts.readAddress(".poolAddressesProvider"));
-        poolImpl              = Pool(upgradeContracts.readAddress(".poolImpl"));
+        poolImpl = Pool(upgradeContracts.readAddress(".poolImpl"));
     }
 
     function test_poolImpl() public {
         assertEq(address(poolImpl.ADDRESSES_PROVIDER()), address(poolAddressesProvider));
-        assertEq(poolImpl.POOL_REVISION(),               revisionNum);
+        assertEq(poolImpl.POOL_REVISION(), revisionNum);
 
         vm.expectRevert("Contract instance has already been initialized");
         poolImpl.initialize(poolAddressesProvider);
     }
-
 }

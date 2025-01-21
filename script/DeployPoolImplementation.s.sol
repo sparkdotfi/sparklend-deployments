@@ -9,7 +9,6 @@ import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAdd
 import {Pool} from "aave-v3-core/contracts/protocol/pool/Pool.sol";
 
 contract DeployPoolImplementation is Script {
-
     using stdJson for string;
     using DeployUtils for string;
 
@@ -23,9 +22,9 @@ contract DeployPoolImplementation is Script {
         //vm.createSelectFork(vm.envString("ETH_RPC_URL"));     // Multi-chain not supported in Foundry yet (use CLI arg for now)
         instanceId = vm.envOr("INSTANCE_ID", string("primary"));
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
-        
+
         deployedContracts = DeployUtils.readOutput(instanceId);
-        
+
         poolAddressesProvider = IPoolAddressesProvider(deployedContracts.readAddress(".poolAddressesProvider"));
 
         vm.startBroadcast();
@@ -35,5 +34,4 @@ contract DeployPoolImplementation is Script {
 
         DeployUtils.exportContract(string(abi.encodePacked(instanceId, "-pool")), "poolImpl", address(poolImpl));
     }
-
 }

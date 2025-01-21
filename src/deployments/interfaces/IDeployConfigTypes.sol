@@ -4,7 +4,7 @@ pragma solidity ^0.8.10;
 interface IDeployConfigTypes {
     struct HypurrDeployRegistry {
         address aTokenImpl;
-        address aaveOracle;
+        address hyFiOracle;
         address aclManager;
         address admin;
         address defaultInterestRateStrategy;
@@ -26,6 +26,6 @@ interface IDeployConfigTypes {
         address uiPoolDataProvider;
         address variableDebtTokenImpl;
         address walletBalanceProvider;
-        address wrappedTokenGateway;
+        address wrappedHypeGateway;
     }
 }

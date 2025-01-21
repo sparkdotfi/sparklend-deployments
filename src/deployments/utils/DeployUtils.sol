@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0
 pragma solidity >=0.8.0;
 
-import { stdJson } from "forge-std/StdJson.sol";
-import { VmSafe } from "forge-std/Vm.sol";
-import { IERC20Metadata } from "src/contracts/dependencies/openzeppelin/interfaces/IERC20Metadata.sol";
+import {stdJson} from "forge-std/StdJson.sol";
+import {VmSafe} from "forge-std/Vm.sol";
+import {IERC20Metadata} from "src/contracts/dependencies/openzeppelin/interfaces/IERC20Metadata.sol";
 
 library DeployUtils {
     VmSafe private constant vm = VmSafe(address(uint160(uint256(keccak256("hevm cheat code")))));
@@ -25,21 +25,26 @@ library DeployUtils {
 
     function readOutput(string memory name, uint256 timestamp) internal view returns (string memory) {
         string memory root = vm.projectRoot();
-        string memory chainOutputFolder = string(abi.encodePacked("/script/output/", vm.toString(getRootChainId()), "/"));
-        return vm.readFile(string(abi.encodePacked(root, chainOutputFolder, name, "-", vm.toString(timestamp), ".json")));
+        string memory chainOutputFolder =
+            string(abi.encodePacked("/script/output/", vm.toString(getRootChainId()), "/"));
+        return
+            vm.readFile(string(abi.encodePacked(root, chainOutputFolder, name, "-", vm.toString(timestamp), ".json")));
     }
 
     function readOutput(string memory name) internal view returns (string memory) {
         string memory root = vm.projectRoot();
-        string memory chainOutputFolder = string(abi.encodePacked("/script/output/", vm.toString(getRootChainId()), "/"));
+        string memory chainOutputFolder =
+            string(abi.encodePacked("/script/output/", vm.toString(getRootChainId()), "/"));
         return vm.readFile(string(abi.encodePacked(root, chainOutputFolder, name, "-latest.json")));
     }
 
     function readTokenConfig(address token) internal view returns (string memory) {
-      // Read JSON file from script/inputs/{chainId}/{tokenSymbol}.json
-      string memory chainInputFolder = string(abi.encodePacked("./script/input/", vm.toString(getRootChainId()), "/assets/"));
-      string memory tokenConfigPath = string(abi.encodePacked(chainInputFolder, IERC20Metadata(token).symbol(), ".json"));
-      return vm.readFile(tokenConfigPath);
+        // Read JSON file from script/inputs/{chainId}/{tokenSymbol}.json
+        string memory chainInputFolder =
+            string(abi.encodePacked("./script/input/", vm.toString(getRootChainId()), "/assets/"));
+        string memory tokenConfigPath =
+            string(abi.encodePacked(chainInputFolder, IERC20Metadata(token).symbol(), ".json"));
+        return vm.readFile(tokenConfigPath);
     }
 
     /**
@@ -56,7 +61,7 @@ library DeployUtils {
             config = readInput(vm.envOr("FOUNDRY_SCRIPT_CONFIG", name));
         }
     }
-    
+
     /**
      * @notice Use standard environment variables to load config.
      * @dev Will first check FOUNDRY_SCRIPT_CONFIG_TEXT for raw json text.
@@ -83,8 +88,11 @@ library DeployUtils {
         name = vm.envOr("FOUNDRY_EXPORTS_NAME", name);
         string memory json = vm.serializeAddress(EXPORT_JSON_KEY, label, addr);
         string memory root = vm.projectRoot();
-        string memory chainOutputFolder = string(abi.encodePacked("/script/output/", vm.toString(getRootChainId()), "/"));
-        vm.writeJson(json, string(abi.encodePacked(root, chainOutputFolder, name, "-", vm.toString(block.timestamp), ".json")));
+        string memory chainOutputFolder =
+            string(abi.encodePacked("/script/output/", vm.toString(getRootChainId()), "/"));
+        vm.writeJson(
+            json, string(abi.encodePacked(root, chainOutputFolder, name, "-", vm.toString(block.timestamp), ".json"))
+        );
         vm.writeJson(json, string(abi.encodePacked(root, chainOutputFolder, name, "-", "latest", ".json")));
         if (vm.envOr("FOUNDRY_EXPORTS_OVERWRITE_LATEST", false)) {
             vm.writeJson(json, string(abi.encodePacked(root, chainOutputFolder, name, "-latest.json")));

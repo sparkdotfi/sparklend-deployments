@@ -33,7 +33,6 @@ contract GulpProxy {
 }
 
 contract Faucet {
-
     PsmLike public immutable psm;
     TokenLike public immutable dai;
     TokenLike public immutable sDai;
@@ -68,5 +67,4 @@ contract Faucet {
             TokenLike(token).mint(to, amount);
         }
     }
-
 }

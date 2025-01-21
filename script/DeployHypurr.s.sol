@@ -5,21 +5,23 @@ import "forge-std/Script.sol";
 import {stdJson} from "forge-std/StdJson.sol";
 import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 
-import {InitializableAdminUpgradeabilityProxy} from 'aave-v3-core/contracts/dependencies/openzeppelin/upgradeability/InitializableAdminUpgradeabilityProxy.sol';
+import {InitializableAdminUpgradeabilityProxy} from
+    "aave-v3-core/contracts/dependencies/openzeppelin/upgradeability/InitializableAdminUpgradeabilityProxy.sol";
 
-import {PoolAddressesProviderRegistry} from "aave-v3-core/contracts/protocol/configuration/PoolAddressesProviderRegistry.sol";
+import {PoolAddressesProviderRegistry} from
+    "aave-v3-core/contracts/protocol/configuration/PoolAddressesProviderRegistry.sol";
 import {PoolAddressesProvider} from "aave-v3-core/contracts/protocol/configuration/PoolAddressesProvider.sol";
-import {AaveProtocolDataProvider} from "aave-v3-core/contracts/misc/AaveProtocolDataProvider.sol";
+import {HyFiProtocolDataProvider} from "src/core/contracts/misc/HyFiProtocolDataProvider.sol";
 import {PoolConfigurator} from "aave-v3-core/contracts/protocol/pool/PoolConfigurator.sol";
 import {Pool} from "aave-v3-core/contracts/protocol/pool/Pool.sol";
 import {ACLManager} from "aave-v3-core/contracts/protocol/configuration/ACLManager.sol";
-import {AaveOracle} from 'aave-v3-core/contracts/misc/AaveOracle.sol';
+import {HyFiOracle} from "src/core/contracts/misc/HyFiOracle.sol";
 
-import {AToken} from "aave-v3-core/contracts/protocol/tokenization/AToken.sol";
-import {DisabledStableDebtToken} from "src/contracts/protocol/tokenization/DisabledStableDebtToken.sol";
+import {HyToken} from "src/core/contracts/protocol/tokenization/HyToken.sol";
+import {DisabledStableDebtToken} from "src/core/contracts/protocol/tokenization/DisabledStableDebtToken.sol";
 import {VariableDebtToken} from "aave-v3-core/contracts/protocol/tokenization/VariableDebtToken.sol";
 
-import {IAaveIncentivesController} from "aave-v3-core/contracts/interfaces/IAaveIncentivesController.sol";
+import {IHyFiIncentivesController} from "src/core/contracts/interfaces/IHyFiIncentivesController.sol";
 
 import {Collector} from "aave-v3-periphery/treasury/Collector.sol";
 import {CollectorController} from "aave-v3-periphery/treasury/CollectorController.sol";
@@ -28,15 +30,15 @@ import {EmissionManager} from "aave-v3-periphery/rewards/EmissionManager.sol";
 
 import {UiPoolDataProviderV3} from "aave-v3-periphery/misc/UiPoolDataProviderV3.sol";
 import {UiIncentiveDataProviderV3} from "aave-v3-periphery/misc/UiIncentiveDataProviderV3.sol";
-import {WrappedTokenGatewayV3} from "aave-v3-periphery/misc/WrappedTokenGatewayV3.sol";
+import {WrappedHypeGateway} from "src/periphery/contracts/misc/WrappedHypeGateway.sol";
 import {IPool} from "aave-v3-core/contracts/interfaces/IPool.sol";
 import {WalletBalanceProvider} from "aave-v3-periphery/misc/WalletBalanceProvider.sol";
 import {IEACAggregatorProxy} from "aave-v3-periphery/misc/interfaces/IEACAggregatorProxy.sol";
-import {DefaultReserveInterestRateStrategy} from "aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol";
+import {DefaultReserveInterestRateStrategy} from
+    "aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol";
 import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAddressesProvider.sol";
 
 contract DeployHypurr is Script {
-
     using stdJson for string;
     using DeployUtils for string;
 
@@ -50,15 +52,15 @@ contract DeployHypurr is Script {
 
     PoolAddressesProviderRegistry registry;
     PoolAddressesProvider poolAddressesProvider;
-    AaveProtocolDataProvider protocolDataProvider;
+    HyFiProtocolDataProvider protocolDataProvider;
     PoolConfigurator poolConfigurator;
     PoolConfigurator poolConfiguratorImpl;
     Pool pool;
     Pool poolImpl;
     ACLManager aclManager;
-    AaveOracle aaveOracle;
+    HyFiOracle hyFiOracle;
 
-    AToken aTokenImpl;
+    HyToken hyTokenImpl;
     DisabledStableDebtToken disabledStableDebtTokenImpl;
     VariableDebtToken variableDebtTokenImpl;
 
@@ -71,7 +73,7 @@ contract DeployHypurr is Script {
 
     UiPoolDataProviderV3 uiPoolDataProvider;
     UiIncentiveDataProviderV3 uiIncentiveDataProvider;
-    WrappedTokenGatewayV3 wrappedTokenGateway;
+    WrappedHypeGateway wrappedHypeGateway;
     WalletBalanceProvider walletBalanceProvider;
 
     InitializableAdminUpgradeabilityProxy incentivesProxy;
@@ -87,21 +89,21 @@ contract DeployHypurr is Script {
 
         config = DeployUtils.loadConfig(instanceId);
 
-        admin    = config.readAddress(".admin");
+        admin = config.readAddress(".admin");
         deployer = msg.sender;
 
-        vm.startBroadcast(vm.envUint('PRIVATE_KEY'));
+        vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
         // 1. Deploy and configure registry and addresses provider
 
-        registry              = new PoolAddressesProviderRegistry(deployer);
+        registry = new PoolAddressesProviderRegistry(deployer);
         poolAddressesProvider = new PoolAddressesProvider(config.readString(".marketId"), deployer);
 
         poolAddressesProvider.setACLAdmin(deployer);
 
         // 2. Deploy data provider and pool configurator, initialize pool configurator
 
-        protocolDataProvider = new AaveProtocolDataProvider(poolAddressesProvider);
+        protocolDataProvider = new HyFiProtocolDataProvider(poolAddressesProvider);
         poolConfiguratorImpl = new PoolConfigurator();
 
         poolConfiguratorImpl.initialize(poolAddressesProvider);
@@ -133,25 +135,43 @@ contract DeployHypurr is Script {
         poolConfigurator = PoolConfigurator(poolAddressesProvider.getPoolConfigurator());
         poolAddressesProvider.setACLManager(address(aclManager));
 
-        // 8. Deploy and initialize aToken instance
+        // 8. Deploy and initialize hyToken instance
 
-        aTokenImpl = new AToken(pool);
-        aTokenImpl.initialize(pool, address(0), address(0), IAaveIncentivesController(address(0)), 0, "SPTOKEN_IMPL", "SPTOKEN_IMPL", "");
+        hyTokenImpl = new HyToken(pool);
+        hyTokenImpl.initialize(
+            pool, address(0), address(0), IHyFiIncentivesController(address(0)), 0, "SPTOKEN_IMPL", "SPTOKEN_IMPL", ""
+        );
 
         // 9. Deploy and initialize disabledStableDebtToken instance
 
         disabledStableDebtTokenImpl = new DisabledStableDebtToken(pool);
-        disabledStableDebtTokenImpl.initialize(pool, address(0), IAaveIncentivesController(address(0)), 0, "STABLE_DEBT_TOKEN_IMPL", "STABLE_DEBT_TOKEN_IMPL", "");
+        disabledStableDebtTokenImpl.initialize(
+            pool,
+            address(0),
+            IHyFiIncentivesController(address(0)),
+            0,
+            "STABLE_DEBT_TOKEN_IMPL",
+            "STABLE_DEBT_TOKEN_IMPL",
+            ""
+        );
 
         // 9. Deploy and initialize variableDebtToken instance
 
         variableDebtTokenImpl = new VariableDebtToken(pool);
-        variableDebtTokenImpl.initialize(pool, address(0), IAaveIncentivesController(address(0)), 0, "VARIABLE_DEBT_TOKEN_IMPL", "VARIABLE_DEBT_TOKEN_IMPL", "");
+        variableDebtTokenImpl.initialize(
+            pool,
+            address(0),
+            IHyFiIncentivesController(address(0)),
+            0,
+            "VARIABLE_DEBT_TOKEN_IMPL",
+            "VARIABLE_DEBT_TOKEN_IMPL",
+            ""
+        );
 
         // 10. Deploy Collector, CollectorController and treasury contracts.
 
         treasuryController = new CollectorController(admin);
-        collectorImpl      = new Collector();
+        collectorImpl = new Collector();
 
         collectorImpl.initialize(address(0));
 
@@ -159,44 +179,42 @@ contract DeployHypurr is Script {
 
         // 11. Deploy initialize and configure rewards contracts.
 
-        incentivesProxy   = new InitializableAdminUpgradeabilityProxy();
-        incentives        = RewardsController(address(incentivesProxy));
-        emissionManager   = new EmissionManager(deployer);
+        incentivesProxy = new InitializableAdminUpgradeabilityProxy();
+        incentives = RewardsController(address(incentivesProxy));
+        emissionManager = new EmissionManager(deployer);
         rewardsController = new RewardsController(address(emissionManager));
 
         rewardsController.initialize(address(0));
         incentivesProxy.initialize(
-            address(rewardsController),
-            admin,
-            abi.encodeWithSignature("initialize(address)", address(emissionManager))
+            address(rewardsController), admin, abi.encodeWithSignature("initialize(address)", address(emissionManager))
         );
         emissionManager.setRewardsController(address(incentives));
 
         // 12. Update flash loan premium to zero.
 
-        poolConfigurator.updateFlashloanPremiumTotal(0);    // Flash loans are free
+        poolConfigurator.updateFlashloanPremiumTotal(0); // Flash loans are free
 
         // 13. Deploy data provider contracts.
 
-        proxy                   = IEACAggregatorProxy(config.readAddress(".nativeTokenOracle"));
-        uiPoolDataProvider      = new UiPoolDataProviderV3(proxy, proxy);
+        proxy = IEACAggregatorProxy(config.readAddress(".nativeTokenOracle"));
+        uiPoolDataProvider = new UiPoolDataProviderV3(proxy, proxy);
         uiIncentiveDataProvider = new UiIncentiveDataProviderV3();
-        wrappedTokenGateway     = new WrappedTokenGatewayV3(config.readAddress(".nativeToken"), admin, IPool(address(pool)));
-        walletBalanceProvider   = new WalletBalanceProvider();
+        wrappedHypeGateway = new WrappedHypeGateway(config.readAddress(".nativeToken"), admin, IPool(address(pool)));
+        walletBalanceProvider = new WalletBalanceProvider();
 
         // 14. Set up oracle.
 
         address[] memory assets;
         address[] memory oracles;
-        aaveOracle = new AaveOracle(
+        hyFiOracle = new HyFiOracle(
             poolAddressesProvider,
             assets,
             oracles,
-            address(0),  // no fallback oracle initially
-            address(0),  // USD
+            address(0), // no fallback oracle initially
+            address(0), // USD
             1e8
         );
-        poolAddressesProvider.setPriceOracle(address(aaveOracle));
+        poolAddressesProvider.setPriceOracle(address(hyFiOracle));
 
         // 15. Transfer all ownership from deployer to admin
 
@@ -220,46 +238,46 @@ contract DeployHypurr is Script {
 
         interestRateStrategy = new DefaultReserveInterestRateStrategy(
             IPoolAddressesProvider(address(poolAddressesProvider)),
-            80_00 * (RAY / 100_00),         // optimal usage ratio: 80%
-            0,                              // base variable borrow rate: 0%
-            4_00 * (RAY / 100_00),          // variable rate slope1: 4%
-            75_00 * (RAY / 100_00),         // variable rate slope2: 75%
-            2_00 * (RAY / 100_00),          // stable rate slope1: 2%
-            75_00 * (RAY / 100_00),         // stable rate slope2: 75%
-            1_00 * (RAY / 100_00),          // base stable borrow rate: 1%
-            80 * (RAY / 100_00),            // stableRateExcessOffset: 0.8%
-            20_00 * (RAY / 100_00)          // optimalStableToTotalDebtRatio: 20%
+            80_00 * (RAY / 100_00), // optimal usage ratio: 80%
+            0, // base variable borrow rate: 0%
+            4_00 * (RAY / 100_00), // variable rate slope1: 4%
+            75_00 * (RAY / 100_00), // variable rate slope2: 75%
+            2_00 * (RAY / 100_00), // stable rate slope1: 2%
+            75_00 * (RAY / 100_00), // stable rate slope2: 75%
+            1_00 * (RAY / 100_00), // base stable borrow rate: 1%
+            80 * (RAY / 100_00), // stableRateExcessOffset: 0.8%
+            20_00 * (RAY / 100_00) // optimalStableToTotalDebtRatio: 20%
         );
 
         vm.stopBroadcast();
 
-        DeployUtils.exportContract(instanceId, "aTokenImpl",      address(aTokenImpl));
-        DeployUtils.exportContract(instanceId, "aaveOracle",      address(aaveOracle));
-        DeployUtils.exportContract(instanceId, "aclManager",      address(aclManager));
-        DeployUtils.exportContract(instanceId, "admin",           address(admin));
-        DeployUtils.exportContract(instanceId, "deployer",        address(deployer));
+        DeployUtils.exportContract(instanceId, "hyTokenImpl", address(hyTokenImpl));
+        DeployUtils.exportContract(instanceId, "hyFiOracle", address(hyFiOracle));
+        DeployUtils.exportContract(instanceId, "aclManager", address(aclManager));
+        DeployUtils.exportContract(instanceId, "admin", address(admin));
+        DeployUtils.exportContract(instanceId, "deployer", address(deployer));
         DeployUtils.exportContract(instanceId, "emissionManager", address(emissionManager));
-        DeployUtils.exportContract(instanceId, "incentives",      address(incentives));
-        DeployUtils.exportContract(instanceId, "incentivesImpl",  address(rewardsController));
-        DeployUtils.exportContract(instanceId, "pool",            address(pool));
+        DeployUtils.exportContract(instanceId, "incentives", address(incentives));
+        DeployUtils.exportContract(instanceId, "incentivesImpl", address(rewardsController));
+        DeployUtils.exportContract(instanceId, "pool", address(pool));
 
-        DeployUtils.exportContract(instanceId, "poolAddressesProvider",         address(poolAddressesProvider));
+        DeployUtils.exportContract(instanceId, "poolAddressesProvider", address(poolAddressesProvider));
         DeployUtils.exportContract(instanceId, "poolAddressesProviderRegistry", address(registry));
 
-        DeployUtils.exportContract(instanceId, "poolConfigurator",        address(poolConfigurator));
-        DeployUtils.exportContract(instanceId, "poolConfiguratorImpl",    address(poolConfiguratorImpl));
-        DeployUtils.exportContract(instanceId, "poolImpl",                address(poolImpl));
-        DeployUtils.exportContract(instanceId, "protocolDataProvider",    address(protocolDataProvider));
-        DeployUtils.exportContract(instanceId, "disabledStableDebtTokenImpl",     address(disabledStableDebtTokenImpl));
-        DeployUtils.exportContract(instanceId, "treasury",                address(treasury));
-        DeployUtils.exportContract(instanceId, "treasuryController",      address(treasuryController));
-        DeployUtils.exportContract(instanceId, "treasuryImpl",            address(treasuryImpl));
+        DeployUtils.exportContract(instanceId, "poolConfigurator", address(poolConfigurator));
+        DeployUtils.exportContract(instanceId, "poolConfiguratorImpl", address(poolConfiguratorImpl));
+        DeployUtils.exportContract(instanceId, "poolImpl", address(poolImpl));
+        DeployUtils.exportContract(instanceId, "protocolDataProvider", address(protocolDataProvider));
+        DeployUtils.exportContract(instanceId, "disabledStableDebtTokenImpl", address(disabledStableDebtTokenImpl));
+        DeployUtils.exportContract(instanceId, "treasury", address(treasury));
+        DeployUtils.exportContract(instanceId, "treasuryController", address(treasuryController));
+        DeployUtils.exportContract(instanceId, "treasuryImpl", address(treasuryImpl));
         DeployUtils.exportContract(instanceId, "uiIncentiveDataProvider", address(uiIncentiveDataProvider));
-        DeployUtils.exportContract(instanceId, "uiPoolDataProvider",      address(uiPoolDataProvider));
-        DeployUtils.exportContract(instanceId, "variableDebtTokenImpl",   address(variableDebtTokenImpl));
-        DeployUtils.exportContract(instanceId, "walletBalanceProvider",   address(walletBalanceProvider));
-        DeployUtils.exportContract(instanceId, "wrappedTokenGateway",             address(wrappedTokenGateway));
-        DeployUtils.exportContract(instanceId, "defaultInterestRateStrategy",    address(interestRateStrategy));
+        DeployUtils.exportContract(instanceId, "uiPoolDataProvider", address(uiPoolDataProvider));
+        DeployUtils.exportContract(instanceId, "variableDebtTokenImpl", address(variableDebtTokenImpl));
+        DeployUtils.exportContract(instanceId, "walletBalanceProvider", address(walletBalanceProvider));
+        DeployUtils.exportContract(instanceId, "wrappedHypeGateway", address(wrappedHypeGateway));
+        DeployUtils.exportContract(instanceId, "defaultInterestRateStrategy", address(interestRateStrategy));
     }
 
     function createCollector(address _admin) internal returns (Collector collector, address impl) {
@@ -267,10 +285,7 @@ contract DeployHypurr is Script {
         collector = Collector(address(collectorProxy));
         impl = address(collectorImpl);
         collectorProxy.initialize(
-            address(collectorImpl),
-            _admin,
-            abi.encodeWithSignature("initialize(address)", address(treasuryController))
+            address(collectorImpl), _admin, abi.encodeWithSignature("initialize(address)", address(treasuryController))
         );
     }
-
 }

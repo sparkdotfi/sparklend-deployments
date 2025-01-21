@@ -5,33 +5,30 @@ import "forge-std/Script.sol";
 import {stdJson} from "forge-std/StdJson.sol";
 import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 
-import {AaveV3ConfigEngine}    from 'aave-helpers/v3-config-engine/AaveV3ConfigEngine.sol';
-import {V3RateStrategyFactory} from 'aave-helpers/v3-config-engine/V3RateStrategyFactory.sol';
+import {AaveV3ConfigEngine} from "aave-helpers/v3-config-engine/AaveV3ConfigEngine.sol";
+import {V3RateStrategyFactory} from "aave-helpers/v3-config-engine/V3RateStrategyFactory.sol";
 
-import {IAaveOracle}                  from 'aave-v3-core/contracts/interfaces/IAaveOracle.sol';
-import {IDefaultInterestRateStrategy} from 'aave-v3-core/contracts/interfaces/IDefaultInterestRateStrategy.sol';
-import {IPoolAddressesProvider}       from 'aave-v3-core/contracts/interfaces/IPoolAddressesProvider.sol';
-import {IPoolConfigurator}            from 'aave-v3-core/contracts/interfaces/IPoolConfigurator.sol';
-import {IPool}                        from 'aave-v3-core/contracts/interfaces/IPool.sol';
+import {IHyFiOracle} from "src/core/contracts/interfaces/IHyFiOracle.sol";
+import {IDefaultInterestRateStrategy} from "aave-v3-core/contracts/interfaces/IDefaultInterestRateStrategy.sol";
+import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAddressesProvider.sol";
+import {IPoolConfigurator} from "aave-v3-core/contracts/interfaces/IPoolConfigurator.sol";
+import {IPool} from "aave-v3-core/contracts/interfaces/IPool.sol";
 
-import {ITransparentProxyFactory} from 'solidity-utils/contracts/transparent-proxy/interfaces/ITransparentProxyFactory.sol';
-import {ProxyAdmin}               from 'solidity-utils/contracts/transparent-proxy/ProxyAdmin.sol';
-import {TransparentProxyFactory}  from 'solidity-utils/contracts/transparent-proxy/TransparentProxyFactory.sol';
+import {ITransparentProxyFactory} from
+    "solidity-utils/contracts/transparent-proxy/interfaces/ITransparentProxyFactory.sol";
+import {ProxyAdmin} from "solidity-utils/contracts/transparent-proxy/ProxyAdmin.sol";
+import {TransparentProxyFactory} from "solidity-utils/contracts/transparent-proxy/TransparentProxyFactory.sol";
 
 library DeployRatesFactoryLib {
     // TODO check also by param, potentially there could be different contracts, but with exactly same params
-    function _getUniqueStrategiesOnPool(
-        IPool pool,
-        address[] memory reservesToSkip
-    )
+    function _getUniqueStrategiesOnPool(IPool pool, address[] memory reservesToSkip)
         internal
         view
         returns (IDefaultInterestRateStrategy[] memory)
     {
         address[] memory listedAssets = pool.getReservesList();
-        IDefaultInterestRateStrategy[] memory uniqueRateStrategies = new IDefaultInterestRateStrategy[](
-            listedAssets.length
-        );
+        IDefaultInterestRateStrategy[] memory uniqueRateStrategies =
+            new IDefaultInterestRateStrategy[](listedAssets.length);
         uint256 uniqueRateStrategiesSize;
         for (uint256 i = 0; i < listedAssets.length; i++) {
             bool shouldSkip;
@@ -73,10 +70,8 @@ library DeployRatesFactoryLib {
         address ownerForFactory,
         address[] memory reservesToSkip
     ) internal returns (V3RateStrategyFactory, address[] memory) {
-        IDefaultInterestRateStrategy[] memory uniqueStrategies = _getUniqueStrategiesOnPool(
-            IPool(addressesProvider.getPool()),
-            reservesToSkip
-        );
+        IDefaultInterestRateStrategy[] memory uniqueStrategies =
+            _getUniqueStrategiesOnPool(IPool(addressesProvider.getPool()), reservesToSkip);
 
         V3RateStrategyFactory ratesFactory = V3RateStrategyFactory(
             ITransparentProxyFactory(transparentProxyFactory).create(
@@ -93,7 +88,6 @@ library DeployRatesFactoryLib {
 }
 
 contract DeployHypurrConfigEngine is Script {
-
     using stdJson for string;
     using DeployUtils for string;
 
@@ -117,11 +111,11 @@ contract DeployHypurrConfigEngine is Script {
         outputName = string(abi.encodePacked(instanceId, "-sce"));
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
 
-        config                = DeployUtils.readInput(instanceId);
-        deployedContracts     = DeployUtils.readOutput(instanceId);
+        config = DeployUtils.readInput(instanceId);
+        deployedContracts = DeployUtils.readOutput(instanceId);
         poolAddressesProvider = IPoolAddressesProvider(deployedContracts.readAddress(".poolAddressesProvider"));
 
-        admin    = config.readAddress(".admin");
+        admin = config.readAddress(".admin");
         deployer = msg.sender;
 
         address[] memory reservesToSkip = new address[](1);
@@ -129,21 +123,17 @@ contract DeployHypurrConfigEngine is Script {
 
         vm.startBroadcast();
         transparentProxyFactory = new TransparentProxyFactory();
-        proxyAdmin              = ProxyAdmin(transparentProxyFactory.createProxyAdmin(admin));
+        proxyAdmin = ProxyAdmin(transparentProxyFactory.createProxyAdmin(admin));
 
         (ratesFactory,) = DeployRatesFactoryLib._createAndSetupRatesFactory(
-            poolAddressesProvider,
-            address(transparentProxyFactory),
-            address(proxyAdmin),
-            reservesToSkip
+            poolAddressesProvider, address(transparentProxyFactory), address(proxyAdmin), reservesToSkip
         );
-
 
         configEngine = new AaveV3ConfigEngine(
             IPool(deployedContracts.readAddress(".pool")),
             IPoolConfigurator(deployedContracts.readAddress(".poolConfigurator")),
-            IAaveOracle(deployedContracts.readAddress(".aaveOracle")),
-            deployedContracts.readAddress(".aTokenImpl"),
+            IHyFiOracle(deployedContracts.readAddress(".hyFiOracle")),
+            deployedContracts.readAddress(".hyTokenImpl"),
             deployedContracts.readAddress(".variableDebtTokenImpl"),
             deployedContracts.readAddress(".disabledStableDebtTokenImpl"),
             deployedContracts.readAddress(".incentives"),
@@ -153,12 +143,11 @@ contract DeployHypurrConfigEngine is Script {
 
         vm.stopBroadcast();
 
-        DeployUtils.exportContract(outputName, "admin",                   admin);
-        DeployUtils.exportContract(outputName, "deployer",                deployer);
+        DeployUtils.exportContract(outputName, "admin", admin);
+        DeployUtils.exportContract(outputName, "deployer", deployer);
         DeployUtils.exportContract(outputName, "transparentProxyFactory", address(transparentProxyFactory));
-        DeployUtils.exportContract(outputName, "proxyAdmin",              address(proxyAdmin));
-        DeployUtils.exportContract(outputName, "ratesFactory",            address(ratesFactory));
-        DeployUtils.exportContract(outputName, "configEngine",            address(configEngine));
+        DeployUtils.exportContract(outputName, "proxyAdmin", address(proxyAdmin));
+        DeployUtils.exportContract(outputName, "ratesFactory", address(ratesFactory));
+        DeployUtils.exportContract(outputName, "configEngine", address(configEngine));
     }
-
 }

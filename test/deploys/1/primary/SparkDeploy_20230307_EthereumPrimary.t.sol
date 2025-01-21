@@ -5,11 +5,10 @@ import "../../../SparkDeployBase.t.sol";
 
 contract SparkDeploy_20230307_EthereumPrimaryTest is SparkDeployBaseTest {
     constructor() {
-        rpcUrl     = getChain("mainnet").rpcUrl;
-        forkBlock  = 16776533;
+        rpcUrl = getChain("mainnet").rpcUrl;
+        forkBlock = 16776533;
         instanceId = "primary";
 
         initialReserveCount = 6;
     }
-
 }

@@ -8,7 +8,6 @@ import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 import {WHYPE} from "src/tokens/WHYPE.sol";
 
 contract DeployPoolImplementation is Script {
-
     using stdJson for string;
     using DeployUtils for string;
 
@@ -22,7 +21,7 @@ contract DeployPoolImplementation is Script {
         instanceId = vm.envOr("INSTANCE_ID", string("primary"));
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
 
-        vm.startBroadcast(vm.envUint('PRIVATE_KEY'));
+        vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
         whype = new WHYPE();
 
