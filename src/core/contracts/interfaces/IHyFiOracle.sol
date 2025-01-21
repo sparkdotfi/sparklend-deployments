@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0
 pragma solidity ^0.8.0;
 
-import { IAaveOracle } from "@aave/core-v3/contracts/interfaces/IAaveOracle.sol";
+import {IAaveOracle} from "@aave/core-v3/contracts/interfaces/IAaveOracle.sol";
 
 /**
  * @title IHyFiOracle
@@ -9,7 +9,4 @@ import { IAaveOracle } from "@aave/core-v3/contracts/interfaces/IAaveOracle.sol"
  * @notice Defines the basic interface for the HypurrFi Oracle
  * @dev Inherits from Aave's oracle interface
  */
-interface IHyFiOracle is IAaveOracle {
-    // Inherits all functions from IAaveOracle
-    // Add any HypurrFi-specific functions here if needed
-}
+interface IHyFiOracle is IAaveOracle {}
