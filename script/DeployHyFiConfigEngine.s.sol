@@ -87,7 +87,7 @@ library DeployRatesFactoryLib {
     }
 }
 
-contract DeployHypurrConfigEngine is Script {
+contract DeployHyFiConfigEngine is Script {
     using stdJson for string;
     using DeployUtils for string;
 

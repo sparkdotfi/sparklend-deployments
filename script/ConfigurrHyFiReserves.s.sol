@@ -8,7 +8,7 @@ import "forge-std/console.sol";
 import {HyperTestnetReservesConfigs} from "src/deployments/configs/HyperTestnetReservesConfigs.sol";
 import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 
-contract ConfigurrHypurrReserves is HyperTestnetReservesConfigs, Script {
+contract ConfigurrHyFiReserves is HyperTestnetReservesConfigs, Script {
     using stdJson for string;
 
     string instanceId = "hypurrfi-testnet";

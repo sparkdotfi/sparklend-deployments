@@ -38,7 +38,7 @@ import {DefaultReserveInterestRateStrategy} from
     "aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol";
 import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAddressesProvider.sol";
 
-contract DeployHypurr is Script {
+contract DeployHyFi is Script {
     using stdJson for string;
     using DeployUtils for string;
 
