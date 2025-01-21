@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0
+// SPDX-License-Identifier: BUSL-1.1
 pragma solidity 0.8.10;
 
 import {AToken} from "@aave/core-v3/contracts/protocol/tokenization/AToken.sol";

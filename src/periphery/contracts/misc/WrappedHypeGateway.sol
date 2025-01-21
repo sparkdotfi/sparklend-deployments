@@ -15,7 +15,7 @@ import {IWrappedHypeGateway} from "src/periphery/contracts/misc/interfaces/IWrap
 import {DataTypesHelper} from "@aave/periphery-v3/contracts/libraries/DataTypesHelper.sol";
 
 /**
- * @dev This contract is an upgrade of the WrappedTokenGatewayV3 contract, with immutable pool address.
+ * @dev This contract is an upgrade of the WrappedTokenGatewayV3 contract, with an immutable pool address.
  * This contract keeps the same interface of the deprecated WrappedTokenGatewayV3 contract.
  */
 contract WrappedHypeGateway is IWrappedTokenGatewayV3, IWrappedHypeGateway, Ownable {
