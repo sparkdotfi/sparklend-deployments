@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import {IStakedTokenV3} from './IStakedTokenV3.sol';
-import {IGhoVariableDebtTokenTransferHook} from './IGhoVariableDebtTokenTransferHook.sol';
+import {IUsdxlVariableDebtTokenTransferHook} from './IUsdxlVariableDebtTokenTransferHook.sol';
 
 interface IStakedAaveV3 is IStakedTokenV3 {
   struct ExchangeRateSnapshot {
@@ -10,7 +10,7 @@ interface IStakedAaveV3 is IStakedTokenV3 {
     uint216 value;
   }
 
-  event GHODebtTokenChanged(address indexed newDebtToken);
+  event USDXLDebtTokenChanged(address indexed newDebtToken);
 
   /**
    * @dev Returnes the number of excahngeRate snapshots
@@ -27,10 +27,10 @@ interface IStakedAaveV3 is IStakedTokenV3 {
     returns (ExchangeRateSnapshot memory);
 
   /**
-   * @dev Sets the GHO debt token (only callable by SHORT_EXECUTOR)
-   * @param newGHODebtToken Address to GHO debt token
+   * @dev Sets the USDXL debt token (only callable by SHORT_EXECUTOR)
+   * @param newUSDXLDebtToken Address to USDXL debt token
    */
-  function setGHODebtToken(IGhoVariableDebtTokenTransferHook newGHODebtToken)
+  function setUSDXLDebtToken(IUsdxlVariableDebtTokenTransferHook newUSDXLDebtToken)
     external;
 
   /**

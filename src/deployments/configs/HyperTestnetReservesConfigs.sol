@@ -132,7 +132,7 @@ contract HyperTestnetReservesConfigs {
 
             inputs[i] = ConfiguratorInputTypes.InitReserveInput({
                 aTokenImpl: deployRegistry.aTokenImpl, // Address of the aToken implementation
-                stableDebtTokenImpl: address(0), // Disabled - not using stable debt in this implementation
+                stableDebtTokenImpl: deployRegistry.disabledStableDebtTokenImpl, // Disabled - not using stable debt in this implementation
                 variableDebtTokenImpl: deployRegistry.variableDebtTokenImpl, // Address of the variable debt token implementation
                 underlyingAssetDecimals: token.decimals(),
                 interestRateStrategyAddress: deployRegistry.defaultInterestRateStrategy, // Address of the interest rate strategy

@@ -5,7 +5,7 @@ import {IERC20} from 'aave-v3-core/contracts/dependencies/openzeppelin/contracts
 import {DistributionTypes} from './lib/DistributionTypes.sol';
 import {GovernancePowerDelegationERC20} from './lib/GovernancePowerDelegationERC20.sol';
 import {StakedTokenV3} from './StakedTokenV3.sol';
-import {IGhoVariableDebtTokenTransferHook} from './interfaces/IGhoVariableDebtTokenTransferHook.sol';
+import {IUsdxlVariableDebtTokenTransferHook} from './interfaces/IUsdxlVariableDebtTokenTransferHook.sol';
 import {SafeCast} from 'solidity-utils/contracts/oz-common/SafeCast.sol';
 import {IStakedAaveV3} from './interfaces/IStakedAaveV3.sol';
 import {IERC20WithPermit} from 'aave-v3-core/contracts/interfaces/IERC20WithPermit.sol';
@@ -22,8 +22,8 @@ contract StakedAaveV3 is StakedTokenV3, IStakedAaveV3 {
   /// @notice Snapshots of the exchangeRate for a given block
   mapping(uint256 => ExchangeRateSnapshot) internal _exchangeRateSnapshots;
 
-  /// @notice GHO debt token to be used in the _beforeTokenTransfer hook
-  IGhoVariableDebtTokenTransferHook public ghoDebtToken;
+  /// @notice USDXL debt token to be used in the _beforeTokenTransfer hook
+  IUsdxlVariableDebtTokenTransferHook public usdxlDebtToken;
 
   function REVISION() public pure virtual override returns (uint256) {
     return 5;
@@ -73,12 +73,12 @@ contract StakedAaveV3 is StakedTokenV3, IStakedAaveV3 {
   }
 
   /// @inheritdoc IStakedAaveV3
-  function setGHODebtToken(IGhoVariableDebtTokenTransferHook newGHODebtToken)
+  function setUSDXLDebtToken(IUsdxlVariableDebtTokenTransferHook newUSDXLDebtToken)
     external
   {
     require(msg.sender == 0xEE56e2B3D491590B5b31738cC34d5232F378a8D5); // Short executor
-    ghoDebtToken = newGHODebtToken;
-    emit GHODebtTokenChanged(address(newGHODebtToken));
+    usdxlDebtToken = newUSDXLDebtToken;
+    emit USDXLDebtTokenChanged(address(newUSDXLDebtToken));
   }
 
   /// @inheritdoc IStakedAaveV3
@@ -148,10 +148,10 @@ contract StakedAaveV3 is StakedTokenV3, IStakedAaveV3 {
     address to,
     uint256 amount
   ) internal override {
-    IGhoVariableDebtTokenTransferHook cachedGhoDebtToken = ghoDebtToken;
-    if (address(cachedGhoDebtToken) != address(0)) {
+    IUsdxlVariableDebtTokenTransferHook cachedUsdxlDebtToken = usdxlDebtToken;
+    if (address(cachedUsdxlDebtToken) != address(0)) {
       try
-        cachedGhoDebtToken.updateDiscountDistribution(
+        cachedUsdxlDebtToken.updateDiscountDistribution(
           from,
           to,
           balanceOf(from),
