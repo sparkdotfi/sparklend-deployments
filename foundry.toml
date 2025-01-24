@@ -7,7 +7,7 @@ remappings = [
     '@aave/periphery-v3/=lib/aave-v3-periphery/',
     'aave-helpers/=lib/aave-helpers/src/',
     '@uniswap/v3-core/=lib/v3-core/',
-    'solidity-utils/=lib/V2-V3-migration-helpers/lib/solidity-utils/src/'
+    'solidity-utils/=lib/aave-helpers/lib/solidity-utils/src/'
 ]
 fs_permissions = [
     { access = "read", path = "./out/"},
