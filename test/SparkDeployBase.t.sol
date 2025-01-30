@@ -96,7 +96,7 @@ abstract contract SparkDeployBaseTest is Test {
         aclManager = ACLManager(deployedContracts.readAddress(".aclManager"));
         aaveOracle = AaveOracle(deployedContracts.readAddress(".aaveOracle"));
 
-        aTokenImpl = AToken(deployedContracts.readAddress(".aTokenImpl"));
+        aTokenImpl = AToken(deployedContracts.readAddress(".hyTokenImpl"));
         variableDebtTokenImpl = VariableDebtToken(deployedContracts.readAddress(".variableDebtTokenImpl"));
         stableDebtTokenImpl = StableDebtToken(deployedContracts.readAddress(".stableDebtTokenImpl"));
 

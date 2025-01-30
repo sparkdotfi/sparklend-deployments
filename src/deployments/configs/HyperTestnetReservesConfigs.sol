@@ -35,7 +35,7 @@ contract HyperTestnetReservesConfigs {
 
     function _deployTestnetTokens(string memory config)
         internal
-        returns (address[] memory tokens, address[] memory oracles)
+        returns (address[] memory tokens)
     {
         console.log("Aave V3 Batch Deployment");
         console.log("sender", msg.sender);
@@ -48,14 +48,7 @@ contract HyperTestnetReservesConfigs {
         // tokens[3] = address(0xe2fbc9cb335a65201fcde55323ae0f4e8a96a616); // stHYPE
         tokens[3] = address(new MintableLimitERC20("Solv BTC", "SolvBTC", 18, 0.1e18));
 
-        oracles = new address[](1);
-
-        // oracles[0] = address(config.networkBaseTokenPriceInUsdProxyAggregator); //config.networkBaseTokenPriceInUsdProxyAggregator
-        // oracles[1] = address(new MockAggregator(1e8));
-        // oracles[2] = address(new MockAggregator(100_000e8));
-        oracles[0] = address(new MockAggregator(100_000e8));
-
-        return (tokens, oracles);
+        return tokens;
     }
 
     function _fetchStableTokens() internal returns (address[] memory tokens) {
@@ -68,14 +61,14 @@ contract HyperTestnetReservesConfigs {
         return tokens;
     }
 
-    function _fetchTestnetTokens() internal returns (address[] memory tokens) {
-        tokens = new address[](5);
+    function _fetchTestnetTokens(string memory config) internal returns (address[] memory tokens) {
+        tokens = new address[](4);
 
         tokens[0] = address(0x4B85aCF84b2593D67f6593D18504dBb3A337D3D8); // SolvBTC
-        tokens[1] = address(0xa42aa6a5a373dC4bD140eC20efeE5C669f9883f9); // WHYPE
-        tokens[2] = address(0xe2FbC9cB335A65201FcDE55323aE0F4E8A96A616); // stHYPE (stTESTH on testnet)
-        tokens[3] = address(0x6fDbAF3102eFC67ceE53EeFA4197BE36c8E1A094); // USDC
-        tokens[4] = address(0x2222C34A8dd4Ea29743bf8eC4fF165E059839782); // sUSDe
+        tokens[1] = address(config.readAddress(".nativeToken")); // WHYPE
+        // tokens[2] = address(0xe2FbC9cB335A65201FcDE55323aE0F4E8A96A616); // stHYPE (stTESTH on testnet)
+        tokens[2] = address(0x6fDbAF3102eFC67ceE53EeFA4197BE36c8E1A094); // USDC
+        tokens[3] = address(0x2222C34A8dd4Ea29743bf8eC4fF165E059839782); // sUSDe
 
         //0x9edA7E43821EedFb677A69066529F16DB3A2dD73 USDXL
 
@@ -83,13 +76,13 @@ contract HyperTestnetReservesConfigs {
     }
 
     function _fetchTestnetOracles() internal returns (address[] memory oracles) {
-        oracles = new address[](5);
+        oracles = new address[](4);
 
         oracles[0] = address(0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D); // SolvBTC
-        oracles[0] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // WHYPE
-        oracles[2] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // stHYPE (stTESTH on testnet); using redstone HYPE oracle on testnet
-        oracles[3] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // USDC
-        oracles[4] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // sUSDe
+        oracles[1] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // WHYPE
+        // oracles[2] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // stHYPE (stTESTH on testnet); using redstone HYPE oracle on testnet
+        oracles[2] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // USDC
+        oracles[3] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // sUSDe
 
         // USDXL uses a static oracle price of 1e8
 
@@ -131,7 +124,7 @@ contract HyperTestnetReservesConfigs {
             IERC20Metadata token = IERC20Metadata(tokens[i]);
 
             inputs[i] = ConfiguratorInputTypes.InitReserveInput({
-                aTokenImpl: deployRegistry.aTokenImpl, // Address of the aToken implementation
+                aTokenImpl: deployRegistry.hyTokenImpl, // Address of the aToken implementation
                 stableDebtTokenImpl: deployRegistry.disabledStableDebtTokenImpl, // Disabled - not using stable debt in this implementation
                 variableDebtTokenImpl: deployRegistry.variableDebtTokenImpl, // Address of the variable debt token implementation
                 underlyingAssetDecimals: token.decimals(),
@@ -272,7 +265,7 @@ contract HyperTestnetReservesConfigs {
 
     function _setDeployRegistry(string memory deployedContracts) internal {
         deployRegistry = IDeployConfigTypes.HypurrDeployRegistry({
-            aTokenImpl: deployedContracts.readAddress(".aTokenImpl"),
+            hyTokenImpl: deployedContracts.readAddress(".hyTokenImpl"),
             hyFiOracle: deployedContracts.readAddress(".hyFiOracle"),
             aclManager: deployedContracts.readAddress(".aclManager"),
             admin: deployedContracts.readAddress(".admin"),

@@ -1,6 +1,6 @@
 {
-    "admin": "0xE0157B2E81506f7710e62b331eb113B232e89efA",
+    "admin": "0x9671B5cA3029DBE60244D8E9844464E830Aee45C",
     "marketId": "HypurrFi Testnet",
-    "nativeToken": "0xa42aa6a5a373dC4bD140eC20efeE5C669f9883f9",
+    "nativeToken": "0x702aB9B6556020F5c7AC814162Cb641d64291144",
     "nativeTokenOracle": "0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b"
 }

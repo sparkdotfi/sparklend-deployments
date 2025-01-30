@@ -40,7 +40,7 @@ contract ConfigurrHyFiReserves is HyperTestnetReservesConfigs, Script {
 
         vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
-        tokens = _fetchStableTokens();
+        tokens = _fetchTestnetTokens(config);
 
         oracles = _fetchTestnetOracles();
 

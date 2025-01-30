@@ -3,7 +3,7 @@ pragma solidity ^0.8.10;
 
 interface IDeployConfigTypes {
     struct HypurrDeployRegistry {
-        address aTokenImpl;
+        address hyTokenImpl;
         address hyFiOracle;
         address aclManager;
         address admin;
