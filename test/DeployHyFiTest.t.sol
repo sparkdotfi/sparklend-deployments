@@ -8,6 +8,9 @@ import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 import {DeployHyFiUtils} from "src/deployments/utils/DeployHyFiUtils.sol";
 import {MockAggregator} from "aave-v3-core/contracts/mocks/oracle/CLAggregators/MockAggregator.sol";
 import {WHYPE} from "src/tokens/WHYPE.sol";
+import {InitializableAdminUpgradeabilityProxy} from
+    "aave-v3-core/contracts/dependencies/openzeppelin/upgradeability/InitializableAdminUpgradeabilityProxy.sol";
+import {IHyFiIncentivesController} from "src/core/contracts/interfaces/IHyFiIncentivesController.sol";
 
 contract DeployHyFiTest is Test, DeployHyFiUtils {
     using stdJson for string;
@@ -50,7 +53,7 @@ contract DeployHyFiTest is Test, DeployHyFiUtils {
         vm.stopPrank();
     }
 
-    function test_spark_deploy_poolAddressesProviderRegistry() public {
+    function test_hyFi_deploy_poolAddressesProviderRegistry() public {
 
         console.log("Testing poolAddressesProviderRegistry");
         address[] memory providersList = registry.getAddressesProvidersList();
@@ -64,153 +67,154 @@ contract DeployHyFiTest is Test, DeployHyFiUtils {
         assertEq(registry.getAddressesProviderIdByAddress(address(poolAddressesProvider)), 1);
     }
 
-    // function test_spark_deploy_poolAddressesProvider() public {
-    //     assertEq(poolAddressesProvider.owner(), admin);
-    //     assertEq(poolAddressesProvider.getMarketId(), "Spark Protocol");
-    //     assertEq(poolAddressesProvider.getPool(), address(pool));
-    //     assertEq(poolAddressesProvider.getPoolConfigurator(), address(poolConfigurator));
-    //     assertEq(poolAddressesProvider.getPriceOracle(), address(aaveOracle));
-    //     assertEq(poolAddressesProvider.getACLManager(), address(aclManager));
-    //     assertEq(poolAddressesProvider.getACLAdmin(), admin);
-    //     assertEq(poolAddressesProvider.getPriceOracleSentinel(), address(0));
-    //     assertEq(poolAddressesProvider.getPoolDataProvider(), address(protocolDataProvider));
-    // }
+    function test_hyFi_deploy_poolAddressesProvider() public {
+        assertEq(poolAddressesProvider.owner(), admin);
+        assertEq(poolAddressesProvider.getMarketId(), "HypurrFi Localnet");
+        assertEq(poolAddressesProvider.getPool(), address(pool));
+        assertEq(poolAddressesProvider.getPoolConfigurator(), address(poolConfigurator));
+        assertEq(poolAddressesProvider.getPriceOracle(), address(hyFiOracle));
+        assertEq(poolAddressesProvider.getACLManager(), address(aclManager));
+        assertEq(poolAddressesProvider.getACLAdmin(), admin);
+        assertEq(poolAddressesProvider.getPriceOracleSentinel(), address(0));
+        assertEq(poolAddressesProvider.getPoolDataProvider(), address(protocolDataProvider));
+    }
 
-    // function test_spark_deploy_aclManager() public {
-    //     // NOTE: Also verify that no other address than the admin address has any role (verify with events)
-    //     assertEq(address(aclManager.ADDRESSES_PROVIDER()), address(poolAddressesProvider));
+    function test_hyFi_deploy_aclManager() public {
+        // NOTE: Also verify that no other address than the admin address has any role (verify with events)
+        assertEq(address(aclManager.ADDRESSES_PROVIDER()), address(poolAddressesProvider));
 
-    //     bytes32 defaultAdmin = aclManager.DEFAULT_ADMIN_ROLE();
-    //     bytes32 emergencyAdmin = aclManager.EMERGENCY_ADMIN_ROLE();
-    //     bytes32 poolAdmin = aclManager.POOL_ADMIN_ROLE();
+        bytes32 defaultAdmin = aclManager.DEFAULT_ADMIN_ROLE();
+        bytes32 emergencyAdmin = aclManager.EMERGENCY_ADMIN_ROLE();
+        bytes32 poolAdmin = aclManager.POOL_ADMIN_ROLE();
 
-    //     assertEq(aclManager.getRoleAdmin(poolAdmin), defaultAdmin);
-    //     assertEq(aclManager.getRoleAdmin(emergencyAdmin), defaultAdmin);
+        assertEq(aclManager.getRoleAdmin(poolAdmin), defaultAdmin);
+        assertEq(aclManager.getRoleAdmin(emergencyAdmin), defaultAdmin);
 
-    //     assertTrue(aclManager.hasRole(defaultAdmin, admin));
-    //     assertTrue(!aclManager.hasRole(defaultAdmin, deployer));
+        assertTrue(aclManager.hasRole(defaultAdmin, admin));
+        assertTrue(!aclManager.hasRole(defaultAdmin, deployer));
 
-    //     assertTrue(aclManager.hasRole(poolAdmin, admin));
-    //     assertTrue(!aclManager.hasRole(poolAdmin, deployer));
+        assertTrue(aclManager.hasRole(poolAdmin, admin));
+        assertTrue(!aclManager.hasRole(poolAdmin, deployer));
 
-    //     assertTrue(aclManager.hasRole(emergencyAdmin, admin));
+        assertTrue(aclManager.hasRole(emergencyAdmin, admin));
 
-    //     assertEq(aclManager.getRoleAdmin(aclManager.RISK_ADMIN_ROLE()), defaultAdmin);
-    //     assertEq(aclManager.getRoleAdmin(aclManager.FLASH_BORROWER_ROLE()), defaultAdmin);
-    //     assertEq(aclManager.getRoleAdmin(aclManager.BRIDGE_ROLE()), defaultAdmin);
-    //     assertEq(aclManager.getRoleAdmin(aclManager.ASSET_LISTING_ADMIN_ROLE()), defaultAdmin);
-    // }
+        assertEq(aclManager.getRoleAdmin(aclManager.RISK_ADMIN_ROLE()), defaultAdmin);
+        assertEq(aclManager.getRoleAdmin(aclManager.FLASH_BORROWER_ROLE()), defaultAdmin);
+        assertEq(aclManager.getRoleAdmin(aclManager.BRIDGE_ROLE()), defaultAdmin);
+        assertEq(aclManager.getRoleAdmin(aclManager.ASSET_LISTING_ADMIN_ROLE()), defaultAdmin);
+    }
 
-    // function test_spark_deploy_protocolDataProvider() public {
-    //     assertEq(address(protocolDataProvider.ADDRESSES_PROVIDER()), address(poolAddressesProvider));
-    // }
+    function test_hyFi_deploy_protocolDataProvider() public {
+        assertEq(address(protocolDataProvider.ADDRESSES_PROVIDER()), address(poolAddressesProvider));
+    }
 
-    // function test_spark_deploy_poolConfigurator() public {
-    //     assertEq(poolConfigurator.CONFIGURATOR_REVISION(), 1);
-    //     assertImplementation(address(poolAddressesProvider), address(poolConfigurator), address(poolConfiguratorImpl));
-    // }
+    function test_hyFi_deploy_poolConfigurator() public {
+        assertEq(poolConfigurator.CONFIGURATOR_REVISION(), 1);
+        assertImplementation(address(poolAddressesProvider), address(poolConfigurator), address(poolConfiguratorImpl));
+    }
 
-    // function test_spark_deploy_pool() public {
-    //     assertEq(address(pool.ADDRESSES_PROVIDER()), address(poolAddressesProvider));
+    function test_hyFi_deploy_pool() public {
+        assertEq(address(pool.ADDRESSES_PROVIDER()), address(poolAddressesProvider));
 
-    //     assertEq(pool.POOL_REVISION(), 1);
-    //     assertEq(pool.MAX_STABLE_RATE_BORROW_SIZE_PERCENT(), 0.25e4);
-    //     assertEq(pool.BRIDGE_PROTOCOL_FEE(), 0);
-    //     assertEq(pool.FLASHLOAN_PREMIUM_TOTAL(), 0);
-    //     assertEq(pool.FLASHLOAN_PREMIUM_TO_PROTOCOL(), 0);
-    //     assertEq(pool.MAX_NUMBER_RESERVES(), 128);
+        assertEq(pool.POOL_REVISION(), 1);
+        assertEq(pool.MAX_STABLE_RATE_BORROW_SIZE_PERCENT(), 0.25e4);
+        assertEq(pool.BRIDGE_PROTOCOL_FEE(), 0);
+        assertEq(pool.FLASHLOAN_PREMIUM_TOTAL(), 0);
+        assertEq(pool.FLASHLOAN_PREMIUM_TO_PROTOCOL(), 0);
+        assertEq(pool.MAX_NUMBER_RESERVES(), 128);
 
-    //     assertImplementation(address(poolAddressesProvider), address(pool), address(poolImpl));
+        assertImplementation(address(poolAddressesProvider), address(pool), address(poolImpl));
 
-    //     address[] memory reserves = pool.getReservesList();
-    //     assertEq(reserves.length, initialReserveCount);
-    // }
+        address[] memory reserves = pool.getReservesList();
+        assertEq(reserves.length, initialReserveCount);
+    }
 
-    // function test_spark_deploy_tokenImpls() public {
-    //     assertEq(address(aTokenImpl.POOL()), address(pool));
-    //     assertEq(address(variableDebtTokenImpl.POOL()), address(pool));
-    //     assertEq(address(stableDebtTokenImpl.POOL()), address(pool));
-    // }
+    function test_hyFi_deploy_tokenImpls() public {
+        assertEq(address(hyTokenImpl.POOL()), address(pool));
+        assertEq(address(variableDebtTokenImpl.POOL()), address(pool));
+        assertEq(address(disabledStableDebtTokenImpl.POOL()), address(pool));
+    }
 
-    // function test_spark_deploy_treasury() public {
-    //     assertEq(address(treasuryController.owner()), admin);
-    //     assertEq(treasury.REVISION(), 1);
-    //     assertEq(treasury.getFundsAdmin(), address(treasuryController));
+    function test_hyFi_deploy_treasury() public {
+        assertEq(address(treasuryController.owner()), admin);
+        assertEq(treasury.REVISION(), 1);
+        assertEq(treasury.getFundsAdmin(), address(treasuryController));
 
-    //     assertImplementation(admin, address(treasury), address(treasuryImpl));
-    // }
+        assertImplementation(admin, address(treasury), address(treasuryImpl));
+    }
 
-    // function test_spark_deploy_incentives() public {
-    //     assertEq(address(emissionManager.owner()), admin);
-    //     assertEq(address(emissionManager.getRewardsController()), address(incentives));
+    function test_hyFi_deploy_incentives() public {
+        assertEq(address(emissionManager.owner()), admin);
+        assertEq(address(emissionManager.getRewardsController()), address(incentives));
 
-    //     assertEq(incentives.REVISION(), 1);
-    //     assertEq(incentives.EMISSION_MANAGER(), address(emissionManager));
+        assertEq(incentives.REVISION(), 1);
+        assertEq(incentives.EMISSION_MANAGER(), address(emissionManager));
 
-    //     assertImplementation(admin, address(incentives), address(incentivesImpl));
-    // }
+        assertImplementation(admin, address(incentives), address(incentivesImpl));
+    }
 
-    // function test_spark_deploy_misc_contracts() public {
-    //     address nativeToken = config.readAddress(".nativeToken");
-    //     address nativeTokenOracle = config.readAddress(".nativeTokenOracle");
+    function test_hyFi_deploy_misc_contracts() public {
+        address nativeToken = config.readAddress(".nativeToken");
+        address nativeTokenOracle = config.readAddress(".nativeTokenOracle");
 
-    //     assertEq(address(uiPoolDataProvider.networkBaseTokenPriceInUsdProxyAggregator()), nativeTokenOracle);
-    //     assertEq(address(uiPoolDataProvider.marketReferenceCurrencyPriceInUsdProxyAggregator()), nativeTokenOracle);
+        assertEq(address(uiPoolDataProvider.networkBaseTokenPriceInUsdProxyAggregator()), nativeTokenOracle);
+        assertEq(address(uiPoolDataProvider.marketReferenceCurrencyPriceInUsdProxyAggregator()), nativeTokenOracle);
 
-    //     assertEq(wrappedTokenGateway.owner(), admin);
-    //     assertEq(wrappedTokenGateway.getWETHAddress(), nativeToken);
-    // }
+        assertEq(wrappedTokenGateway.owner(), admin);
+        assertEq(wrappedTokenGateway.getWETHAddress(), nativeToken);
+    }
 
-    // function test_spark_deploy_oracles() public {
-    //     assertEq(address(aaveOracle.ADDRESSES_PROVIDER()), address(poolAddressesProvider));
-    //     assertEq(aaveOracle.BASE_CURRENCY(), address(0));
-    //     assertEq(aaveOracle.BASE_CURRENCY_UNIT(), 10 ** 8);
-    //     assertEq(aaveOracle.getFallbackOracle(), address(0));
-    // }
+    function test_hyFi_deploy_oracles() public {
+        assertEq(address(aaveOracle.ADDRESSES_PROVIDER()), address(poolAddressesProvider));
+        assertEq(aaveOracle.BASE_CURRENCY(), address(0));
+        assertEq(aaveOracle.BASE_CURRENCY_UNIT(), 10 ** 8);
+        assertEq(aaveOracle.getFallbackOracle(), address(0));
+    }
 
-    // function test_implementation_contracts_initialized() public {
-    //     vm.expectRevert("Contract instance has already been initialized");
-    //     poolConfiguratorImpl.initialize(poolAddressesProvider);
+    function test_implementation_contracts_initialized() public {
+        vm.expectRevert("Contract instance has already been initialized");
+        poolConfiguratorImpl.initialize(poolAddressesProvider);
 
-    //     vm.expectRevert("Contract instance has already been initialized");
-    //     poolImpl.initialize(poolAddressesProvider);
+        vm.expectRevert("Contract instance has already been initialized");
+        poolImpl.initialize(poolAddressesProvider);
 
-    //     vm.expectRevert("Contract instance has already been initialized");
-    //     treasuryImpl.initialize(address(0));
+        vm.expectRevert("Contract instance has already been initialized");
+        treasuryImpl.initialize(address(0));
 
-    //     vm.expectRevert("Contract instance has already been initialized");
-    //     incentivesImpl.initialize(address(0));
+        vm.expectRevert("Contract instance has already been initialized");
+        incentives.initialize(address(0));
 
-    //     vm.expectRevert("Contract instance has already been initialized");
-    //     aTokenImpl.initialize(
-    //         pool, address(0), address(0), IAaveIncentivesController(address(0)), 0, "SPTOKEN_IMPL", "SPTOKEN_IMPL", ""
-    //     );
+        vm.expectRevert("Contract instance has already been initialized");
+        hyTokenImpl.initialize(
+            pool, address(0), address(0), IHyFiIncentivesController(address(0)), 0, "SPTOKEN_IMPL", "SPTOKEN_IMPL", ""
+        );
 
-    //     vm.expectRevert("Contract instance has already been initialized");
-    //     stableDebtTokenImpl.initialize(
-    //         pool,
-    //         address(0),
-    //         IAaveIncentivesController(address(0)),
-    //         0,
-    //         "STABLE_DEBT_TOKEN_IMPL",
-    //         "STABLE_DEBT_TOKEN_IMPL",
-    //         ""
-    //     );
+        vm.expectRevert("Contract instance has already been initialized");
+        disabledStableDebtTokenImpl.initialize(
+            pool,
+            address(0),
+            IHyFiIncentivesController(address(0)),
+            0,
+            "STABLE_DEBT_TOKEN_IMPL",
+            "STABLE_DEBT_TOKEN_IMPL",
+            ""
+        );
 
-    //     vm.expectRevert("Contract instance has already been initialized");
-    //     variableDebtTokenImpl.initialize(
-    //         pool,
-    //         address(0),
-    //         IAaveIncentivesController(address(0)),
-    //         0,
-    //         "VARIABLE_DEBT_TOKEN_IMPL",
-    //         "VARIABLE_DEBT_TOKEN_IMPL",
-    //         ""
-    //     );
-    // }
+        vm.expectRevert("Contract instance has already been initialized");
+        variableDebtTokenImpl.initialize(
+            pool,
+            address(0),
+            IHyFiIncentivesController(address(0)),
+            0,
+            "VARIABLE_DEBT_TOKEN_IMPL",
+            "VARIABLE_DEBT_TOKEN_IMPL",
+            ""
 
-    // function assertImplementation(address _admin, address proxy, address implementation) internal {
-    //     vm.prank(_admin);
-    //     assertEq(InitializableAdminUpgradeabilityProxy(payable(proxy)).implementation(), implementation);
-    // }
+        );
+    }
+
+    function assertImplementation(address _admin, address proxy, address implementation) internal {
+        vm.prank(_admin);
+        assertEq(InitializableAdminUpgradeabilityProxy(payable(proxy)).implementation(), implementation);
+    }
 }

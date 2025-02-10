@@ -67,7 +67,7 @@ abstract contract DeployHyFiUtils {
     Collector treasury;
     address treasuryImpl;
     CollectorController treasuryController;
-    RewardsController incentives;
+    RewardsController incentivesImpl;
     EmissionManager emissionManager;
     Collector collectorImpl;
 
@@ -170,15 +170,17 @@ abstract contract DeployHyFiUtils {
         // 12. Deploy initialize and configure rewards contracts.
 
         incentivesProxy = new InitializableAdminUpgradeabilityProxy();
-        incentives = RewardsController(address(incentivesProxy));
+        incentivesImpl = RewardsController(address(incentivesProxy));
         emissionManager = new EmissionManager(deployer);
         rewardsController = new RewardsController(address(emissionManager));
+
 
         rewardsController.initialize(address(0));
         incentivesProxy.initialize(
             address(rewardsController), admin, abi.encodeWithSignature("initialize(address)", address(emissionManager))
         );
-        emissionManager.setRewardsController(address(incentives));
+        emissionManager.setRewardsController(address(incentivesImpl));
+
 
         // 13. Update flash loan premium to zero.
 
