@@ -62,28 +62,28 @@ contract HyperTestnetReservesConfigs {
     }
 
     function _fetchTestnetTokens(string memory config) internal returns (address[] memory tokens) {
-        tokens = new address[](4);
+        tokens = new address[](1);
 
-        tokens[0] = address(0x4B85aCF84b2593D67f6593D18504dBb3A337D3D8); // SolvBTC
-        tokens[1] = address(config.readAddress(".nativeToken")); // WHYPE
+        // tokens[0] = address(0x4B85aCF84b2593D67f6593D18504dBb3A337D3D8); // SolvBTC
+        // tokens[1] = address(config.readAddress(".nativeToken")); // WHYPE
         // tokens[2] = address(0xe2FbC9cB335A65201FcDE55323aE0F4E8A96A616); // stHYPE (stTESTH on testnet)
-        tokens[2] = address(0x6fDbAF3102eFC67ceE53EeFA4197BE36c8E1A094); // USDC
-        tokens[3] = address(0x2222C34A8dd4Ea29743bf8eC4fF165E059839782); // sUSDe
-
+        // tokens[2] = address(0x6fDbAF3102eFC67ceE53EeFA4197BE36c8E1A094); // USDC
+        // tokens[3] = address(0x2222C34A8dd4Ea29743bf8eC4fF165E059839782); // sUSDe
+        tokens[0] = address(0x2cA0F62dCeAe63ef25A59F4Abfec83264Df204c1); // KHYPE
         //0x9edA7E43821EedFb677A69066529F16DB3A2dD73 USDXL
 
         return tokens;
     }
 
     function _fetchTestnetOracles() internal returns (address[] memory oracles) {
-        oracles = new address[](4);
+        oracles = new address[](1);
 
-        oracles[0] = address(0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D); // SolvBTC
-        oracles[1] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // WHYPE
-        // oracles[2] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // stHYPE (stTESTH on testnet); using redstone HYPE oracle on testnet
-        oracles[2] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // USDC
-        oracles[3] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // sUSDe
-
+        // oracles[0] = address(0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D); // SolvBTC
+        // oracles[1] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // WHYPE
+        // // oracles[2] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // stHYPE (stTESTH on testnet); using redstone HYPE oracle on testnet
+        // oracles[2] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // USDC
+        // oracles[3] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // sUSDe
+        oracles[0] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // KHYPE
         // USDXL uses a static oracle price of 1e8
 
         return oracles;

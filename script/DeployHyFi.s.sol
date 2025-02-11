@@ -32,7 +32,7 @@ contract DeployHyFi is Script, DeployHyFiUtils {
         DeployUtils.exportContract(instanceId, "admin", address(admin));
         DeployUtils.exportContract(instanceId, "deployer", address(deployer));
         DeployUtils.exportContract(instanceId, "emissionManager", address(emissionManager));
-        DeployUtils.exportContract(instanceId, "incentives", address(incentives));
+        DeployUtils.exportContract(instanceId, "incentives", address(incentivesProxy));
         DeployUtils.exportContract(instanceId, "incentivesImpl", address(rewardsController));
         DeployUtils.exportContract(instanceId, "pool", address(pool));
 
