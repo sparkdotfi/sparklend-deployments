@@ -11,7 +11,6 @@ contract DeployHyFi is Script, DeployHyFiUtils {
     using DeployUtils for string;
 
     function run() external {
-        //vm.createSelectFork(vm.envString("ETH_RPC_URL"));     // Multi-chain not supported in Foundry yet (use CLI arg for now)
         instanceId = vm.envOr("INSTANCE_ID", string("primary"));
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
 

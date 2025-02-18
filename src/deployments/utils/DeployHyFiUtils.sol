@@ -38,6 +38,7 @@ import {IEACAggregatorProxy} from "aave-v3-periphery/misc/interfaces/IEACAggrega
 import {DefaultReserveInterestRateStrategy} from
     "aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol";
 import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAddressesProvider.sol";
+import {console} from "forge-std/console.sol";
 
 abstract contract DeployHyFiUtils {
 
@@ -174,7 +175,6 @@ abstract contract DeployHyFiUtils {
         emissionManager = new EmissionManager(deployer);
         rewardsController = new RewardsController(address(emissionManager));
 
-
         rewardsController.initialize(address(0));
         incentivesProxy.initialize(
             address(rewardsController), admin, abi.encodeWithSignature("initialize(address)", address(emissionManager))
@@ -249,5 +249,11 @@ abstract contract DeployHyFiUtils {
         collectorProxy.initialize(
             address(collectorImpl), _admin, abi.encodeWithSignature("initialize(address)", address(treasuryController))
         );
+    }
+
+    function createUiPoolDataProvider() internal {
+        proxy = IEACAggregatorProxy(config.readAddress(".nativeTokenOracle"));
+        console.log("proxy: ", address(proxy));
+        uiPoolDataProvider = new UiPoolDataProviderV3(proxy, proxy);
     }
 }

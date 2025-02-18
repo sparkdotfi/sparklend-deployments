@@ -37,101 +37,27 @@ contract HyperTestnetReservesConfigs {
 
     Vm internal constant vm2 = Vm(address(bytes20(uint160(uint256(keccak256("hevm cheat code"))))));
 
-    function _deployTestnetTokens(string memory config)
+    function _fetchMainnetTokens(string memory config)
         internal
         returns (address[] memory tokens)
     {
-        console.log("Aave V3 Batch Deployment");
         console.log("sender", msg.sender);
 
-        tokens = new address[](4);
+        tokens = new address[](2);
 
-        tokens[0] = address(config.readAddress(".nativeToken")); // config.wrappedNativeToken
-        tokens[1] = address(new MintableLimitERC20("USD Coin", "USDC", 6, 1000e6));
-        tokens[2] = address(new MintableLimitERC20("Staked USDe", "sUSDe", 18, 1000e18));
-        // tokens[3] = address(0xe2fbc9cb335a65201fcde55323ae0f4e8a96a616); // stHYPE
-        tokens[3] = address(new MintableLimitERC20("Solv BTC", "SolvBTC", 18, 0.1e18));
+        tokens[0] = address(config.readAddress(".nativeToken")); // WHYPE
+        tokens[1] = address(0x0000000000000000000000000000000000000000); // USDC
 
         return tokens;
     }
 
-    function _fetchStableTokens() internal returns (address[] memory tokens) {
-        tokens = new address[](1);
+    function _fetchMainnetOracles(string memory config) internal returns (address[] memory oracles) {
+        oracles = new address[](2);
 
-        tokens[0] = address(0x8bf86549d308e50Db889cF843AEBd6b7B0d7BB9a); // WHYPE
-        // tokens[0] = address(0x6fDbAF3102eFC67ceE53EeFA4197BE36c8E1A094); // USDC
-        // tokens[1] = address(0x2222C34A8dd4Ea29743bf8eC4fF165E059839782); // sUSDe
-
-        return tokens;
-    }
-
-    function _fetchTestnetTokens(string memory config) internal returns (address[] memory tokens) {
-        tokens = new address[](3);
-
-        tokens[0] = address(0x4B85aCF84b2593D67f6593D18504dBb3A337D3D8); // SolvBTC
-        // tokens[1] = address(config.readAddress(".nativeToken")); // WHYPE
-        // tokens[2] = address(0xe2FbC9cB335A65201FcDE55323aE0F4E8A96A616); // stHYPE (stTESTH on testnet)
-        tokens[1] = address(0x6fDbAF3102eFC67ceE53EeFA4197BE36c8E1A094); // USDC
-        tokens[2] = address(0x2222C34A8dd4Ea29743bf8eC4fF165E059839782); // sUSDe
-        // tokens[0] = address(0x2cA0F62dCeAe63ef25A59F4Abfec83264Df204c1); // KHYPE
-        //0x9edA7E43821EedFb677A69066529F16DB3A2dD73 USDXL
-
-        return tokens;
-    }
-
-    function _fetchTestnetOracles() internal returns (address[] memory oracles) {
-        oracles = new address[](3);
-
-        MockAggregator usdOracle = new MockAggregator(1e8);
-        MockAggregator btcOracle = new MockAggregator(100_000e8);
-
-        // oracles[0] = address(0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D); // SolvBTC
-        // oracles[1] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // WHYPE
-        // // oracles[2] = address(0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b); // stHYPE (stTESTH on testnet); using redstone HYPE oracle on testnet
-        // oracles[2] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // USDC
-        // oracles[3] = address(0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911); // sUSDe
-        oracles[0] = address(btcOracle); // SolvBTC
-        oracles[1] = address(usdOracle); // USDC
-        oracles[2] = address(usdOracle); // sUSDe
-        // USDXL uses a static oracle price of 1e8
+        oracles[0] = address(config.readAddress(".nativeTokenOracle")); // WHYPE
+        oracles[1] = address(0x0000000000000000000000000000000000000000); // USDC
 
         return oracles;
-    }
-
-    function _faucetTokens(address[] memory tokens, uint256[] memory amounts, address[] memory recipients, bool transferTokens) internal {
-        // First mint all tokens
-        for (uint256 j; j < tokens.length;) {
-            uint256 mintLimit = MintableLimitERC20(tokens[j]).mintLimit();
-            uint256 remainingAmount = amounts[j] * recipients.length; // Total amount needed for all recipients
-            
-            while (remainingAmount > 0) {
-                uint256 currentMintAmount = remainingAmount > mintLimit ? mintLimit : remainingAmount;
-                address[] memory tokenArray = new address[](1);
-                tokenArray[0] = tokens[j];
-                
-                new FaucetReceiver(tokenArray, currentMintAmount);
-                remainingAmount -= currentMintAmount;
-            }
-            
-            unchecked {
-                j++;
-            }
-        }
-
-        // Then transfer to all recipients
-        if (transferTokens) {
-            for (uint256 i; i < recipients.length;) {
-                for (uint256 j; j < tokens.length;) {
-                    MintableLimitERC20(tokens[j]).transfer(recipients[i], amounts[j]);
-                    unchecked {
-                        j++;
-                    }
-                }
-                unchecked {
-                    i++;
-                }
-            }
-        }
     }
 
     function _updateDebtToken(ConfiguratorInputTypes.UpdateDebtTokenInput memory input) internal {

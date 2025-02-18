@@ -30,19 +30,23 @@ contract Default is HyperTestnetReservesConfigs, Script {
     }
 
     _setDeployRegistry(deployedContracts);
-    address[] memory tokens = new address[](2);
+    // address[] memory tokens = new address[](1);
 
-    tokens[0] = 0x6fDbAF3102eFC67ceE53EeFA4197BE36c8E1A094; // USDC
-    tokens[1] = 0x2222C34A8dd4Ea29743bf8eC4fF165E059839782; // sUSDe
+    // tokens[0] = address(0x4B85aCF84b2593D67f6593D18504dBb3A337D3D8); // SolvBTC
+    // // tokens[1] = address(0x6fDbAF3102eFC67ceE53EeFA4197BE36c8E1A094); // USDC
+    // // tokens[2] = 0x2222C34A8dd4Ea29743bf8eC4fF165E059839782; // sUSDe
 
-    uint256[] memory amounts = new uint256[](3);
+    // uint256[] memory amounts = new uint256[](1);
 
-    amounts[0] = 10e6;
-    amounts[1] = 10e18;
+    // amounts[0] = 10e18;
+    // // amounts[1] = 10000e6;
+    // // amounts[2] = 10000e18;
 
-    address[] memory recipients = new address[](1);
+    // address[] memory recipients = new address[](3);
 
-    recipients[0] = 0xE0157B2E81506f7710e62b331eb113B232e89efA;
+    // recipients[0] = 0x2fCf555c4C508c2e358F373A4B6E25F8491928b0;
+    // recipients[1] = 0xabC4b3c691900d524cbF71d237a9A12FCcea3006;
+    // recipients[2] = 0x16D2AD8Cc04888b537bB7B631715335a901B57cA;
 
     console.log('Aave V3 Last Testnet Token Fauceting');
     console.log('sender', msg.sender);
@@ -52,14 +56,15 @@ contract Default is HyperTestnetReservesConfigs, Script {
     // _faucetTokens(
     //    tokens,
     //    amounts,
-    //    recipients 
+    //    recipients,
+    //    false // skip transfer to supply pool on behalf of recipient
     // );
 
-    _supplyPool(
-        tokens,
-        amounts,
-        vm.envAddress('SENDER')
-    );
+    // _supplyPool(
+    //     tokens,
+    //     amounts,
+    //     recipients
+    // );
 
     vm.stopBroadcast();
   }

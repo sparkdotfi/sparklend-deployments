@@ -5,13 +5,13 @@ import {Script} from "forge-std/Script.sol";
 import "forge-std/StdJson.sol";
 import "forge-std/console.sol";
 
-import {HyperTestnetReservesConfigs} from "src/deployments/configs/HyperTestnetReservesConfigs.sol";
+import {HyperTestnetReservesConfigs} from "src/deployments/configs/HyperMainnetReservesConfigs.sol";
 import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 
 contract ConfigurrHyFiReserves is HyperTestnetReservesConfigs, Script {
     using stdJson for string;
 
-    string instanceId = "hypurrfi-testnet";
+    string instanceId = "hypurrfi-mainnet";
     uint256 instanceIdBlock = 0;
     string rpcUrl;
     uint256 forkBlock;
@@ -35,29 +35,29 @@ contract ConfigurrHyFiReserves is HyperTestnetReservesConfigs, Script {
         address[] memory tokens;
         address[] memory oracles;
 
-        console.log("HypurrFi Testnet Reserve Config");
+        console.log("HypurrFi Mainnet Reserve Config");
         console.log("sender", msg.sender);
 
         vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
-        tokens = _fetchTestnetTokens(config);
+        tokens = _fetchMainnetTokens(config);
 
-        oracles = _fetchTestnetOracles();
+        oracles = _fetchMainnetOracles(config);
 
         // set oracles
         _getAaveOracle().setAssetSources(tokens, oracles);
 
-        // // set reserve config
-        // _initReserves(tokens);
+        // set reserve config
+        _initReserves(tokens);
 
-        // // disable stable debt
-        // _disableStableDebt(tokens);
+        // disable stable debt
+        _disableStableDebt(tokens);
 
-        // // enable collateral
-        // _enableCollateral(tokens);
+        // enable collateral
+        _enableCollateral(tokens);
 
-        // // enable borrowing
-        // _enableBorrowing(tokens);
+        // enable borrowing
+        _enableBorrowing(tokens);
 
         vm.stopBroadcast();
     }
