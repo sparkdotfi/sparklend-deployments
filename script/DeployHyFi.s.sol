@@ -21,9 +21,12 @@ contract DeployHyFi is Script, DeployHyFiUtils {
 
         vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
-        _deployHyFi();
+        createUiPoolDataProvider();
+        // _deployHyFi(true);
 
         vm.stopBroadcast();
+
+        return;
 
         DeployUtils.exportContract(instanceId, "hyTokenImpl", address(hyTokenImpl));
         DeployUtils.exportContract(instanceId, "hyFiOracle", address(hyFiOracle));

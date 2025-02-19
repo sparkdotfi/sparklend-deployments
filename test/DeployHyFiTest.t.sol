@@ -51,7 +51,7 @@ contract DeployHyFiTest is Test, DeployHyFiUtils {
         console.log("Deployer address:", deployer);
 
         vm.startPrank(deployer);
-        _deployHyFi();
+        _deployHyFi(false);
         vm.stopPrank();
     }
 

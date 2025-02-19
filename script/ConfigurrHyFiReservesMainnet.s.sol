@@ -11,7 +11,7 @@ import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 contract ConfigurrHyFiReserves is HyperTestnetReservesConfigs, Script {
     using stdJson for string;
 
-    string instanceId = "hypurrfi-mainnet";
+    string instanceId;
     uint256 instanceIdBlock = 0;
     string rpcUrl;
     uint256 forkBlock;
@@ -21,6 +21,7 @@ contract ConfigurrHyFiReserves is HyperTestnetReservesConfigs, Script {
     string deployedContracts;
 
     function run() external {
+        instanceId = vm.envOr("INSTANCE_ID", string("primary"));
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
 
         config = DeployUtils.readInput(instanceId);

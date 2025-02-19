@@ -27,6 +27,7 @@ import {IERC20Metadata} from "src/contracts/dependencies/openzeppelin/interfaces
 import {stdJson} from "forge-std/StdJson.sol";
 import {ScriptTools} from "dss-test/ScriptTools.sol";
 import {Vm} from "forge-std/Vm.sol";
+import {ReserveInitializer} from "src/periphery/contracts/misc/ReserveInitializer.sol";
 import "forge-std/console.sol";
 
 contract HyperTestnetReservesConfigs {
@@ -176,8 +177,21 @@ contract HyperTestnetReservesConfigs {
             }
         }
 
-        // set reserves configs
-        _getPoolConfigurator().initReserves(inputs);
+        uint256[] memory amounts = new uint256[](tokens.length);
+        for (uint256 i; i < tokens.length;) {
+            amounts[i] = 0.1e18;
+            unchecked {
+                i++;
+            }
+        }
+
+        ReserveInitializer initializer = new ReserveInitializer(deployRegistry.wrappedHypeGateway, deployRegistry.poolConfigurator, deployRegistry.pool);
+        
+        _addPoolAdmin(address(initializer));
+        
+        initializer.batchInitReserves(inputs, amounts);
+
+        _removePoolAdmin(address(initializer));
     }
 
     function _disableStableDebt(address[] memory tokens) internal {
@@ -265,6 +279,10 @@ contract HyperTestnetReservesConfigs {
 
     function _addPoolAdmin(address newAdmin) internal {
         IACLManager(_getMarketReport().aclManager).addPoolAdmin(newAdmin);
+    }
+
+    function _removePoolAdmin(address oldAdmin) internal {
+        IACLManager(_getMarketReport().aclManager).removePoolAdmin(oldAdmin);
     }
 
     function _setupEModeGroup(

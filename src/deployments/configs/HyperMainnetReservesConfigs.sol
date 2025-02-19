@@ -28,6 +28,7 @@ import {stdJson} from "forge-std/StdJson.sol";
 import {ScriptTools} from "dss-test/ScriptTools.sol";
 import {Vm} from "forge-std/Vm.sol";
 import "forge-std/console.sol";
+import {ReserveInitializer} from "src/periphery/contracts/misc/ReserveInitializer.sol";
 
 contract HyperTestnetReservesConfigs {
     using stdJson for string;
@@ -43,19 +44,19 @@ contract HyperTestnetReservesConfigs {
     {
         console.log("sender", msg.sender);
 
-        tokens = new address[](2);
+        tokens = new address[](1);
 
         tokens[0] = address(config.readAddress(".nativeToken")); // WHYPE
-        tokens[1] = address(0x0000000000000000000000000000000000000000); // USDC
+        // tokens[1] = address(0x0000000000000000000000000000000000000000); // USDC
 
         return tokens;
     }
 
     function _fetchMainnetOracles(string memory config) internal returns (address[] memory oracles) {
-        oracles = new address[](2);
+        oracles = new address[](1);
 
         oracles[0] = address(config.readAddress(".nativeTokenOracle")); // WHYPE
-        oracles[1] = address(0x0000000000000000000000000000000000000000); // USDC
+        // oracles[1] = address(0x0000000000000000000000000000000000000000); // USDC
 
         return oracles;
     }
@@ -102,8 +103,21 @@ contract HyperTestnetReservesConfigs {
             }
         }
 
-        // set reserves configs
-        _getPoolConfigurator().initReserves(inputs);
+        uint256[] memory amounts = new uint256[](tokens.length);
+        for (uint256 i; i < tokens.length;) {
+            amounts[i] = 0.1e18;
+            unchecked {
+                i++;
+            }
+        }
+
+        ReserveInitializer initializer = new ReserveInitializer(deployRegistry.wrappedHypeGateway, deployRegistry.poolConfigurator, deployRegistry.pool);
+        
+        _addPoolAdmin(address(initializer));
+        
+        initializer.batchInitReserves{value: amounts[0]}(inputs, amounts);
+
+        _removePoolAdmin(address(initializer));
     }
 
     function _disableStableDebt(address[] memory tokens) internal {
@@ -191,6 +205,10 @@ contract HyperTestnetReservesConfigs {
 
     function _addPoolAdmin(address newAdmin) internal {
         IACLManager(_getMarketReport().aclManager).addPoolAdmin(newAdmin);
+    }
+
+    function _removePoolAdmin(address oldAdmin) internal {
+        IACLManager(_getMarketReport().aclManager).removePoolAdmin(oldAdmin);
     }
 
     function _setupEModeGroup(

@@ -1,0 +1,3 @@
+eth_account
+load_dotenv
+hyperliquid-python-sdk

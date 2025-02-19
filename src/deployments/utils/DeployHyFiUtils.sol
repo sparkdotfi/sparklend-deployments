@@ -39,11 +39,15 @@ import {DefaultReserveInterestRateStrategy} from
     "aave-v3-core/contracts/protocol/pool/DefaultReserveInterestRateStrategy.sol";
 import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAddressesProvider.sol";
 import {console} from "forge-std/console.sol";
+import {VmSafe} from "forge-std/Vm.sol";
+import {Vm} from "forge-std/Vm.sol"; 
 
 abstract contract DeployHyFiUtils {
 
     using stdJson for string;
     using DeployUtils for string;
+
+    Vm constant vm2 = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
 
     string config;
     string instanceId;
@@ -85,23 +89,26 @@ abstract contract DeployHyFiUtils {
     
     uint256 constant RAY = 10 ** 27;
 
-    function _deployHyFi() internal {
+    function _deployHyFi(bool liveEnv) internal {
         // 1. Deploy and configure registry and addresses provider
-
+        switchBigBlocks(liveEnv, true);
         registry = new PoolAddressesProviderRegistry(deployer);
+        switchBigBlocks(liveEnv, true);
         poolAddressesProvider = new PoolAddressesProvider(config.readString(".marketId"), deployer);
+        switchBigBlocks(liveEnv, true);
         poolAddressesProvider.setACLAdmin(deployer);
 
         // 2. Deploy data provider and pool configurator, initialize pool configurator
-
+        switchBigBlocks(liveEnv, true);
         protocolDataProvider = new HyFiProtocolDataProvider(poolAddressesProvider);
         poolConfiguratorImpl = new PoolConfigurator();
-
+        switchBigBlocks(liveEnv, true);
         poolConfiguratorImpl.initialize(poolAddressesProvider);
 
         // 3. Deploy pool implementation and initialize
-
+        switchBigBlocks(liveEnv, true);
         poolImpl = new Pool(poolAddressesProvider);
+        switchBigBlocks(liveEnv, true);
         poolImpl.initialize(poolAddressesProvider);
 
         // 4. Deploy and configure ACL manager
@@ -128,7 +135,9 @@ abstract contract DeployHyFiUtils {
 
         // 8. Deploy and initialize hyToken instance
 
+        switchBigBlocks(liveEnv, true);
         hyTokenImpl = new HyToken(pool);
+        switchBigBlocks(liveEnv, true);
         hyTokenImpl.initialize(
             pool, address(0), address(0), IHyFiIncentivesController(address(0)), 0, "SPTOKEN_IMPL", "SPTOKEN_IMPL", ""
         );
@@ -170,17 +179,18 @@ abstract contract DeployHyFiUtils {
 
         // 12. Deploy initialize and configure rewards contracts.
 
-        incentivesProxy = new InitializableAdminUpgradeabilityProxy();
-        incentivesImpl = RewardsController(address(incentivesProxy));
-        emissionManager = new EmissionManager(deployer);
-        rewardsController = new RewardsController(address(emissionManager));
+        // incentivesProxy = new InitializableAdminUpgradeabilityProxy();
+        // switchBigBlocks(liveEnv, true);
+        // incentivesImpl = RewardsController(address(incentivesProxy));
+        // switchBigBlocks(liveEnv, true);
+        // emissionManager = new EmissionManager(deployer);
+        // rewardsController = new RewardsController(address(emissionManager));
 
-        rewardsController.initialize(address(0));
-        incentivesProxy.initialize(
-            address(rewardsController), admin, abi.encodeWithSignature("initialize(address)", address(emissionManager))
-        );
-        emissionManager.setRewardsController(address(incentivesImpl));
-
+        // rewardsController.initialize(address(0));
+        // incentivesProxy.initialize(
+        //     address(rewardsController), admin, abi.encodeWithSignature("initialize(address)", address(emissionManager))
+        // );
+        // emissionManager.setRewardsController(address(incentivesImpl));
 
         // 13. Update flash loan premium to zero.
 
@@ -188,9 +198,11 @@ abstract contract DeployHyFiUtils {
 
         // 14. Deploy data provider contracts.
 
-        proxy = IEACAggregatorProxy(config.readAddress(".nativeTokenOracle"));
-        uiPoolDataProvider = new UiPoolDataProviderV3(proxy, proxy);
+        // proxy = IEACAggregatorProxy(config.readAddress(".nativeTokenOracle"));
+        // uiPoolDataProvider = new UiPoolDataProviderV3(proxy, proxy);
+        switchBigBlocks(liveEnv, true);
         uiIncentiveDataProvider = new UiIncentiveDataProviderV3();
+        switchBigBlocks(liveEnv, true);
         wrappedHypeGateway = new WrappedHypeGateway(config.readAddress(".nativeToken"), admin, IPool(address(pool)));
         walletBalanceProvider = new WalletBalanceProvider();
 
@@ -224,7 +236,7 @@ abstract contract DeployHyFiUtils {
         poolAddressesProvider.transferOwnership(admin);
 
         registry.transferOwnership(admin);
-        emissionManager.transferOwnership(admin);
+        // emissionManager.transferOwnership(admin);
 
         // 17. Deploy interest rate strategy.
 
@@ -255,5 +267,15 @@ abstract contract DeployHyFiUtils {
         proxy = IEACAggregatorProxy(config.readAddress(".nativeTokenOracle"));
         console.log("proxy: ", address(proxy));
         uiPoolDataProvider = new UiPoolDataProviderV3(proxy, proxy);
+    }
+
+    function switchBigBlocks(bool liveEnv, bool usingBigBlocks) internal {
+        if (liveEnv) {
+            string[] memory command = new string[](3);
+            command[0] = "python3";
+            command[1] = "big_blocks.py";
+            command[2] = usingBigBlocks ? "true" : "false";
+            vm2.ffi(command);
+        }
     }
 }
