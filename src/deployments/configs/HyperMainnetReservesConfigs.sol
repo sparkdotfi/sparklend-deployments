@@ -16,6 +16,7 @@ import {IPool} from "aave-v3-core/contracts/interfaces/IPool.sol";
 import {ConfiguratorInputTypes} from "aave-v3-core/contracts/protocol/libraries/types/ConfiguratorInputTypes.sol";
 import {IDefaultInterestRateStrategy} from "aave-v3-core/contracts/interfaces/IDefaultInterestRateStrategy.sol";
 import {IACLManager} from "aave-v3-core/contracts/interfaces/IACLManager.sol";
+import {IERC20} from "solidity-utils/contracts/oz-common/interfaces/IERC20.sol";
 import {
     UiPoolDataProviderV3,
     IUiPoolDataProviderV3,
@@ -49,7 +50,7 @@ contract HyperTestnetReservesConfigs {
         // tokens[0] = address(config.readAddress(".nativeToken")); // WHYPE
         // tokens[1] = address(0x0000000000000000000000000000000000000000); // USDC
         tokens[0] = address(0x94e8396e0869c9F2200760aF0621aFd240E1CF38); // wstHYPE
-        
+
         return tokens;
     }
 
@@ -86,15 +87,15 @@ contract HyperTestnetReservesConfigs {
                 aTokenImpl: deployRegistry.hyTokenImpl, // Address of the aToken implementation
                 stableDebtTokenImpl: deployRegistry.disabledStableDebtTokenImpl, // Disabled - not using stable debt in this implementation
                 variableDebtTokenImpl: deployRegistry.variableDebtTokenImpl, // Address of the variable debt token implementation
-                underlyingAssetDecimals: uint8(18),
+                underlyingAssetDecimals: token.decimals(),
                 interestRateStrategyAddress: deployRegistry.defaultInterestRateStrategy, // Address of the interest rate strategy
                 underlyingAsset: address(token), // Address of the underlying asset
                 treasury: deployRegistry.treasury, // Address of the treasury
                 incentivesController: deployRegistry.incentives, // Address of the incentives controller
-                aTokenName: string(abi.encodePacked("wstHYPE", " Hypurr")),
-                aTokenSymbol: string(abi.encodePacked("hy", "wstHYPE")),
-                variableDebtTokenName: string(abi.encodePacked("wstHYPE", " Variable Debt Hypurr")),
-                variableDebtTokenSymbol: string(abi.encodePacked("variableDebt", "wstHYPE")),
+                aTokenName: string(abi.encodePacked(token.symbol(), " Hypurr")),
+                aTokenSymbol: string(abi.encodePacked("hy", token.symbol())),
+                variableDebtTokenName: string(abi.encodePacked(token.symbol(), " Variable Debt Hypurr")),
+                variableDebtTokenSymbol: string(abi.encodePacked("variableDebt", token.symbol())),
                 stableDebtTokenName: "", // Empty as stable debt is disabled
                 stableDebtTokenSymbol: "", // Empty as stable debt is disabled
                 params: bytes("") // Additional parameters for initialization
@@ -105,16 +106,17 @@ contract HyperTestnetReservesConfigs {
             }
         }
 
+        ReserveInitializer initializer = new ReserveInitializer(deployRegistry.wrappedHypeGateway, deployRegistry.poolConfigurator, deployRegistry.pool);
+
         uint256[] memory amounts = new uint256[](tokens.length);
         for (uint256 i; i < tokens.length;) {
             amounts[i] = 0.1e18;
+            IERC20(tokens[i]).transfer(address(initializer), amounts[i]);
             unchecked {
                 i++;
             }
         }
 
-        ReserveInitializer initializer = new ReserveInitializer(deployRegistry.wrappedHypeGateway, deployRegistry.poolConfigurator, deployRegistry.pool);
-        
         _addPoolAdmin(address(initializer));
         
         initializer.batchInitReserves(inputs, amounts);

@@ -51,7 +51,7 @@ abstract contract DeployHyFiUtils {
 
     string config;
     string instanceId;
-
+    string deployedContracts;
     address admin;
     address deployer;
 
@@ -95,35 +95,25 @@ abstract contract DeployHyFiUtils {
     }
 
     function _deployPoolAddressesProvider(bool liveEnv) internal {
-        switchBigBlocks(liveEnv, true);
         poolAddressesProvider = new PoolAddressesProvider(config.readString(".marketId"), deployer);
     }
 
     function _deployHyFi(bool liveEnv) internal {
         // 1. Deploy and configure registry and addresses provider
-        switchBigBlocks(liveEnv, false);
         registry = new PoolAddressesProviderRegistry(deployer);
-        switchBigBlocks(liveEnv, true);
         poolAddressesProvider = new PoolAddressesProvider(config.readString(".marketId"), deployer);
-        return;
-        switchBigBlocks(liveEnv, true);
         poolAddressesProvider.setACLAdmin(deployer);
 
         // 2. Deploy data provider and pool configurator, initialize pool configurator
-        switchBigBlocks(liveEnv, true);
         protocolDataProvider = new HyFiProtocolDataProvider(poolAddressesProvider);
         poolConfiguratorImpl = new PoolConfigurator();
-        switchBigBlocks(liveEnv, true);
         poolConfiguratorImpl.initialize(poolAddressesProvider);
 
         // 3. Deploy pool implementation and initialize
-        switchBigBlocks(liveEnv, true);
         poolImpl = new Pool(poolAddressesProvider);
-        switchBigBlocks(liveEnv, true);
         poolImpl.initialize(poolAddressesProvider);
 
         // 4. Deploy and configure ACL manager
-
         aclManager = new ACLManager(poolAddressesProvider);
         aclManager.addPoolAdmin(deployer);
 
@@ -146,9 +136,7 @@ abstract contract DeployHyFiUtils {
 
         // 8. Deploy and initialize hyToken instance
 
-        switchBigBlocks(liveEnv, true);
         hyTokenImpl = new HyToken(pool);
-        switchBigBlocks(liveEnv, true);
         hyTokenImpl.initialize(
             pool, address(0), address(0), IHyFiIncentivesController(address(0)), 0, "SPTOKEN_IMPL", "SPTOKEN_IMPL", ""
         );
@@ -211,9 +199,7 @@ abstract contract DeployHyFiUtils {
 
         // proxy = IEACAggregatorProxy(config.readAddress(".nativeTokenOracle"));
         // uiPoolDataProvider = new UiPoolDataProviderV3(proxy, proxy);
-        switchBigBlocks(liveEnv, true);
         uiIncentiveDataProvider = new UiIncentiveDataProviderV3();
-        switchBigBlocks(liveEnv, true);
         wrappedHypeGateway = new WrappedHypeGateway(config.readAddress(".nativeToken"), admin, IPool(address(pool)));
         walletBalanceProvider = new WalletBalanceProvider();
 
@@ -290,5 +276,37 @@ abstract contract DeployHyFiUtils {
             vm2.ffi(command);
             vm2.startBroadcast(vm2.envUint("PRIVATE_KEY"));
         }
+    }
+
+    function _setContractAddresses() internal {
+        aclManager = ACLManager(deployedContracts.readAddress(".aclManager"));
+        registry = PoolAddressesProviderRegistry(deployedContracts.readAddress(".poolAddressesProviderRegistry"));
+        poolAddressesProvider = PoolAddressesProvider(deployedContracts.readAddress(".poolAddressesProvider"));
+        treasury = Collector(deployedContracts.readAddress(".treasury"));
+        wrappedHypeGateway = WrappedHypeGateway(payable(deployedContracts.readAddress(".wrappedHypeGateway")));
+        treasuryController = CollectorController(deployedContracts.readAddress(".treasuryController"));
+    }
+
+    function _transferOwnership() internal {
+        aclManager.addEmergencyAdmin(admin);
+        aclManager.addPoolAdmin(admin);
+        if (admin != deployer) {
+            aclManager.removePoolAdmin(deployer);
+        }
+        aclManager.grantRole(aclManager.DEFAULT_ADMIN_ROLE(), admin);
+        if (admin != deployer) {
+            aclManager.revokeRole(aclManager.DEFAULT_ADMIN_ROLE(), deployer);
+        }
+
+        poolAddressesProvider.setACLAdmin(admin);
+        poolAddressesProvider.transferOwnership(admin);
+
+        registry.transferOwnership(admin);
+
+        wrappedHypeGateway.transferOwnership(admin);
+
+        InitializableAdminUpgradeabilityProxy(payable(address(treasury))).changeAdmin(admin);
+        
+        treasuryController.transferOwnership(admin);
     }
 }
