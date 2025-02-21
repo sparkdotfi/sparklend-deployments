@@ -46,17 +46,19 @@ contract HyperTestnetReservesConfigs {
 
         tokens = new address[](1);
 
-        tokens[0] = address(config.readAddress(".nativeToken")); // WHYPE
+        // tokens[0] = address(config.readAddress(".nativeToken")); // WHYPE
         // tokens[1] = address(0x0000000000000000000000000000000000000000); // USDC
-
+        tokens[0] = address(0x94e8396e0869c9F2200760aF0621aFd240E1CF38); // wstHYPE
+        
         return tokens;
     }
 
     function _fetchMainnetOracles(string memory config) internal returns (address[] memory oracles) {
         oracles = new address[](1);
 
-        oracles[0] = address(config.readAddress(".nativeTokenOracle")); // WHYPE
+        // oracles[0] = address(config.readAddress(".nativeTokenOracle")); // WHYPE
         // oracles[1] = address(0x0000000000000000000000000000000000000000); // USDC
+        oracles[0] = address(0x5777A35EED45CFD605daD5d3D7B531aC2F409cD1); // wstHYPE
 
         return oracles;
     }
@@ -84,15 +86,15 @@ contract HyperTestnetReservesConfigs {
                 aTokenImpl: deployRegistry.hyTokenImpl, // Address of the aToken implementation
                 stableDebtTokenImpl: deployRegistry.disabledStableDebtTokenImpl, // Disabled - not using stable debt in this implementation
                 variableDebtTokenImpl: deployRegistry.variableDebtTokenImpl, // Address of the variable debt token implementation
-                underlyingAssetDecimals: token.decimals(),
+                underlyingAssetDecimals: uint8(18),
                 interestRateStrategyAddress: deployRegistry.defaultInterestRateStrategy, // Address of the interest rate strategy
                 underlyingAsset: address(token), // Address of the underlying asset
                 treasury: deployRegistry.treasury, // Address of the treasury
                 incentivesController: deployRegistry.incentives, // Address of the incentives controller
-                aTokenName: string(abi.encodePacked(token.symbol(), " Hypurr")),
-                aTokenSymbol: string(abi.encodePacked("hy", token.symbol())),
-                variableDebtTokenName: string(abi.encodePacked(token.symbol(), " Variable Debt Hypurr")),
-                variableDebtTokenSymbol: string(abi.encodePacked("variableDebt", token.symbol())),
+                aTokenName: string(abi.encodePacked("wstHYPE", " Hypurr")),
+                aTokenSymbol: string(abi.encodePacked("hy", "wstHYPE")),
+                variableDebtTokenName: string(abi.encodePacked("wstHYPE", " Variable Debt Hypurr")),
+                variableDebtTokenSymbol: string(abi.encodePacked("variableDebt", "wstHYPE")),
                 stableDebtTokenName: "", // Empty as stable debt is disabled
                 stableDebtTokenSymbol: "", // Empty as stable debt is disabled
                 params: bytes("") // Additional parameters for initialization
@@ -115,7 +117,7 @@ contract HyperTestnetReservesConfigs {
         
         _addPoolAdmin(address(initializer));
         
-        initializer.batchInitReserves{value: amounts[0]}(inputs, amounts);
+        initializer.batchInitReserves(inputs, amounts);
 
         _removePoolAdmin(address(initializer));
     }

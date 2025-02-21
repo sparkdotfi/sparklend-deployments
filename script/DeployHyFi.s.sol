@@ -20,10 +20,10 @@ contract DeployHyFi is Script, DeployHyFiUtils {
         deployer = msg.sender;
 
         vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
-
-        createUiPoolDataProvider();
-        // _deployHyFi(true);
-
+        _deployRegistry(true);
+        vm.stopBroadcast();
+        vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
+        _deployPoolAddressesProvider(true);
         vm.stopBroadcast();
 
         return;

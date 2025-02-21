@@ -89,12 +89,23 @@ abstract contract DeployHyFiUtils {
     
     uint256 constant RAY = 10 ** 27;
 
+    function _deployRegistry(bool liveEnv) internal {
+        switchBigBlocks(liveEnv, false);
+        registry = new PoolAddressesProviderRegistry(deployer);
+    }
+
+    function _deployPoolAddressesProvider(bool liveEnv) internal {
+        switchBigBlocks(liveEnv, true);
+        poolAddressesProvider = new PoolAddressesProvider(config.readString(".marketId"), deployer);
+    }
+
     function _deployHyFi(bool liveEnv) internal {
         // 1. Deploy and configure registry and addresses provider
-        switchBigBlocks(liveEnv, true);
+        switchBigBlocks(liveEnv, false);
         registry = new PoolAddressesProviderRegistry(deployer);
         switchBigBlocks(liveEnv, true);
         poolAddressesProvider = new PoolAddressesProvider(config.readString(".marketId"), deployer);
+        return;
         switchBigBlocks(liveEnv, true);
         poolAddressesProvider.setACLAdmin(deployer);
 
@@ -271,11 +282,13 @@ abstract contract DeployHyFiUtils {
 
     function switchBigBlocks(bool liveEnv, bool usingBigBlocks) internal {
         if (liveEnv) {
+            vm2.stopBroadcast();
             string[] memory command = new string[](3);
             command[0] = "python3";
             command[1] = "big_blocks.py";
             command[2] = usingBigBlocks ? "true" : "false";
             vm2.ffi(command);
+            vm2.startBroadcast(vm2.envUint("PRIVATE_KEY"));
         }
     }
 }
