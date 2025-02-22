@@ -40,7 +40,8 @@ import {DefaultReserveInterestRateStrategy} from
 import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAddressesProvider.sol";
 import {console} from "forge-std/console.sol";
 import {VmSafe} from "forge-std/Vm.sol";
-import {Vm} from "forge-std/Vm.sol"; 
+import {Vm} from "forge-std/Vm.sol";
+import {ReserveInitializer} from "src/periphery/contracts/misc/ReserveInitializer.sol";
 
 abstract contract DeployHyFiUtils {
 
@@ -86,6 +87,8 @@ abstract contract DeployHyFiUtils {
     IEACAggregatorProxy proxy;
 
     DefaultReserveInterestRateStrategy interestRateStrategy;
+
+    ReserveInitializer reserveInitializer;
     
     uint256 constant RAY = 10 ** 27;
 
@@ -285,6 +288,7 @@ abstract contract DeployHyFiUtils {
         treasury = Collector(deployedContracts.readAddress(".treasury"));
         wrappedHypeGateway = WrappedHypeGateway(payable(deployedContracts.readAddress(".wrappedHypeGateway")));
         treasuryController = CollectorController(deployedContracts.readAddress(".treasuryController"));
+        reserveInitializer = ReserveInitializer(deployedContracts.readAddress(".reserveInitializer"));
     }
 
     function _transferOwnership() internal {
@@ -309,5 +313,6 @@ abstract contract DeployHyFiUtils {
         InitializableAdminUpgradeabilityProxy(payable(address(treasury))).changeAdmin(admin);
         
         treasuryController.transferOwnership(admin);
+        reserveInitializer.transferOwnership(admin);
     }
 }
