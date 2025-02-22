@@ -21,6 +21,7 @@ contract TransferOwnership is DeployHyFiUtils, Script {
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
 
         config = DeployUtils.readInput(instanceId);
+        deployer = config.readAddress(".deployer");
         admin = config.readAddress(".admin");
         if (instanceIdBlock > 0) {
             deployedContracts = DeployUtils.readOutput(instanceId, instanceIdBlock);

@@ -292,6 +292,7 @@ abstract contract DeployHyFiUtils {
         aclManager.addPoolAdmin(admin);
         if (admin != deployer) {
             aclManager.removePoolAdmin(deployer);
+            aclManager.removeEmergencyAdmin(deployer);
         }
         aclManager.grantRole(aclManager.DEFAULT_ADMIN_ROLE(), admin);
         if (admin != deployer) {

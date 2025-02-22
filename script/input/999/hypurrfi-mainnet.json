@@ -1,5 +1,6 @@
 {
     "admin": "0x75a6b68343d595257702d078BC684613CE7bcD7E",
+    "deployer": "0x096f03ae4c33E9C9C0EC0dcbA29645382c38896b",
     "marketId": "HypurrFi Mainnet",
     "nativeToken": "0x5555555555555555555555555555555555555555",
     "nativeTokenOracle": "0x1d0E4EA616A749c1620118F7d97c111e8ec36E8b"
