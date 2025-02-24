@@ -134,6 +134,15 @@ contract HyperTestnetReservesConfigs {
         }
     }
 
+    function _enableFlashloans(address[] memory tokens) internal {
+        for (uint256 i; i < tokens.length;) {
+            _getPoolConfigurator().setReserveFlashLoaning(tokens[i], true);
+            unchecked {
+                i++;
+            }
+        }
+    }
+
     function _enableCollateral(address[] memory tokens) internal {
         for (uint256 i; i < tokens.length;) {
             string memory tokenConfig = DeployUtils.readTokenConfig(tokens[i]);

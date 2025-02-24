@@ -60,6 +60,9 @@ contract ConfigurrHyFiReserves is HyperTestnetReservesConfigs, Script {
         // enable borrowing
         _enableBorrowing(tokens);
 
+        // enable flashloans
+        _enableFlashloans(tokens);
+
         vm.stopBroadcast();
     }
 }
