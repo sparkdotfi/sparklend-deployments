@@ -55,7 +55,7 @@ forge verify-contract $HYTOKEN_IMPL src/core/contracts/protocol/tokenization/HyT
     --verifier-url $VERIFIER_URL
 
 # Pool
-forge verify-contract $POOL lib/aave-v3-core/contracts/protocol/pool/Pool.sol:Pool \
+forge verify-contract $POOL lib/aave-v3-core/contracts/protocol/libraries/aave-upgradeability/InitializableImmutableAdminUpgradeabilityProxy.sol:InitializableImmutableAdminUpgradeabilityProxy \
     --chain-id $CHAIN_ID \
     --verifier $VERIFIER \
     --verifier-url $VERIFIER_URL
@@ -73,7 +73,7 @@ forge verify-contract $POOL_ADDRESSES_PROVIDER_REGISTRY lib/aave-v3-core/contrac
     --verifier-url $VERIFIER_URL
 
 # Pool Configurator
-forge verify-contract $POOL_CONFIGURATOR lib/aave-v3-core/contracts/protocol/pool/PoolConfigurator.sol:PoolConfigurator \
+forge verify-contract $POOL_CONFIGURATOR lib/aave-v3-core/contracts/protocol/libraries/aave-upgradeability/InitializableImmutableAdminUpgradeabilityProxy.sol:InitializableImmutableAdminUpgradeabilityProxy \
     --chain-id $CHAIN_ID \
     --verifier $VERIFIER \
     --verifier-url $VERIFIER_URL
@@ -92,6 +92,23 @@ forge verify-contract $TREASURY lib/aave-v3-core/contracts/dependencies/openzepp
 
 # Treasury Controller
 forge verify-contract $TREASURY_CONTROLLER lib/aave-v3-periphery/contracts/treasury/CollectorController.sol:CollectorController \
+    --chain-id $CHAIN_ID \
+    --verifier $VERIFIER \
+    --verifier-url $VERIFIER_URL
+
+forge verify-contract $TREASURY_IMPL lib/aave-v3-periphery/contracts/treasury/Collector.sol:Collector \
+    --chain-id $CHAIN_ID \
+    --verifier $VERIFIER \
+    --verifier-url $VERIFIER_URL
+
+# Variable Debt Token
+forge verify-contract $VARIABLE_DEBT_TOKEN lib/aave-v3-core/contracts/protocol/tokenization/VariableDebtToken.sol:VariableDebtToken \
+    --chain-id $CHAIN_ID \
+    --verifier $VERIFIER \
+    --verifier-url $VERIFIER_URL
+
+# Stable Debt Token
+forge verify-contract $STABLE_DEBT_TOKEN src/core/contracts/protocol/tokenization/DisabledStableDebtToken.sol:DisabledStableDebtToken \
     --chain-id $CHAIN_ID \
     --verifier $VERIFIER \
     --verifier-url $VERIFIER_URL

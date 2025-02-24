@@ -19,6 +19,10 @@ contract Default is Script {
     IPoolAddressesProvider poolAddressesProvider;
     CapAutomator capAutomator;
 
+    address admin;
+    address deployer;
+    string config;
+
     function run() external {
         console.log("Aave V3 Cap Automator Deployment");
         console.log("sender", msg.sender);
@@ -27,6 +31,11 @@ contract Default is Script {
         instanceId = vm.envOr("INSTANCE_ID", string("primary"));
         vm.setEnv("FOUNDRY_ROOT_CHAINID", vm.toString(block.chainid));
 
+        config = DeployUtils.loadConfig(instanceId);
+
+        admin = config.readAddress(".admin");
+        deployer = msg.sender;
+
         deployedContracts = DeployUtils.readOutput(instanceId);
 
         poolAddressesProvider = IPoolAddressesProvider(deployedContracts.readAddress(".poolAddressesProvider"));
@@ -34,6 +43,8 @@ contract Default is Script {
         vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
         capAutomator = new CapAutomator(address(poolAddressesProvider));
+
+        capAutomator.transferOwnership(admin);
 
         vm.stopBroadcast();
 
