@@ -42,7 +42,7 @@ import {console} from "forge-std/console.sol";
 import {VmSafe} from "forge-std/Vm.sol";
 import {Vm} from "forge-std/Vm.sol";
 import {ReserveInitializer} from "src/periphery/contracts/misc/ReserveInitializer.sol";
-
+import {IACLManager} from "aave-v3-core/contracts/interfaces/IACLManager.sol";
 abstract contract DeployHyFiUtils {
 
     using stdJson for string;
@@ -314,5 +314,13 @@ abstract contract DeployHyFiUtils {
         
         treasuryController.transferOwnership(admin);
         reserveInitializer.transferOwnership(admin);
+    }
+
+    function _addPoolAdmin(address aclManager, address newAdmin) internal {
+        IACLManager(aclManager).addPoolAdmin(newAdmin);
+    }
+
+    function _removePoolAdmin(address aclManager, address oldAdmin) internal {
+        IACLManager(aclManager).removePoolAdmin(oldAdmin);
     }
 }
