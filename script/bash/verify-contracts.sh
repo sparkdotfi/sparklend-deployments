@@ -27,8 +27,15 @@ UI_POOL_DATA_PROVIDER="0x7b883191011AEAe40581d3Fa1B112413808C9c00"
 VARIABLE_DEBT_TOKEN="0xdBcF99e5202b2bB9C47182209c7a551524f7c690"
 WALLET_BALANCE_PROVIDER="0xE913De89D8c868aEF96D3b10dAAE1900273D7Bb2"
 WRAPPED_HYPE_GATEWAY="0xd1EF87FeFA83154F83541b68BD09185e15463972"
+WST_HYPE_ORACLE="0x5777a35eed45cfd605dad5d3d7b531ac2f409cd1"
 
 echo "Starting contract verification..."
+
+# WstHypeOracle
+forge verify-contract $WST_HYPE_ORACLE src/periphery/contracts/misc/WstHypeOracle.sol:WstHypeOracle \
+    --chain-id $CHAIN_ID \
+    --verifier $VERIFIER \
+    --verifier-url $VERIFIER_URL
 
 # ACL Manager
 forge verify-contract $ACL_MANAGER lib/aave-v3-core/contracts/protocol/configuration/ACLManager.sol:ACLManager \
@@ -120,7 +127,7 @@ forge verify-contract $UI_INCENTIVE_DATA_PROVIDER lib/aave-v3-periphery/contract
     --verifier-url $VERIFIER_URL
 
 # UI Pool Data Provider
-forge verify-contract $UI_POOL_DATA_PROVIDER lib/aave-v3-periphery/contracts/misc/UiPoolDataProvider.sol:UiPoolDataProvider \
+forge verify-contract $UI_POOL_DATA_PROVIDER lib/aave-v3-periphery/contracts/misc/UiPoolDataProviderV3.sol:UiPoolDataProviderV3 \
     --chain-id $CHAIN_ID \
     --verifier $VERIFIER \
     --verifier-url $VERIFIER_URL

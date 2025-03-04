@@ -16,7 +16,7 @@ fs_permissions = [
     { access = "write", path = "./reports" }
 ]
 evm_version = 'cancun'
-#solc_version = '0.8.10'
+solc_version = '0.8.10'
 optimizer = true
 optimizer_runs = 100000
 
