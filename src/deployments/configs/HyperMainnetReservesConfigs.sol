@@ -31,7 +31,7 @@ import {Vm} from "forge-std/Vm.sol";
 import "forge-std/console.sol";
 import {ReserveInitializer} from "src/periphery/contracts/misc/ReserveInitializer.sol";
 
-contract HyperTestnetReservesConfigs {
+contract HyperMainnetReservesConfigs {
     using stdJson for string;
     using ReserveConfiguration for DataTypes.ReserveConfigurationMap;
 

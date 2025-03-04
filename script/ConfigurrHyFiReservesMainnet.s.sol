@@ -5,10 +5,10 @@ import {Script} from "forge-std/Script.sol";
 import "forge-std/StdJson.sol";
 import "forge-std/console.sol";
 
-import {HyperTestnetReservesConfigs} from "src/deployments/configs/HyperMainnetReservesConfigs.sol";
+import {HyperMainnetReservesConfigs} from "src/deployments/configs/HyperMainnetReservesConfigs.sol";
 import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 
-contract ConfigurrHyFiReserves is HyperTestnetReservesConfigs, Script {
+contract ConfigurrHyFiReserves is HyperMainnetReservesConfigs, Script {
     using stdJson for string;
 
     string instanceId;
