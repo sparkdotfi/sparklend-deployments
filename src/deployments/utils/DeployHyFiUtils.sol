@@ -141,7 +141,7 @@ abstract contract DeployHyFiUtils {
 
         hyTokenImpl = new HyToken(pool);
         hyTokenImpl.initialize(
-            pool, address(0), address(0), IHyFiIncentivesController(address(0)), 0, "SPTOKEN_IMPL", "SPTOKEN_IMPL", ""
+            pool, address(0), address(0), IHyFiIncentivesController(address(0)), 0, "HY_TOKEN_IMPL", "HY_TOKEN_IMPL", ""
         );
 
         // 9. Deploy and initialize disabledStableDebtToken instance
