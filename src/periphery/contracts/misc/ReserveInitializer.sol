@@ -52,11 +52,11 @@ contract ReserveInitializer is Ownable {
                     // For HYPE tokens, wrap them to WHYPE first
                     WRAPPED_TOKEN_GATEWAY.depositHYPE{value: msg.value}(address(POOL), msg.sender, 0);
                 } else {
-                    require(IERC20(underlyingAsset).balanceOf(msg.sender) >= initialAmounts[i], string(abi.encodePacked("Insufficient balance of ", IERC20Metadata(underlyingAsset).symbol())));
+                    require(IERC20(underlyingAsset).balanceOf(address(this)) >= initialAmounts[i], string(abi.encodePacked("Insufficient balance of ", IERC20Metadata(underlyingAsset).symbol())));
                     // Approve pool to spend tokens
                     IERC20(underlyingAsset).safeIncreaseAllowance(address(POOL), initialAmounts[i]);
                     // Supply to pool
-                    POOL.supply(underlyingAsset, initialAmounts[i], msg.sender, 0);
+                    POOL.supply(underlyingAsset, initialAmounts[i], address(0), 0);
                 }
             }
         }
