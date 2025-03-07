@@ -5,7 +5,7 @@ import {IHyFiIncentivesController} from './IHyFiIncentivesController.sol';
 import {IPool} from 'aave-v3-core/contracts/interfaces/IPool.sol';
 
 /**
- * @title IInitializableAToken
+ * @title IInitializableHyToken
  * @author Aave
  * @notice Interface for the initialize function on AToken
  */
