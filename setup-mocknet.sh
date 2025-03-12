@@ -1,0 +1,1 @@
+anvil --chain-id 1337 --dump-state script/snapshot/1337/hypurrfi-mocknet.json --load-state script/snapshot/1337/hypurrfi-mocknet.json

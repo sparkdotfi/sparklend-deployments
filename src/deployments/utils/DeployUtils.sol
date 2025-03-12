@@ -2,11 +2,11 @@
 pragma solidity >=0.8.0;
 
 import {stdJson} from "forge-std/StdJson.sol";
-import {VmSafe} from "forge-std/Vm.sol";
+import {Vm} from "forge-std/Vm.sol";
 import {IERC20Metadata} from "src/contracts/dependencies/openzeppelin/interfaces/IERC20Metadata.sol";
 
 library DeployUtils {
-    VmSafe private constant vm = VmSafe(address(uint160(uint256(keccak256("hevm cheat code")))));
+    Vm private constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
     string internal constant EXPORT_JSON_KEY = "EXPORTS";
 
     function getRootChainId() internal view returns (uint256) {
@@ -96,6 +96,24 @@ library DeployUtils {
         vm.writeJson(json, string(abi.encodePacked(root, chainOutputFolder, name, "-", "latest", ".json")));
         if (vm.envOr("FOUNDRY_EXPORTS_OVERWRITE_LATEST", false)) {
             vm.writeJson(json, string(abi.encodePacked(root, chainOutputFolder, name, "-latest.json")));
+        }
+    }
+
+    function exportSnapshot(string calldata filepath) internal {
+        string memory root = vm.projectRoot();
+        string memory snapshotFolder =
+            string(abi.encodePacked("/script/snapshot/", vm.toString(getRootChainId()), "/"));
+        // vm.writeFile(
+        //     string(abi.encodePacked(root, snapshotFolder, name, "-", vm.toString(block.timestamp), ".json")),
+        //     vm.toString(block.number)
+        // );
+        // vm.dumpState(filepath);
+        if (vm.envOr("FOUNDRY_EXPORTS_OVERWRITE_LATEST", false)) {
+            // vm.writeFile(
+            //     string(abi.encodePacked(root, snapshotFolder, name, "-latest.json")),
+            //     vm.toString(block.number)
+            // );
+            // vm.dumpState(filepath);
         }
     }
 

@@ -13,6 +13,7 @@ fs_permissions = [
     { access = "read", path = "./out/"},
     { access = "read", path = "./script/input/"},
     { access = "read-write", path = "./script/output/"},
+    { access = "read-write", path = "./script/snapshot/"},
     { access = "write", path = "./reports" }
 ]
 evm_version = 'cancun'
