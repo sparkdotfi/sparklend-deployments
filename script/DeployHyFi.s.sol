@@ -23,8 +23,6 @@ contract DeployHyFi is Script, DeployHyFiUtils {
         _deployHyFi(true);
         vm.stopBroadcast();
 
-        return;
-
         DeployUtils.exportContract(instanceId, "hyTokenImpl", address(hyTokenImpl));
         DeployUtils.exportContract(instanceId, "hyFiOracle", address(hyFiOracle));
         DeployUtils.exportContract(instanceId, "aclManager", address(aclManager));

@@ -200,8 +200,8 @@ abstract contract DeployHyFiUtils {
 
         // 14. Deploy data provider contracts.
 
-        // proxy = IEACAggregatorProxy(config.readAddress(".nativeTokenOracle"));
-        // uiPoolDataProvider = new UiPoolDataProviderV3(proxy, proxy);
+        proxy = IEACAggregatorProxy(config.readAddress(".nativeTokenOracle"));
+        uiPoolDataProvider = new UiPoolDataProviderV3(proxy, proxy);
         uiIncentiveDataProvider = new UiIncentiveDataProviderV3();
         wrappedHypeGateway = new WrappedHypeGateway(config.readAddress(".nativeToken"), admin, IPool(address(pool)));
         walletBalanceProvider = new WalletBalanceProvider();
