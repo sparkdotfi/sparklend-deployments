@@ -6,6 +6,7 @@ import "forge-std/console.sol";
 
 import {HyperMocknetReservesConfigs} from "src/deployments/configs/HyperMocknetReservesConfigs.sol";
 import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
+import {WHYPE} from "src/tokens/WHYPE.sol";
 
 contract Default is HyperMocknetReservesConfigs, Script {
     using stdJson for string;
@@ -33,11 +34,11 @@ contract Default is HyperMocknetReservesConfigs, Script {
     _setDeployRegistry(deployedContracts);
     address[] memory tokens = new address[](1);
 
-    tokens[0] = deployedContracts.readAddress(".usdc");
+    tokens[0] = config.readAddress(".nativeToken");
 
     uint256[] memory amounts = new uint256[](1);
 
-    amounts[0] = 10000e6;
+    amounts[0] = 100e18;
 
     address[] memory recipients = new address[](1);
 
@@ -48,12 +49,14 @@ contract Default is HyperMocknetReservesConfigs, Script {
 
     vm.startBroadcast(vm.envUint('PRIVATE_KEY'));
 
-    _faucetTokens(
-       tokens,
-       amounts,
-       recipients,
-       false // skip transfer to supply pool on behalf of recipient
-    );
+    WHYPE(payable(config.readAddress(".nativeToken"))).deposit{value: amounts[0]}();
+
+    // _faucetTokens(
+    //    tokens,
+    //    amounts,
+    //    recipients,
+    //    false // skip transfer to supply pool on behalf of recipient
+    // );
 
     _supplyPool(
         tokens,

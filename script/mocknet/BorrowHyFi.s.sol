@@ -37,7 +37,7 @@ contract Default is HyperMocknetReservesConfigs, Script {
 
     uint256[] memory amounts = new uint256[](1);
 
-    amounts[0] = 8250e6;
+    amounts[0] = 0.01e6;
 
     address[] memory recipients = new address[](1);
 
