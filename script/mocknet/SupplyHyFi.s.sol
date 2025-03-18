@@ -34,11 +34,11 @@ contract Default is HyperMocknetReservesConfigs, Script {
     _setDeployRegistry(deployedContracts);
     address[] memory tokens = new address[](1);
 
-    tokens[0] = config.readAddress(".nativeToken");
+    tokens[0] = deployedContracts.readAddress(".usdc");
 
     uint256[] memory amounts = new uint256[](1);
 
-    amounts[0] = 100e18;
+    amounts[0] = 20000e18;
 
     address[] memory recipients = new address[](1);
 
@@ -49,21 +49,21 @@ contract Default is HyperMocknetReservesConfigs, Script {
 
     vm.startBroadcast(vm.envUint('PRIVATE_KEY'));
 
-    WHYPE(payable(config.readAddress(".nativeToken"))).deposit{value: amounts[0]}();
+    WHYPE(payable(deployedContracts.readAddress(".whype"))).deposit{value: 100000e18}();
 
-    // _faucetTokens(
-    //    tokens,
-    //    amounts,
-    //    recipients,
-    //    false // skip transfer to supply pool on behalf of recipient
-    // );
-
-    _supplyPool(
-        tokens,
-        amounts,
-        recipients,
-        vm.envAddress("SENDER")
+    _faucetTokens(
+       tokens,
+       amounts,
+       recipients,
+       true // skip transfer to supply pool on behalf of recipient
     );
+
+    // _supplyPool(
+    //     tokens,
+    //     amounts,
+    //     recipients,
+    //     vm.envAddress("SENDER")
+    // );
 
     vm.stopBroadcast();
   }
