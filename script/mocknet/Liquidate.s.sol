@@ -63,7 +63,7 @@ contract Default is HyperMocknetReservesConfigs, Script {
     ILiquidator(config.readAddress(".liquidator")).approvePool(debtToken);
     
     // Call liquidation function - adjust parameters based on your protocol's implementation
-    ILiquidator(config.readAddress(".liquidator")).liquidate(
+    int256 collateralToReceive = ILiquidator(config.readAddress(".liquidator")).liquidate(
         collateralToken,
         debtToken,
         userToLiquidate,
@@ -73,6 +73,12 @@ contract Default is HyperMocknetReservesConfigs, Script {
         false,
         abi.encodePacked(IERC20(debtToken), uint24(FEE), IERC20(collateralToken)) // NOTE: path is reversed for exact output
     );
+
+    console.log('swap path: ');
+    console.logBytes(abi.encodePacked(IERC20(debtToken), uint24(FEE), IERC20(collateralToken)));
+
+    console.log('collateralToReceive: ');
+    console.logInt(collateralToReceive);
 
     vm.stopBroadcast();
   }

@@ -61,7 +61,7 @@ contract ConfigurrHyFiReserves is HyperMainnetReservesConfigs, Script {
         _enableBorrowing(tokens);
 
         // enable flashloans
-        _enableFlashloans(tokens);
+        // _enableFlashloans(tokens);
 
         vm.stopBroadcast();
     }

@@ -27,4 +27,6 @@ interface ILiquidator {
     function approvePool(
         address token
     ) external;
+
+    function testGetAmountIn() external;
 } 

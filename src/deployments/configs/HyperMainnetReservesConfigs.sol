@@ -49,7 +49,8 @@ contract HyperMainnetReservesConfigs {
 
         // tokens[0] = address(config.readAddress(".nativeToken")); // WHYPE
         // tokens[1] = address(0x0000000000000000000000000000000000000000); // USDC
-        tokens[0] = address(0x94e8396e0869c9F2200760aF0621aFd240E1CF38); // wstHYPE
+        // tokens[0] = address(0x94e8396e0869c9F2200760aF0621aFd240E1CF38); // wstHYPE
+        tokens[0] = address(0x9FDBdA0A5e284c32744D2f17Ee5c74B284993463); // UBTC
 
         return tokens;
     }
@@ -59,7 +60,7 @@ contract HyperMainnetReservesConfigs {
 
         // oracles[0] = address(config.readAddress(".nativeTokenOracle")); // WHYPE
         // oracles[1] = address(0x0000000000000000000000000000000000000000); // USDC
-        oracles[0] = address(0x5777A35EED45CFD605daD5d3D7B531aC2F409cD1); // wstHYPE
+        oracles[0] = address(0xfD5c563391CDA3B290394da1D6c6a36A3cbf401D); // wstHYPE
 
         return oracles;
     }
