@@ -9,6 +9,8 @@ import {HyperMainnetReservesConfigs} from "src/deployments/configs/HyperMainnetR
 import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
 import {IERC20} from "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol";
 import {ILiquidator} from "src/periphery/contracts/misc/interfaces/ILiquidator.sol";
+import {IUiPoolDataProviderV3} from '@aave/periphery-v3/contracts/misc/interfaces/IUiPoolDataProviderV3.sol';
+import {IPoolAddressesProvider} from "aave-v3-core/contracts/interfaces/IPoolAddressesProvider.sol";
 
 contract ConfigurrHyFiReserves is HyperMainnetReservesConfigs, Script {
     using stdJson for string;
@@ -46,6 +48,9 @@ contract ConfigurrHyFiReserves is HyperMainnetReservesConfigs, Script {
         // USDXL approving address of pool
         // IERC20(0xca79db4B49f608eF54a5CB813FbEd3a6387bC645).approve(0xceCcE0EB9DD2Ef7996e01e25DD70e461F918A14b, type(uint256).max);
         ILiquidator(0x7A5e5837F23460f32BAcc916C74FF2a608f74375).approvePool(0xca79db4B49f608eF54a5CB813FbEd3a6387bC645);
+        
+        // stack too deep :(
+        // IUiPoolDataProviderV3(0x7b883191011AEAe40581d3Fa1B112413808C9c00).getReservesData(IPoolAddressesProvider(0xA73ff12D177D8F1Ec938c3ba0e87D33524dD5594));
 
         vm.stopBroadcast();
     }

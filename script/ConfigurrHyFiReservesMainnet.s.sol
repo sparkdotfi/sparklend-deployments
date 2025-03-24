@@ -7,6 +7,7 @@ import "forge-std/console.sol";
 
 import {HyperMainnetReservesConfigs} from "src/deployments/configs/HyperMainnetReservesConfigs.sol";
 import {DeployUtils} from "src/deployments/utils/DeployUtils.sol";
+import {IEACAggregatorProxy} from "@aave/periphery-v3/contracts/misc/interfaces/IEACAggregatorProxy.sol";
 
 contract ConfigurrHyFiReserves is HyperMainnetReservesConfigs, Script {
     using stdJson for string;
@@ -44,6 +45,11 @@ contract ConfigurrHyFiReserves is HyperMainnetReservesConfigs, Script {
         tokens = _fetchMainnetTokens(config);
 
         oracles = _fetchMainnetOracles(config);
+
+        for (uint i; i < oracles.length; i++) {
+            IEACAggregatorProxy(oracles[i]).latestAnswer();
+            IEACAggregatorProxy(oracles[i]).decimals();
+        }
 
         // set oracles
         _getAaveOracle().setAssetSources(tokens, oracles);
