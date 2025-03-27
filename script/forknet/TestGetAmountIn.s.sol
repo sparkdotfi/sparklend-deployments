@@ -34,7 +34,7 @@ contract Default is HyperMocknetReservesConfigs, Script {
     // Start broadcasting transactions
     vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
-    ILiquidator(config.readAddress(".liquidator")).testGetAmountIn();
+    // ILiquidator(config.readAddress(".liquidator")).testGetAmountIn();
 
     vm.stopBroadcast();
   }

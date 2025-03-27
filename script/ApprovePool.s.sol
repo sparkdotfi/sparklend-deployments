@@ -37,9 +37,6 @@ contract ConfigurrHyFiReserves is HyperMainnetReservesConfigs, Script {
 
         _setDeployRegistry(deployedContracts);
 
-        address[] memory tokens;
-        address[] memory oracles;
-
         console.log("HypurrFi Mainnet Reserve Config");
         console.log("sender", msg.sender);
 

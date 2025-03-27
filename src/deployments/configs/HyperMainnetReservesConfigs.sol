@@ -39,8 +39,8 @@ contract HyperMainnetReservesConfigs {
 
     Vm internal constant vm2 = Vm(address(bytes20(uint160(uint256(keccak256("hevm cheat code"))))));
 
-    function _fetchMainnetTokens(string memory config)
-        internal
+    function _fetchMainnetTokens(string memory)
+        internal view
         returns (address[] memory tokens)
     {
         console.log("sender", msg.sender);
@@ -50,17 +50,18 @@ contract HyperMainnetReservesConfigs {
         // tokens[0] = address(config.readAddress(".nativeToken")); // WHYPE
         // tokens[1] = address(0x0000000000000000000000000000000000000000); // USDC
         // tokens[0] = address(0x94e8396e0869c9F2200760aF0621aFd240E1CF38); // wstHYPE
-        tokens[0] = address(0x9FDBdA0A5e284c32744D2f17Ee5c74B284993463); // UBTC
+        tokens[0] = address(0); // UETH
 
         return tokens;
     }
 
-    function _fetchMainnetOracles(string memory config) internal returns (address[] memory oracles) {
+    function _fetchMainnetOracles(string memory) internal pure returns (address[] memory oracles) {
         oracles = new address[](1);
 
         // oracles[0] = address(config.readAddress(".nativeTokenOracle")); // WHYPE
         // oracles[1] = address(0x0000000000000000000000000000000000000000); // USDC
-        oracles[0] = address(0xfD5c563391CDA3B290394da1D6c6a36A3cbf401D); // wstHYPE
+        // oracles[0] = address(0xfD5c563391CDA3B290394da1D6c6a36A3cbf401D); // UBTC
+        oracles[0] = address(0x44Bbb85E5B1799569dD02054Cfb38028656Ae30A); // UETH
 
         return oracles;
     }
@@ -307,7 +308,7 @@ contract HyperMainnetReservesConfigs {
         );
     }
 
-    function _testPoolDataProvider() internal {
+    function _testPoolDataProvider() internal view {
         IUiPoolDataProviderV3(_getMarketReport().uiPoolDataProvider).getReservesData(
             IPoolAddressesProvider(deployRegistry.poolAddressesProvider)
         );

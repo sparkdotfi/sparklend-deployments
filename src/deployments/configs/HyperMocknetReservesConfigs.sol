@@ -279,8 +279,7 @@ contract HyperMocknetReservesConfigs {
     function _setupEModeGroup(
         uint8 categoryId,
         string memory label,
-        address[] memory collateralTokens,
-        address[] memory borrowTokens,
+        address[] memory tokens,
         address oracle,
         uint16 ltv,
         uint16 liquidationThreshold,
@@ -290,8 +289,8 @@ contract HyperMocknetReservesConfigs {
         _getPoolConfigurator().setEModeCategory(categoryId, ltv, liquidationThreshold, liquidationBonus, oracle, label);
 
         // enable tokens for emode category
-        for (uint256 i; i < collateralTokens.length;) {
-            _getPoolConfigurator().setAssetEModeCategory(collateralTokens[i], categoryId);
+        for (uint256 i; i < tokens.length;) {
+            _getPoolConfigurator().setAssetEModeCategory(tokens[i], categoryId);
 
             unchecked {
                 i++;
@@ -360,7 +359,7 @@ contract HyperMocknetReservesConfigs {
         );
     }
 
-    function _testPoolDataProvider() internal {
+    function _testPoolDataProvider() internal view {
         IUiPoolDataProviderV3(_getMarketReport().uiPoolDataProvider).getReservesData(
             IPoolAddressesProvider(deployRegistry.poolAddressesProvider)
         );

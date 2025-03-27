@@ -56,7 +56,7 @@ contract HyperTestnetReservesConfigs {
         return tokens;
     }
 
-    function _fetchStableTokens() internal returns (address[] memory tokens) {
+    function _fetchStableTokens() internal pure returns (address[] memory tokens) {
         tokens = new address[](1);
 
         tokens[0] = address(0x8bf86549d308e50Db889cF843AEBd6b7B0d7BB9a); // WHYPE
@@ -66,7 +66,7 @@ contract HyperTestnetReservesConfigs {
         return tokens;
     }
 
-    function _fetchTestnetTokens(string memory config) internal returns (address[] memory tokens) {
+    function _fetchTestnetTokens(string memory) internal pure returns (address[] memory tokens) {
         tokens = new address[](3);
 
         tokens[0] = address(0x4B85aCF84b2593D67f6593D18504dBb3A337D3D8); // SolvBTC
@@ -288,8 +288,7 @@ contract HyperTestnetReservesConfigs {
     function _setupEModeGroup(
         uint8 categoryId,
         string memory label,
-        address[] memory collateralTokens,
-        address[] memory borrowTokens,
+        address[] memory tokens,
         address oracle,
         uint16 ltv,
         uint16 liquidationThreshold,
@@ -299,8 +298,8 @@ contract HyperTestnetReservesConfigs {
         _getPoolConfigurator().setEModeCategory(categoryId, ltv, liquidationThreshold, liquidationBonus, oracle, label);
 
         // enable tokens for emode category
-        for (uint256 i; i < collateralTokens.length;) {
-            _getPoolConfigurator().setAssetEModeCategory(collateralTokens[i], categoryId);
+        for (uint256 i; i < tokens.length;) {
+            _getPoolConfigurator().setAssetEModeCategory(tokens[i], categoryId);
 
             unchecked {
                 i++;
@@ -367,7 +366,7 @@ contract HyperTestnetReservesConfigs {
         );
     }
 
-    function _testPoolDataProvider() internal {
+    function _testPoolDataProvider() internal view {
         IUiPoolDataProviderV3(_getMarketReport().uiPoolDataProvider).getReservesData(
             IPoolAddressesProvider(deployRegistry.poolAddressesProvider)
         );

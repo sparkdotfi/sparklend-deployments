@@ -99,24 +99,6 @@ library DeployUtils {
         }
     }
 
-    function exportSnapshot(string calldata filepath) internal {
-        string memory root = vm.projectRoot();
-        string memory snapshotFolder =
-            string(abi.encodePacked("/script/snapshot/", vm.toString(getRootChainId()), "/"));
-        // vm.writeFile(
-        //     string(abi.encodePacked(root, snapshotFolder, name, "-", vm.toString(block.timestamp), ".json")),
-        //     vm.toString(block.number)
-        // );
-        // vm.dumpState(filepath);
-        if (vm.envOr("FOUNDRY_EXPORTS_OVERWRITE_LATEST", false)) {
-            // vm.writeFile(
-            //     string(abi.encodePacked(root, snapshotFolder, name, "-latest.json")),
-            //     vm.toString(block.number)
-            // );
-            // vm.dumpState(filepath);
-        }
-    }
-
     function eq(string memory a, string memory b) internal pure returns (bool) {
         return keccak256(bytes(a)) == keccak256(bytes(b));
     }

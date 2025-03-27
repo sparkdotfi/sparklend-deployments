@@ -92,16 +92,16 @@ abstract contract DeployHyFiUtils {
     
     uint256 constant RAY = 10 ** 27;
 
-    function _deployRegistry(bool liveEnv) internal {
-        switchBigBlocks(liveEnv, false);
+    function _deployRegistry(bool) internal {
+        // switchBigBlocks(liveEnv, false);
         registry = new PoolAddressesProviderRegistry(deployer);
     }
 
-    function _deployPoolAddressesProvider(bool liveEnv) internal {
+    function _deployPoolAddressesProvider(bool) internal {
         poolAddressesProvider = new PoolAddressesProvider(config.readString(".marketId"), deployer);
     }
 
-    function _deployHyFi(bool liveEnv) internal {
+    function _deployHyFi(bool) internal {
         // 1. Deploy and configure registry and addresses provider
         registry = new PoolAddressesProviderRegistry(deployer);
         poolAddressesProvider = new PoolAddressesProvider(config.readString(".marketId"), deployer);

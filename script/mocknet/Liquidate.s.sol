@@ -41,45 +41,6 @@ contract Default is HyperMocknetReservesConfigs, Script {
     // Start broadcasting transactions
     vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
-    // Get the lending pool address from deployed contracts
-    address lendingPool = deployedContracts.readAddress(".pool");
-    
-    // Get the collateral token and debt token addresses
-    address collateralToken = deployedContracts.readAddress(".whype");  
-    address debtToken = deployedContracts.readAddress(".usdc");
-    
-    // Specify the user to liquidate
-    address userToLiquidate = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;  // Replace with actual user address
-    
-    uint256 debtToCover = 8550302938;
-    // Perform the liquidation
-    // Typically liquidation involves:
-    // 1. Approving the lending pool to spend your tokens
-    // 2. Calling the liquidation function
-
-    IERC20(collateralToken).transfer(config.readAddress(".liquidator"), 2000e18);
-    
-    // approve the pool
-    ILiquidator(config.readAddress(".liquidator")).approvePool(debtToken);
-    
-    // Call liquidation function - adjust parameters based on your protocol's implementation
-    int256 collateralToReceive = ILiquidator(config.readAddress(".liquidator")).liquidate(
-        collateralToken,
-        debtToken,
-        userToLiquidate,
-        debtToCover,
-        0, // collateralToReceive
-        config.readAddress(".liquidator"),
-        false,
-        abi.encodePacked(IERC20(debtToken), uint24(FEE), IERC20(collateralToken)) // NOTE: path is reversed for exact output
-    );
-
-    console.log('swap path: ');
-    console.logBytes(abi.encodePacked(IERC20(debtToken), uint24(FEE), IERC20(collateralToken)));
-
-    console.log('collateralToReceive: ');
-    console.logInt(collateralToReceive);
-
     vm.stopBroadcast();
   }
 }
