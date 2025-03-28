@@ -45,19 +45,18 @@ contract ReserveInitializer is Ownable {
 
         // Supply initial amounts to pool
         for (uint256 i = 0; i < inputs.length; i++) {
-            if (initialAmounts[i] > 0) {
-                address underlyingAsset = inputs[i].underlyingAsset;
+            require(initialAmounts[i] > 0, "reserve cannot be initialized with zero supply");
+            address underlyingAsset = inputs[i].underlyingAsset;
 
-                if (underlyingAsset == address(WRAPPED_TOKEN_GATEWAY.getWHYPEAddress()) && msg.value > 0) {
-                    // For HYPE tokens, wrap them to WHYPE first
-                    WRAPPED_TOKEN_GATEWAY.depositHYPE{value: msg.value}(address(POOL), msg.sender, 0);
-                } else {
-                    require(IERC20(underlyingAsset).balanceOf(address(this)) >= initialAmounts[i], string(abi.encodePacked("Insufficient balance of ", IERC20Metadata(underlyingAsset).symbol())));
-                    // Approve pool to spend tokens
-                    IERC20(underlyingAsset).safeIncreaseAllowance(address(POOL), initialAmounts[i]);
-                    // Supply to pool
-                    POOL.supply(underlyingAsset, initialAmounts[i], address(0), 0);
-                }
+            if (underlyingAsset == address(WRAPPED_TOKEN_GATEWAY.getWHYPEAddress()) && msg.value > 0) {
+                // For HYPE tokens, wrap them to WHYPE first
+                WRAPPED_TOKEN_GATEWAY.depositHYPE{value: msg.value}(address(POOL), msg.sender, 0);
+            } else {
+                require(IERC20(underlyingAsset).balanceOf(address(this)) >= initialAmounts[i], string(abi.encodePacked("Insufficient balance of ", IERC20Metadata(underlyingAsset).symbol())));
+                // Approve pool to spend tokens
+                IERC20(underlyingAsset).safeIncreaseAllowance(address(POOL), initialAmounts[i]);
+                // Supply to pool
+                POOL.supply(underlyingAsset, initialAmounts[i], address(0), 0);
             }
         }
     }
