@@ -22,7 +22,7 @@ END_BLOCK="latest"
 FLAGGED_ADDRESSES_FILE="flagged-addresses.json"
 SHOW_FULL_ADDRESSES=true  # Default to short addresses
 FILTER_OWNERSHIP_EVENTS=false  # Default to showing all events
-TXN_LIMIT="1"
+TXN_LIMIT="3"
 TXN_SKIP=13
 PURRSEC_URL="https://purrsec.com/tx"
 
@@ -502,7 +502,7 @@ analyze_address_txns() {
                 # Show decoded data if available
                 if [ "$data" != "{}" ] && [ "$data" != "null" ]; then
                     echo "    Decoded Data:"
-                    echo "    $data" | jq '.' 2>/dev/null || echo "$data"
+                    echo "$data" | jq '.' 2>/dev/null | sed 's/^/        /'
                 fi
             fi
 
