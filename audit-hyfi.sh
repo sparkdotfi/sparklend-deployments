@@ -16,11 +16,67 @@ fi
 
 # Configuration
 RPC_URL="https://rpc.purroofgroup.com"
-INITIAL_EOA="0x096f03ae4c33E9C9C0EC0dcbA29645382c38896b"  # Your deployer EOA
+INITIAL_EOA="0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"  # Your deployer EOA
 START_BLOCK="0"
 END_BLOCK="latest"
 FLAGGED_ADDRESSES_FILE="flagged-addresses.json"
-SHOW_FULL_ADDRESSES=false  # Default to short addresses
+SHOW_FULL_ADDRESSES=true  # Default to short addresses
+FILTER_OWNERSHIP_EVENTS=false  # Default to showing all events
+TXN_LIMIT="1"
+TXN_SKIP=13
+PURRSEC_URL="https://purrsec.com/tx"
+
+# Helper function to convert date string to timestamp
+convert_to_timestamp() {
+    local date_str=$1
+    
+    # If input is already a Unix timestamp (all digits)
+    if [[ "$date_str" =~ ^[0-9]+$ ]]; then
+        echo "$date_str"
+        return 0
+    fi
+    
+    # Replace T with space if it exists
+    date_str=${date_str/T/ }
+    
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # For macOS
+        local formatted_date=$(echo "$date_str" | sed 's/-/\//g')
+        date -j -f "%Y/%m/%d %H:%M:%S" "$formatted_date" "+%s"
+    else
+        # For Linux
+        date -d "$date_str" "+%s"
+    fi
+}
+
+# Initialize timestamps
+DEFAULT_CUTOFF="2025-02-26T00:00:00"
+TIMESTAMP_BEFORE=$(convert_to_timestamp "$DEFAULT_CUTOFF")
+TIMESTAMP_AFTER=""   # Default to no lower cutoff
+
+# Helper function to format timestamp to human readable
+format_timestamp_human() {
+    local timestamp=$1
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS requires specific formatting
+        date -j -f "%s" "$timestamp" "+%Y-%m-%d %H:%M:%S UTC" 2>/dev/null
+    else
+        # Linux
+        date -d "@$timestamp" "+%Y-%m-%d %H:%M:%S UTC"
+    fi
+}
+
+# Test the timestamp conversion immediately after setting it
+if [ ! -z "$TIMESTAMP_BEFORE" ]; then
+    converted_timestamp=$(convert_to_timestamp "$TIMESTAMP_BEFORE")
+    if [ $? -eq 0 ]; then
+        TIMESTAMP_BEFORE=$converted_timestamp
+        echo "Converted before timestamp: $(format_timestamp_human "$TIMESTAMP_BEFORE")"
+    else
+        echo "Error converting before timestamp. Using default (no cutoff)."
+        TIMESTAMP_BEFORE=""
+    fi
+fi
 
 # Process command line arguments
 while [[ $# -gt 0 ]]; do
@@ -29,32 +85,86 @@ while [[ $# -gt 0 ]]; do
             SHOW_FULL_ADDRESSES=true
             shift
             ;;
+        --ownership-only)
+            FILTER_OWNERSHIP_EVENTS=true
+            shift
+            ;;
+        --limit)
+            if [[ -z "$2" ]] || ! [[ "$2" =~ ^[0-9]+$ ]]; then
+                echo "Error: --limit requires a positive number"
+                exit 1
+            fi
+            TXN_LIMIT=$2
+            shift 2
+            ;;
+        --skip)
+            if [[ -z "$2" ]] || ! [[ "$2" =~ ^[0-9]+$ ]]; then
+                echo "Error: --skip requires a positive number"
+                exit 1
+            fi
+            TXN_SKIP=$2
+            shift 2
+            ;;
+        --before)
+            if [[ -z "$2" ]]; then
+                echo "Error: --before requires a timestamp argument (YYYY-MM-DD HH:MM:SS)"
+                exit 1
+            fi
+            TIMESTAMP_BEFORE=$(convert_to_timestamp "$2")
+            if [ $? -ne 0 ] || [ -z "$TIMESTAMP_BEFORE" ]; then
+                echo "Error: Invalid timestamp format for --before. Please use YYYY-MM-DD HH:MM:SS"
+                exit 1
+            fi
+            shift 2
+            ;;
+        --after)
+            if [[ -z "$2" ]]; then
+                echo "Error: --after requires a timestamp argument (YYYY-MM-DD HH:MM:SS)"
+                exit 1
+            fi
+            TIMESTAMP_AFTER=$(convert_to_timestamp "$2")
+            if [ $? -ne 0 ] || [ -z "$TIMESTAMP_AFTER" ]; then
+                echo "Error: Invalid timestamp format for --after. Please use YYYY-MM-DD HH:MM:SS"
+                exit 1
+            fi
+            shift 2
+            ;;
         *)
             echo "Unknown option: $1"
-            echo "Usage: $0 [--full-addresses]"
+            echo "Usage: $0 [--full-addresses] [--ownership-only] [--before 'YYYY-MM-DD HH:MM:SS'] [--after 'YYYY-MM-DD HH:MM:SS'] [--limit N] [--skip N]"
             exit 1
             ;;
     esac
 done
+
+# Print time range if specified
+if [ ! -z "$TIMESTAMP_AFTER" ] || [ ! -z "$TIMESTAMP_BEFORE" ]; then
+    echo "🕒 Filtering transactions by time range:"
+    if [ ! -z "$TIMESTAMP_AFTER" ]; then
+        echo "   After: $(format_timestamp_human "$TIMESTAMP_AFTER")"
+    fi
+    if [ ! -z "$TIMESTAMP_BEFORE" ]; then
+        echo "   Before: $(format_timestamp_human "$TIMESTAMP_BEFORE")"
+    fi
+fi
 
 # Known function signatures
 TRANSFER_OWNERSHIP_SIG="0xf2fde38b"  # transferOwnership(address)
 ADD_POOL_ADMIN_SIG="0x283d62ad"      # addPoolAdmin(address)
 REMOVE_POOL_ADMIN_SIG="0x72a57b6b"    # removePoolAdmin(address)
 
-# Address name mapping (example format)
+# Address name mapping
 declare -A ADDRESS_NAMES=(
-    ["0x1234..."]="Deployer EOA"
-    ["0x5678..."]="Pool Admin Multisig"
-    ["0x9abc..."]="Emergency Admin"
-    # Add more address mappings here
+    ["0x0000000000000000000000000000000000000000"]="Burn Address"
+    ["0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"]="HypurrFi Deployer"
+    ["0xC2b3075fB1AC9f5eCc1e2C07dA8bcCC43e7083fb"]="HypurrFiTeam Multisig"
+    # Add any other default mappings here
 )
 
 # Declare associative arrays for admin tracking
 declare -A ADMIN_START_BLOCKS
 declare -A ADMIN_END_BLOCKS
 declare -A ACTIVE_ADMINS
-
 
 # Event signatures for Aave V3 admin functions
 declare -A EVENT_SIGNATURES=(
@@ -148,11 +258,18 @@ check_flag() {
     fi
 }
 
+# Function to format timestamp for macOS
+format_timestamp() {
+    local timestamp=$1
+    # macOS date command format
+    date -r "$timestamp" "+%Y-%m-%d %H:%M:%S UTC"
+}
+
 # Function to get UTC timestamp from block
 get_timestamp() {
     local block_number=$1
     local timestamp=$(cast block $block_number --rpc-url $RPC_URL | grep "timestamp" | awk '{print $2}')
-    echo "🕒 $(date -u -d @$timestamp '+%Y-%m-%d %H:%M:%S UTC')"
+    echo "🕒 $(format_timestamp "$timestamp")"
 }
 
 # Function to get function name from signature
@@ -205,6 +322,7 @@ decode_function() {
     fi
 }
 
+# Function to analyze transactions for an address
 analyze_address_txns() {
     local ADDRESS=$1
     local START_BLOCK_NUM=$2
@@ -213,44 +331,191 @@ analyze_address_txns() {
     echo "🔍 Analyzing transactions for: $(format_address "$ADDRESS")"
     echo "📅 Period: Block $START_BLOCK_NUM to ${END_BLOCK_NUM:-latest}"
 
-    # Call Parsec API to get transactions with logs
-    local transactions=$(curl -s "https://api.parsec.finance/api/rest/transactions\
-?addresses=$ADDRESS\
-&chains=hyper_evm\
-&apiKey=$PARSEC_API_KEY")
+    local apiUrl="https://api.parsec.finance/api/rest/transactions?addresses=$ADDRESS&chains=hyper_evm&apiKey=$PARSEC_API_KEY&limit=200&includeLogs=true"
 
-    # Process each transaction and its logs
-    echo "$transactions" | jq -c '.[]' | while read -r tx; do
-        local tx_hash=$(echo "$tx" | jq -r '.hash')
-        local block_number=$(echo "$tx" | jq -r '.blockNumber')
-        local timestamp=$(echo "$tx" | jq -r '.timestamp')
-        
-        # Get logs from the transaction
-        local logs=$(echo "$tx" | jq -c '.logs[]?')
-        
-        # Check if any logs match our admin events
-        if [ ! -z "$logs" ]; then
-            local found_admin_event=false
-            
-            echo "$logs" | while read -r log; do
-                local topics=$(echo "$log" | jq -r '.topics[]')
-                local first_topic=$(echo "$topics" | head -n1)
-                
-                # Check if this is an admin event we're tracking
-                if [ ! -z "${EVENT_SIGNATURES[$first_topic]}" ]; then
-                    found_admin_event=true
-                    
-                    echo -e "\n---Admin Event Found---"
-                    echo "Transaction: $tx_hash"
-                    echo "Block: $block_number"
-                    echo "🕒 $(date -u -d @$timestamp '+%Y-%m-%d %H:%M:%S UTC')"
-                    
-                    # Decode the event
-                    decode_event "$log"
-                fi
-            done
+    # Call Parsec API to get transactions and sort by timestamp
+    local transactions=$(curl -s "$apiUrl" | jq '.txs |= sort_by(.timestamp)')
+
+    # Print total number of transactions found
+    echo "$transactions" | jq -r '.txs | length' | xargs -I {} echo "Total transactions: {}"
+
+    # Process each transaction (now sorted by timestamp)
+    txn_count=0
+    processed_count=0
+    echo "$transactions" | jq -c '.txs[]?' 2>/dev/null | while read -r tx; do
+        if [ -z "$tx" ] || [ "$tx" = "null" ]; then
+            continue
         fi
+
+        # Skip transactions if needed
+        if [ "$txn_count" -lt "$TXN_SKIP" ]; then
+            ((txn_count++))
+            continue
+        fi
+
+        # Check transaction limit
+        if [ ! -z "$TXN_LIMIT" ]; then
+            if [ "$processed_count" -ge "$TXN_LIMIT" ]; then
+                processed_count=$TXN_LIMIT
+                echo -e "\n════════════════════════════════════════"
+                echo -e "\n🛑 Reached transaction limit ($TXN_LIMIT)"
+                break
+            fi
+        fi
+        
+        # Increment counters
+        ((txn_count++))
+        ((processed_count++))
+
+        # Extract transaction details
+        local tx_hash=$(echo "$tx" | jq -r '.hash // empty')
+        local block_number=$(echo "$tx" | jq -r '.block // empty')
+        local timestamp=$(echo "$tx" | jq -r '.timestamp // empty')
+        
+        # Check timestamp cutoffs if specified
+        if [ ! -z "$timestamp" ]; then
+            # Convert timestamp to integer for comparison
+            timestamp_int=$(echo "$timestamp" | cut -d. -f1)  # Remove any decimal part
+            
+            # Skip if before the after timestamp
+            if [ ! -z "$TIMESTAMP_AFTER" ] && [ "$timestamp_int" -lt "$TIMESTAMP_AFTER" ]; then
+                continue
+            fi
+            # Break if after the before timestamp
+            if [ ! -z "$TIMESTAMP_BEFORE" ] && [ "$timestamp_int" -gt "$TIMESTAMP_BEFORE" ]; then
+                echo "🕒 Reached timestamp cutoff"
+                break
+            fi
+        fi
+
+        local contract_creation=$(echo "$tx" | jq -r '.contract_creation // empty')
+        local to_address=$(echo "$tx" | jq -r '.to // empty')
+        local value=$(echo "$tx" | jq -r '.value // "0.0"')
+        local status=$(echo "$tx" | jq -r '.status // false')
+        
+        echo -e "\n════════════════════════════════════════"
+        echo "TRANSACTION"
+        echo "════════════════════════════════════════"
+        if [ ! -z "$timestamp" ]; then
+            echo "🕒 $(format_timestamp "$timestamp")"
+        fi
+        
+        # Handle contract creation transactions
+        if [ ! -z "$contract_creation" ] && [ "$contract_creation" != "null" ]; then
+            local contract_name=$(get_contract_details "$contract_creation")
+            echo "📝 Contract Creation:"
+            echo "   Address: $contract_creation"
+            echo "   Name: $contract_name"
+        else
+            if [ ! -z "$to_address" ]; then
+                echo "To: $(format_address "$to_address")"
+            fi
+            if [ "$value" != "0.0" ]; then
+                echo "Value: $value ETH"
+            fi
+        fi
+
+        # Process status
+        if [ "$status" = "true" ]; then
+            echo "✅ Status: Success"
+        else
+            echo "❌ Status: Failed"
+        fi
+
+        echo "🧱 Block: $block_number"
+
+        # Show link at the end
+        if [ ! -z "$tx_hash" ]; then
+            echo "🔗 $PURRSEC_URL/$tx_hash"
+        fi
+        
+        # Process logs if they exist
+        echo "$tx" | jq -c '.logs[]?' 2>/dev/null | while read -r log; do
+            if [ -z "$log" ] || [ "$log" = "null" ]; then
+                continue
+            fi
+
+            local topic=$(echo "$log" | jq -r '.topic // empty')
+            if [ -z "$topic" ]; then
+                continue
+            fi
+
+            # Skip non-OwnershipTransferred events if filter is enabled
+            if [ "$FILTER_OWNERSHIP_EVENTS" = true ] && [ "$topic" != "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0" ]; then
+                continue
+            fi
+
+            local name=$(echo "$log" | jq -r '.name // empty')
+            local address=$(echo "$log" | jq -r '.address // empty')
+            local address_label=$(echo "$log" | jq -r '.addressLabel.label // empty')
+            local data=$(echo "$log" | jq -r '.data // "{}"')
+            
+            # Update ADDRESS_NAMES if we have a contract name in the logs
+            if [ ! -z "$address" ] && [ ! -z "$address_label" ] && [ "$address_label" != "null" ]; then
+                ADDRESS_NAMES["${address,,}"]="$address_label"
+            fi
+            
+            # Check if this is a tracked event
+            if [ ! -z "${EVENT_SIGNATURES[$topic]}" ]; then
+                echo -e "\n    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓"
+                if [ ! -z "$address" ]; then
+                    # Convert to lowercase for consistent lookup
+                    address="${address,,}"
+                    
+                    # Check if we already have a name for this address
+                    if [ -z "${ADDRESS_NAMES[$address]}" ]; then
+                        # If not, try to get it from Parsec API
+                        local contract_name=$(get_contract_details "$address")
+                        if [ "$contract_name" != "Unknown" ]; then
+                            ADDRESS_NAMES["$address"]="$contract_name"
+                        fi
+                    fi
+                    
+                    echo -e "\n    Contract: $(format_address "$address")"
+                fi
+                
+                if [ ! -z "$name" ] && [ "$name" != "null" ]; then
+                    echo "    Event: $name"
+                else
+                    echo "    Event: ${EVENT_SIGNATURES[$topic]}"
+                fi
+                
+                # Parse raw data parameters
+                echo "$log" | jq -c '.rawData[]?' 2>/dev/null | while read -r param; do
+                    if [ -z "$param" ] || [ "$param" = "null" ]; then
+                        continue
+                    fi
+                    
+                    if [[ $param == *"0x000000000000000000000000"* ]]; then
+                        # This is likely an address parameter
+                        # Remove quotes and extract the address part
+                        param=$(echo "$param" | tr -d '"')
+                        local addr="0x${param:26:40}"  # Take exactly 40 chars after prefix
+                        # Convert to lowercase for consistent lookup
+                        addr="${addr,,}"
+                        echo "    Parameter: $(format_address "$addr")"
+                    else
+                        echo "    Parameter: $param"
+                    fi
+                done
+                
+                # Show decoded data if available
+                if [ "$data" != "{}" ] && [ "$data" != "null" ]; then
+                    echo "    Decoded Data:"
+                    echo "    $data" | jq '.' 2>/dev/null || echo "$data"
+                fi
+            fi
+
+
+        done
     done
+
+    # Print final stats if we didn't hit the limit
+    if [ -z "$TXN_LIMIT" ]; then
+        echo "📊 Processed $processed_count transaction(s) (skipped first $TXN_SKIP)"
+    else
+        echo "📊 Processed $TXN_LIMIT transaction(s) (skipped first $TXN_SKIP)"
+    fi
 }
 
 # Function to decode events and their parameters
@@ -298,35 +563,6 @@ decode_event() {
     # Show raw data for debugging
     echo "   Raw Data: $data"
 }
-
-# First analyze initial EOA transactions
-echo "Starting transaction analysis..."
-analyze_address_txns "$INITIAL_EOA" "$START_BLOCK"
-
-# Process any discovered admin changes
-for admin in "${!ACTIVE_ADMINS[@]}"; do
-    echo -e "\n\n====================================="
-    echo "Analyzing temporary pool admin: $(format_address "$admin")"
-    echo "====================================="
-    
-    start_block="${ADMIN_START_BLOCKS[$admin]}"
-    end_block="${ADMIN_END_BLOCKS[$admin]:-latest}"
-    
-    analyze_address_txns "$admin" "$start_block" "$end_block"
-done
-
-# Print summary
-echo -e "\n📊 Admin Activity Summary:"
-for admin in "${!ADMIN_START_BLOCKS[@]}"; do
-    echo "Address: $(format_address "$admin")"
-    echo "Active from block: ${ADMIN_START_BLOCKS[$admin]}"
-    if [ ! -z "${ADMIN_END_BLOCKS[$admin]}" ]; then
-        echo "Removed at block: ${ADMIN_END_BLOCKS[$admin]}"
-    else
-        echo "Still active"
-    fi
-    echo "-------------------"
-done
 
 get_all_transactions() {
     local ADDRESS=$1
@@ -402,8 +638,8 @@ process_event() {
     local tx_details=$(cast tx "$tx_hash" --rpc-url $RPC_URL)
     
     # Get timestamp
-    local timestamp=$(cast block "$block_number" --rpc-url $RPC_URL | grep "timestamp" | awk '{print $2}')
-    echo "🕒 $(date -u -d @$timestamp '+%Y-%m-%d %H:%M:%S UTC')"
+    local timestamp=$(cast block "$block_number" --rpc-url "$RPC_URL" | grep "timestamp" | awk '{print $2}')
+    echo "🕒 $(format_timestamp "$timestamp")"
     
     # Get function signature
     local input_data=$(echo "$tx_details" | grep "input" | cut -d' ' -f2-)
@@ -433,7 +669,9 @@ get_transactions() {
 # Function to analyze a contract deployment transaction
 analyze_deployment() {
     local tx_hash=$1
-    echo -e "\n---Analyzing Transaction---"
+    echo -e "\n════════════════════════════════════════"
+    echo "TRANSACTION"
+    echo "════════════════════════════════════════"
     echo "Transaction: $tx_hash"
     
     # Get transaction details
@@ -447,7 +685,7 @@ analyze_deployment() {
     local block_number=$(echo "$tx_details" | grep "block" | awk '{print $2}')
     local timestamp=$(cast block "$block_number" --rpc-url "$RPC_URL" | grep "timestamp" | awk '{print $2}')
     
-    echo "🕒 $(date -u -d @$timestamp '+%Y-%m-%d %H:%M:%S UTC')"
+    echo "🕒 $(format_timestamp "$timestamp")"
     
     if [ ! -z "$contract_address" ]; then
         echo "📍 Contract Deployment at: $contract_address"
@@ -459,3 +697,32 @@ analyze_deployment() {
         echo "To: $to_address"
     fi
 }
+
+# Function to get contract details from Parsec API and update address names
+get_contract_details() {
+    local contract_address="${1,,}"  # Convert to lowercase
+    
+    # Check if we already know this contract's name
+    if [ ! -z "${ADDRESS_NAMES[$contract_address]}" ]; then
+        echo "${ADDRESS_NAMES[$contract_address]}"
+        return 0
+    fi
+    
+    # If not in our mapping, fetch from API
+    local api_response=$(curl -s "https://api.parsec.finance/api/rest/contract?address=$contract_address&chain=hyper_evm&apiKey=$PARSEC_API_KEY")
+    local contract_name=$(echo "$api_response" | jq -r '.contract.sourceCode.name // "Unknown"')
+    
+    # Update ADDRESS_NAMES mapping with the contract name if found
+    if [ "$contract_name" != "Unknown" ] && [ "$contract_name" != "null" ]; then
+        ADDRESS_NAMES["$contract_address"]="$contract_name"
+        echo "$contract_name"
+    else
+        echo "Unknown"
+    fi
+}
+
+# Main execution flow (move this to the end of the file)
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    echo "Starting transaction analysis..."
+    analyze_address_txns "$INITIAL_EOA" "$START_BLOCK"
+fi
