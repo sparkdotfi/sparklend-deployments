@@ -16,14 +16,16 @@ fi
 
 # Configuration
 RPC_URL="https://rpc.purroofgroup.com"
-INITIAL_EOA="0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"  # Your deployer EOA
+INITIAL_EOA="0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb"  # Your deployer EOA
 START_BLOCK="0"
 END_BLOCK="latest"
 FLAGGED_ADDRESSES_FILE="flagged-addresses.json"
 SHOW_FULL_ADDRESSES=true  # Default to short addresses
 FILTER_OWNERSHIP_EVENTS=false  # Default to showing all events
-TXN_LIMIT="3"
-TXN_SKIP=13
+# TXN_LIMIT="65"
+TXN_LIMIT="84"
+# TXN_SKIP=13
+TXN_SKIP=0
 PURRSEC_URL="https://purrsec.com/tx"
 
 # Helper function to convert date string to timestamp
@@ -50,9 +52,9 @@ convert_to_timestamp() {
 }
 
 # Initialize timestamps
-DEFAULT_CUTOFF="2025-02-26T00:00:00"
-TIMESTAMP_BEFORE=$(convert_to_timestamp "$DEFAULT_CUTOFF")
-TIMESTAMP_AFTER=""   # Default to no lower cutoff
+# DEFAULT_CUTOFF="2025-02-26T00:00:00"
+TIMESTAMP_BEFORE="" # Default to no upper cutoff
+TIMESTAMP_AFTER=""  # Default to no lower cutoff
 
 # Helper function to format timestamp to human readable
 format_timestamp_human() {
@@ -148,16 +150,16 @@ if [ ! -z "$TIMESTAMP_AFTER" ] || [ ! -z "$TIMESTAMP_BEFORE" ]; then
     fi
 fi
 
-# Known function signatures
-TRANSFER_OWNERSHIP_SIG="0xf2fde38b"  # transferOwnership(address)
-ADD_POOL_ADMIN_SIG="0x283d62ad"      # addPoolAdmin(address)
-REMOVE_POOL_ADMIN_SIG="0x72a57b6b"    # removePoolAdmin(address)
-
+# Address name mapping
 # Address name mapping
 declare -A ADDRESS_NAMES=(
     ["0x0000000000000000000000000000000000000000"]="Burn Address"
     ["0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"]="HypurrFi Deployer"
-    ["0xC2b3075fB1AC9f5eCc1e2C07dA8bcCC43e7083fb"]="HypurrFiTeam Multisig"
+    ["0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb"]="HypurrFi Team Multisig"
+    ["0xafe1b6f29217fc917e3f9c725de07fdf4506f786"]="ReserveInitializer 1"
+    ["0xa2d096e01b73048772c0fb3ad6a789af9788db08"]="ReserveInitializer 2"
+    ["0x94e8396e0869c9f2200760af0621afd240e1cf38"]="wstHYPE"
+    ["0x5555555555555555555555555555555555555555"]="WHYPE"
     # Add any other default mappings here
 )
 
@@ -168,6 +170,27 @@ declare -A ACTIVE_ADMINS
 
 # Event signatures for Aave V3 admin functions
 declare -A EVENT_SIGNATURES=(
+    # ACL Events
+    ["0xe9cf53972264dc95304fd424458745019ddfca0e37ae8f703d74772c41ad115b"]="ACLAdminUpdated(address,address)"
+    ["0x2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d"]="RoleGranted(bytes32,address,address)"
+    ["0xf6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b"]="RoleRevoked(bytes32,address,address)"
+    
+    # PoolAddressesProvider Events
+    ["0xb30efa04327bb8a537d61cc1e5c48095345ad18ef7cc04e6bacf7dfb6caaf507"]="ACLManagerUpdated(address,address)"
+    ["0x9ef0e8c8e52743bb38b83b17d9429141d494b8041ca6d616a6c77cebae9cd8b7"]="AddressSet(bytes32,address,address)"
+    ["0x3bbd45b5429b385e3fb37ad5cd1cd1435a3c8ec32196c7937597365a3fd3e99c"]="AddressSetAsProxy(bytes32,address,address,address)"
+    ["0xe685c8cdecc6030c45030fd54778812cb84ed8e4467c38294403d68ba7860823"]="MarketIdSet(string,string)"
+    ["0x8932892569eba59c8382a089d9b732d1f49272878775235761a2a6b0309cd465"]="PoolConfiguratorUpdated(address,address)"
+    ["0xc853974cfbf81487a14a23565917bee63f527853bcb5fa54f2ae1cdf8a38356d"]="PoolDataProviderUpdated(address,address)"
+    ["0x90affc163f1a2dfedcd36aa02ed992eeeba8100a4014f0b4cdc20ea265a66627"]="PoolUpdated(address,address)"
+    ["0x5326514eeca90494a14bedabcff812a0e683029ee85d1e23824d44fd14cd6ae7"]="PriceOracleSentinelUpdated(address,address)"
+    ["0x56b5f80d8cac1479698aa7d01605fd6111e90b15fc4d2b377417f46034876cbd"]="PriceOracleUpdated(address,address)"
+    ["0x4a465a9bd819d9662563c1e11ae958f8109e437e7f4bf1c6ef0b9a7b3f35d478"]="ProxyCreated(bytes32,address,address)"
+    
+    # PoolAddressesProviderRegistry Events
+    ["0xc2e7cc813550ef0e7126cc0571281850ce5df2e9c400acf3589c38e4627f85f1"]="AddressesProviderRegistered(address,uint256)"
+    ["0x254723080701bde71d562cad0e967cef23d86bb27ee842c190a2596820f3b241"]="AddressesProviderUnregistered(address,uint256)"
+    
     # Pool Admin Events
     ["0x8936e1f096bf0a8c9df862b3d1d5b82774cad78116200175f00b5b7ba3010b0e"]="PoolAdminAdded(address)"
     ["0x787a2e12f4a55b658b8f573c32432ee11a5e8b51677d1bdad8b2ec946f939ba8"]="PoolAdminRemoved(address)"
@@ -234,18 +257,62 @@ declare -A EVENT_SIGNATURES=(
     # Treasury Events
     ["0xc890e9ad6431ca53be76ed57b3aaa5b37435a6dc76a33505e91d2531c4bf9c03"]="TreasuryChanged(address)"
     ["0x7757f7fb26f9c4ec0e11bc5e2e67358f69f3c3fe5dc42f2d66db8c39f4ec87fe"]="TreasuryFeeChanged(uint256)"
+
+    # Pool Configurator Events
+    ["0xa76f65411ec66a7fb6bc467432eb14767900449ae4469fa295e4441fe5e1cb73"]="ATokenUpgraded(address,address,address)"
+    ["0xc51aca575985d521c5072ad11549bad77013bb786d57f30f94b40ed8f8dc9bc4"]="BorrowCapChanged(address,uint256,uint256)"
+    ["0x74adf6aaf58c08bc4f993640385e136522375ea3d1589a10d02adbb906c67d1c"]="BorrowableInIsolationChanged(address,bool)"
+    ["0x30b17cb587a89089d003457c432f73e22aeee93de425e92224ba01080260ecd9"]="BridgeProtocolFeeUpdated(uint256,uint256)"
+    ["0x637febbda9275aea2e85c0ff690444c8d87eb2e8339bbede9715abcc89cb0995"]="CollateralConfigurationChanged(address,uint256,uint256,uint256)"
+    ["0x6824a6c7fbc10d2979b1f1ccf2dd4ed0436541679a661dedb5c10bd4be830682"]="DebtCeilingChanged(address,uint256,uint256)"
+    ["0x5bb69795b6a2ea222d73a5f8939c23471a1f85a99c7ca43c207f1b71f10c6264"]="EModeAssetCategoryChanged(address,uint8,uint8)"
+    ["0x0acf8b4a3cace10779798a89a206a0ae73a71b63acdd3be2801d39c2ef7ab3cb"]="EModeCategoryAdded(uint8,uint256,uint256,uint256,address,string)"
+    ["0xe7e0c75e1fc2d0bd83dc85d59f085b3e763107c392fb368e85572b292f1f5576"]="FlashloanPremiumToProtocolUpdated(uint128,uint128)"
+    ["0x71aba182c9d0529b516de7a78bed74d49c207ef7e152f52f7ea5d8730138f643"]="FlashloanPremiumTotalUpdated(uint128,uint128)"
+    ["0xb5b0a963825337808b6e3154de8e98027595a5cad4219bb3a9bc55b192f4b391"]="LiquidationProtocolFeeChanged(address,uint256,uint256)"
+    ["0xc36c7d11ba01a5869d52aa4a3781939dab851cbc9ee6e7fdcedc7d58898a3f1e"]="ReserveActive(address,bool)"
+    ["0x2443ba28e8d1d88d531a3d90b981816a4f3b3c7f1fd4085c6029e81d1b7a570d"]="ReserveBorrowing(address,bool)"
+    ["0xeeec4c06f7adad215cbdb4d2960896c83c26aedce02dde76d36fa28588d62da4"]="ReserveDropped(address)"
+    ["0xb46e2b82b0c2cf3d7d9dece53635e165c53e0eaa7a44f904d61a2b7174826aef"]="ReserveFactorChanged(address,uint256,uint256)"
+    ["0xc8ff3cc5b0fddaa3e6ebbbd7438f43393e4ea30e88b80ad016c1bc094655034d"]="ReserveFlashLoaning(address,bool)"
+    ["0x0c4443d258a350d27dc50c378b2ebf165e6469725f786d21b30cab16823f5587"]="ReserveFrozen(address,bool)"
+    ["0x3a0ca721fc364424566385a1aa271ed508cc2c0949c2272575fb3013a163a45f"]="ReserveInitialized(address,address,address,address,address)"
+    ["0xdb8dada53709ce4988154324196790c2e4a60c377e1256790946f83b87db3c33"]="ReserveInterestRateStrategyChanged(address,address,address)"
+    ["0xe188d542a5f11925d3a3af33703cdd30a43cb3e8066a3cf68b1b57f61a5a94b5"]="ReservePaused(address,bool)"
+    ["0x0b64d0941719acd363f1a6be3d8525d8ec9d71738f7445aabcd88d7939b472e7"]="ReserveStableRateBorrowing(address,bool)"
+    ["0x842a280b07e8e502a9101f32a3b768ebaba3655556dd674f0831900861fc674b"]="SiloedBorrowingChanged(address,bool,bool)"
+    ["0x7a943a5b6c214bf7726c069a878b1e2a8e7371981d516048b84e03743e67bc28"]="StableDebtTokenUpgraded(address,address,address)"
+    ["0x0263602682188540a2d633561c0b4453b7d8566285e99f9f6018b8ef2facef49"]="SupplyCapChanged(address,uint256,uint256)"
+    ["0x09808b1fc5abde94edf02fdde393bea0d2e4795999ba31695472848638b5c29f"]="UnbackedMintCapChanged(address,uint256,uint256)"
+    ["0x9439658a562a5c46b1173589df89cf001483d685bad28aedaff4a88656292d81"]="VariableDebtTokenUpgraded(address,address,address)"
 )
 
-# Function to format address display
-format_address() {
-    local address=$1
-    local name="${ADDRESS_NAMES[$address]:-Unknown}"
+# Add function signatures mapping
+declare -A FUNCTION_SIGNATURES=(
+    ["0x4dd18bf5"]="setACLAdmin(address)"
+    # Add other known function signatures here
+)
+
+# First, let's add debug logging to load_address_names
+load_address_names() {
+    # Reset the associative array
+    declare -g -A ADDRESS_NAMES
     
-    if [ "$SHOW_FULL_ADDRESSES" = true ]; then
+    while IFS='=' read -r address name; do
+        # Convert address to lowercase and store
+        local lower_address="${address,,}"
+        ADDRESS_NAMES["$lower_address"]="$name"
+    done < "$FLAGGED_ADDRESSES_FILE"
+}
+
+# And in format_address, let's add debug
+format_address() {
+    local address="${1,,}" # Convert to lowercase
+    local name="${ADDRESS_NAMES[$address]}"
+    if [ ! -z "$name" ]; then
         echo "$address ($name)"
     else
-        # Show first 6 and last 4 characters
-        echo "${address:0:6}...${address: -4} ($name)"
+        echo "$address (Unknown)"
     fi
 }
 
@@ -324,6 +391,8 @@ decode_function() {
 
 # Function to analyze transactions for an address
 analyze_address_txns() {
+    load_address_names
+    
     local ADDRESS=$1
     local START_BLOCK_NUM=$2
     local END_BLOCK_NUM=$3
@@ -331,7 +400,7 @@ analyze_address_txns() {
     echo "🔍 Analyzing transactions for: $(format_address "$ADDRESS")"
     echo "📅 Period: Block $START_BLOCK_NUM to ${END_BLOCK_NUM:-latest}"
 
-    local apiUrl="https://api.parsec.finance/api/rest/transactions?addresses=$ADDRESS&chains=hyper_evm&apiKey=$PARSEC_API_KEY&limit=200&includeLogs=true"
+    local apiUrl="https://api.parsec.finance/api/rest/transactions?addresses=$ADDRESS&chains=hyper_evm&apiKey=$PARSEC_API_KEY&limit=200&includeLogs=true&includeInput=true"
 
     # Call Parsec API to get transactions and sort by timestamp
     local transactions=$(curl -s "$apiUrl" | jq '.txs |= sort_by(.timestamp)')
@@ -392,23 +461,41 @@ analyze_address_txns() {
         local to_address=$(echo "$tx" | jq -r '.to // empty')
         local value=$(echo "$tx" | jq -r '.value // "0.0"')
         local status=$(echo "$tx" | jq -r '.status // false')
-        
+        local input_data=$(echo "$tx" | jq -r '.input // empty')
+
         echo -e "\n════════════════════════════════════════"
-        echo "TRANSACTION"
+        if [ ! -z "$contract_creation" ] && [ "$contract_creation" != "null" ]; then
+            echo "CONTRACT CREATION"
+        else
+            echo "TRANSACTION"
+        fi
         echo "════════════════════════════════════════"
+        
         if [ ! -z "$timestamp" ]; then
             echo "🕒 $(format_timestamp "$timestamp")"
         fi
         
+        # Show function call if available
+        local input_decoded=$(echo "$tx" | jq -r '.inputDecoded // empty')
+        if [ ! -z "$input_decoded" ]; then
+            local function_name=$(echo "$input_decoded" | jq -r '.function // empty')
+            local args=$(echo "$input_decoded" | jq -r '.args // empty')
+            
+            if [ ! -z "$function_name" ]; then
+                echo "📝 Function: $function_name"
+                if [ ! -z "$args" ] && [ "$args" != "null" ]; then
+                    echo "📋 Arguments: $args"
+                fi
+            fi
+        fi
+
         # Handle contract creation transactions
         if [ ! -z "$contract_creation" ] && [ "$contract_creation" != "null" ]; then
-            local contract_name=$(get_contract_details "$contract_creation")
-            echo "📝 Contract Creation:"
-            echo "   Address: $contract_creation"
-            echo "   Name: $contract_name"
+            echo "📝 Contract Created"
+            echo "🏠 Address: $contract_creation ($(get_contract_details "$contract_creation"))"
         else
             if [ ! -z "$to_address" ]; then
-                echo "To: $(format_address "$to_address")"
+                echo "To: $to_address ($(get_contract_details "$to_address"))"
             fi
             if [ "$value" != "0.0" ]; then
                 echo "Value: $value ETH"
@@ -422,7 +509,7 @@ analyze_address_txns() {
             echo "❌ Status: Failed"
         fi
 
-        echo "🧱 Block: $block_number"
+        echo "📦 Block: $block_number"
 
         # Show link at the end
         if [ ! -z "$tx_hash" ]; then
@@ -493,7 +580,8 @@ analyze_address_txns() {
                         local addr="0x${param:26:40}"  # Take exactly 40 chars after prefix
                         # Convert to lowercase for consistent lookup
                         addr="${addr,,}"
-                        echo "    Parameter: $(format_address "$addr")"
+                        local contract_name=$(get_contract_details "$addr")
+                        echo "    Parameter: $addr ($contract_name)"
                     else
                         echo "    Parameter: $param"
                     fi
@@ -726,3 +814,4 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     echo "Starting transaction analysis..."
     analyze_address_txns "$INITIAL_EOA" "$START_BLOCK"
 fi
+
