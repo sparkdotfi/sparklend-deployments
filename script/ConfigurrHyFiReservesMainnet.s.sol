@@ -42,9 +42,9 @@ contract ConfigurrHyFiReserves is HyperMainnetReservesConfigs, Script {
 
         vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
 
-        tokens = _fetchMainnetTokens(config);
+        tokens = _fetchTokens(config);
 
-        oracles = _fetchMainnetOracles(config);
+        oracles = _fetchOracles(config);
 
         for (uint i; i < oracles.length; i++) {
             require(IEACAggregatorProxy(oracles[i]).latestAnswer() > 0);

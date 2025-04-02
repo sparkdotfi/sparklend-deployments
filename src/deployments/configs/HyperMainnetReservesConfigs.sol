@@ -55,6 +55,23 @@ contract HyperMainnetReservesConfigs {
         return tokens;
     }
 
+    function _fetchTokens(string memory config) 
+    internal
+    returns (address[] memory tokens) {
+        string[] memory tokenNames = config.readStringArray(".tokens");
+        tokens = new address[](tokenNames.length);
+        for (uint i; i < tokenNames.length; i++) {
+            string memory tokenConfig = DeployUtils.readTokenConfig(tokenNames[i]);
+            tokens[i] = tokenConfig.readAddress(".tokenAddress");
+
+            // SAFEGUARD: verify token symbol matches onchain
+            string memory symbol = IERC20Metadata(tokens[i]).symbol();
+            require(keccak256(abi.encodePacked(symbol)) == keccak256(abi.encodePacked(tokenNames[i])), 
+                string(abi.encodePacked("Token symbol mismatch: ", symbol, " != ", tokenNames[i])));
+        }
+        return tokens;
+    }
+
     function _fetchMainnetOracles(string memory) internal pure returns (address[] memory oracles) {
         oracles = new address[](1);
 
@@ -64,6 +81,39 @@ contract HyperMainnetReservesConfigs {
         oracles[0] = address(0x44Bbb85E5B1799569dD02054Cfb38028656Ae30A); // UETH
 
         return oracles;
+    }
+
+    function _fetchOracles(string memory config)
+    internal                 
+    returns (address[] memory oracles) {
+        string[] memory tokenNames = config.readStringArray(".tokens");
+        oracles = new address[](tokenNames.length);
+        for (uint i; i < tokenNames.length; i++) {
+            string memory tokenConfig = DeployUtils.readTokenConfig(tokenNames[i]);
+            oracles[i] = tokenConfig.readAddress(".oracleAddress");
+
+            // SAFEGUARD: verify oracle address is valid
+            require(IEACAggregatorProxy(oracles[i]).latestAnswer() > 0, string(abi.encodePacked("Oracle price mismatch for ", tokenNames[i])));
+            require(IEACAggregatorProxy(oracles[i]).decimals() == 8, string(abi.encodePacked("Oracle decimals mismatch for ", tokenNames[i])));
+        
+            // SAFEGUARD: verify oracle price is within tolerance of expected price
+            int256 oraclePrice = IEACAggregatorProxy(oracles[i]).latestAnswer();
+            int256 expectedPrice = int256(tokenConfig.readUint(".expectedPrice"));
+            int256 tolerance = (expectedPrice * int256(config.readUint(".oracleTolerancePercentage"))) / 100;
+            
+            require(
+                oraclePrice >= expectedPrice - tolerance && 
+                oraclePrice <= expectedPrice + tolerance,
+                string(abi.encodePacked(
+                    "Oracle price out of tolerance for ", 
+                    tokenNames[i],
+                    ": expected ",
+                    vm2.toString(uint256(expectedPrice)),
+                    " got ",
+                    vm2.toString(uint256(oraclePrice))
+                ))
+            );
+        }   
     }
 
     function _updateDebtToken(ConfiguratorInputTypes.UpdateDebtTokenInput memory input) internal {

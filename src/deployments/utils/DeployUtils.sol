@@ -47,6 +47,15 @@ library DeployUtils {
         return vm.readFile(tokenConfigPath);
     }
 
+    function readTokenConfig(string memory tokenSymbol) internal view returns (string memory) {
+        // Read JSON file from script/inputs/{chainId}/{tokenSymbol}.json
+        string memory chainInputFolder =
+            string(abi.encodePacked("./script/input/", vm.toString(getRootChainId()), "/assets/"));
+        string memory tokenConfigPath =
+            string(abi.encodePacked(chainInputFolder, tokenSymbol, ".json"));
+        return vm.readFile(tokenConfigPath);
+    }
+
     /**
      * @notice Use standard environment variables to load config.
      * @dev Will first check FOUNDRY_SCRIPT_CONFIG_TEXT for raw json text.
