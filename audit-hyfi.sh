@@ -154,12 +154,14 @@ fi
 # Address name mapping
 declare -A ADDRESS_NAMES=(
     ["0x0000000000000000000000000000000000000000"]="Burn Address"
-    ["0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"]="HypurrFi Deployer"
+    ["0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"]="HypurrFi Deployer 1"
     ["0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb"]="HypurrFi Team Multisig"
     ["0xafe1b6f29217fc917e3f9c725de07fdf4506f786"]="ReserveInitializer 1"
     ["0xa2d096e01b73048772c0fb3ad6a789af9788db08"]="ReserveInitializer 2"
     ["0x94e8396e0869c9f2200760af0621afd240e1cf38"]="wstHYPE"
     ["0x5555555555555555555555555555555555555555"]="WHYPE"
+    ["0x41dfedc82218d625f91f9a8ee2b1eb27beed287a"]="HypurrFi Deployer 2"
+    ["0x9fdbda0a5e284c32744d2f17ee5c74b284993463"]="UBTC"
     # Add any other default mappings here
 )
 
@@ -567,30 +569,19 @@ analyze_address_txns() {
                     echo "    Event: ${EVENT_SIGNATURES[$topic]}"
                 fi
                 
-                # Parse raw data parameters
-                echo "$log" | jq -c '.rawData[]?' 2>/dev/null | while read -r param; do
-                    if [ -z "$param" ] || [ "$param" = "null" ]; then
-                        continue
-                    fi
-                    
-                    if [[ $param == *"0x000000000000000000000000"* ]]; then
-                        # This is likely an address parameter
-                        # Remove quotes and extract the address part
-                        param=$(echo "$param" | tr -d '"')
-                        local addr="0x${param:26:40}"  # Take exactly 40 chars after prefix
-                        # Convert to lowercase for consistent lookup
-                        addr="${addr,,}"
-                        local contract_name=$(get_contract_details "$addr")
-                        echo "    Parameter: $addr ($contract_name)"
-                    else
-                        echo "    Parameter: $param"
-                    fi
-                done
-                
                 # Show decoded data if available
                 if [ "$data" != "{}" ] && [ "$data" != "null" ]; then
                     echo "    Decoded Data:"
-                    echo "$data" | jq '.' 2>/dev/null | sed 's/^/        /'
+                    # First extract all addresses and get their labels
+                    while read -r addr; do
+                        if [[ $addr =~ ^0x[a-fA-F0-9]{40}$ ]]; then
+                            label=$(get_contract_details "$addr")
+                            data=$(echo "$data" | sed "s|\"$addr\"|\"$addr ($label)\"|g")
+                        fi
+                    done < <(echo "$data" | jq -r '..|select(type == "string" and test("^0x[a-fA-F0-9]{40}$"))' 2>/dev/null)
+                    
+                    # Then print the formatted JSON
+                    echo "$data" | jq '.' 2>/dev/null | sed 's/^/    /'
                 fi
             fi
 
