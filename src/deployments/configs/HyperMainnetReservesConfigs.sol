@@ -30,6 +30,7 @@ import {ScriptTools} from "dss-test/ScriptTools.sol";
 import {Vm} from "forge-std/Vm.sol";
 import "forge-std/console.sol";
 import {ReserveInitializer} from "src/periphery/contracts/misc/ReserveInitializer.sol";
+import {AggregatorV3Interface} from "src/contracts/oracle/interfaces/AggregatorV3Interface.sol";
 
 contract HyperMainnetReservesConfigs {
     using stdJson for string;
@@ -100,6 +101,13 @@ contract HyperMainnetReservesConfigs {
             int256 oraclePrice = IEACAggregatorProxy(oracles[i]).latestAnswer();
             int256 expectedPrice = int256(tokenConfig.readUint(".expectedPrice"));
             int256 tolerance = (expectedPrice * int256(config.readUint(".oracleTolerancePercentage"))) / 100;
+
+            // SAFEGUARD: verify oracle description matches
+            require(
+                keccak256(bytes(AggregatorV3Interface(oracles[i]).description())) == 
+                keccak256(abi.encodePacked(tokenNames[i], "/USD Oracle")), 
+                string(abi.encodePacked("Oracle description mismatch for ", tokenNames[i]))
+            );
             
             require(
                 oraclePrice >= expectedPrice - tolerance && 

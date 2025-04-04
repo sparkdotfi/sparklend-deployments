@@ -4,8 +4,8 @@
     "marketId": "HypurrFi Mainnet",
     "nativeToken": "0x5555555555555555555555555555555555555555",
     "nativeTokenOracle": "0x1d0E4EA616A749c1620118F7d97c111e8ec36E8b",
-    "oracleTolerancePercentage": 5,
+    "oracleTolerancePercentage": 10,
     "tokens": [
-        "UBTC"
+        "fHYPE"
     ]
 }

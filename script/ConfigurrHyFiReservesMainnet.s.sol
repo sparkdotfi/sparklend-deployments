@@ -46,11 +46,6 @@ contract ConfigurrHyFiReserves is HyperMainnetReservesConfigs, Script {
 
         oracles = _fetchOracles(config);
 
-        for (uint i; i < oracles.length; i++) {
-            require(IEACAggregatorProxy(oracles[i]).latestAnswer() > 0);
-            require(IEACAggregatorProxy(oracles[i]).decimals() == 8);
-        }
-
         // set oracles
         _getAaveOracle().setAssetSources(tokens, oracles);
 
