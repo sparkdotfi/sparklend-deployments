@@ -1,5 +1,8 @@
 {
     "ltv": 2000,
     "liquidationThreshold": 4500,
-    "liquidationBonus": 10800
+    "liquidationBonus": 10800,
+    "tokenAddress": "0x0000000000000000000000000000000000000000",
+    "oracleAddress": "0x0000000000000000000000000000000000000000",
+    "expectedPrice": 80000e8
 }

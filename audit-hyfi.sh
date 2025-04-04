@@ -155,13 +155,13 @@ fi
 declare -A ADDRESS_NAMES=(
     ["0x0000000000000000000000000000000000000000"]="Burn Address"
     ["0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"]="HypurrFi Deployer 1"
+    ["0x41dfedc82218d625f91f9a8ee2b1eb27beed287a"]="HypurrFi Deployer 2"
     ["0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb"]="HypurrFi Team Multisig"
     ["0xafe1b6f29217fc917e3f9c725de07fdf4506f786"]="ReserveInitializer 1"
     ["0xa2d096e01b73048772c0fb3ad6a789af9788db08"]="ReserveInitializer 2"
+    ["0x9fdbda0a5e284c32744d2f17ee5c74b284993463"]="UBTC"
     ["0x94e8396e0869c9f2200760af0621afd240e1cf38"]="wstHYPE"
     ["0x5555555555555555555555555555555555555555"]="WHYPE"
-    ["0x41dfedc82218d625f91f9a8ee2b1eb27beed287a"]="HypurrFi Deployer 2"
-    ["0x9fdbda0a5e284c32744d2f17ee5c74b284993463"]="UBTC"
     # Add any other default mappings here
 )
 
