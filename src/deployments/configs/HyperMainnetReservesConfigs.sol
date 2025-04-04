@@ -69,6 +69,11 @@ contract HyperMainnetReservesConfigs {
             string memory symbol = IERC20Metadata(tokens[i]).symbol();
             require(keccak256(abi.encodePacked(symbol)) == keccak256(abi.encodePacked(tokenNames[i])), 
                 string(abi.encodePacked("Token symbol mismatch: ", symbol, " != ", tokenNames[i])));
+
+            // SAFEGUARD: verify token name matches onchain
+            string memory name = IERC20Metadata(tokens[i]).name();
+            require(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(tokenConfig.readString(".tokenName"))),
+                string(abi.encodePacked("Token name mismatch: ", name, " != ", tokenConfig.readString(".tokenName"))));
         }
         return tokens;
     }
