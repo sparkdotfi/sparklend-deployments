@@ -1,0 +1,1669 @@
+Starting transaction analysis...
+🔍 Analyzing transactions for: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+📅 Period: Block 0 to 602136
+Total transactions: 193
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:33:00 UTC
+📝 Contract Created
+🏠 Address: 0x578ed836e04f7447559b1c7d4b10082c9e1d98c0 (PoolAddressesProviderRegistry)
+✅ Status: Success
+📦 Block: 76159
+🔗 https://purrsec.com/tx/0x2b21e029161b1f3d8d9a61187f2d6e6fb335c4ca87a38356e60be05bb7c157a5
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x578ed836e04f7447559b1c7d4b10082c9e1d98c0 (PoolAddressesProviderRegistry)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x578ed836e04f7447559b1c7d4b10082c9e1d98c0 (PoolAddressesProviderRegistry)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:34:00 UTC
+📝 Contract Created
+🏠 Address: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 76190
+🔗 https://purrsec.com/tx/0x240efd4a8f5f4bde8b858078a626e068b29b3b7070e2fa8a5e115c9fac30098c
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: OwnershipTransferred
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "newOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "previousOwner": "0x0000000000000000000000000000000000000000"
+        }
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: MarketIdSet
+    Parameter: "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+    Parameter: "0x85ef13710fbe49df81987c7807416db3a6849d3be48fc807b3bb5e5d0125178c"
+    Decoded Data:
+        {
+          "newMarketId": "0x85ef13710fbe49df81987c7807416db3a6849d3be48fc807b3bb5e5d0125178c",
+          "oldMarketId": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+        }
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: OwnershipTransferred
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "newOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "previousOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:35:00 UTC
+📝 Function: setACLAdmin
+📋 Arguments: [{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"newAclAdmin"}]
+To: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 76221
+🔗 https://purrsec.com/tx/0xb4fe426c2ef73d50695d3740b1f8fd3427cd9677426b45db9892606b4beef8b6
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: ACLAdminUpdated
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "newAddress": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "oldAddress": "0x0000000000000000000000000000000000000000"
+        }
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:36:00 UTC
+📝 Contract Created
+🏠 Address: 0x895c799a5bbdcb63b80bee5bd94e7b9138d977d6 (HyFiProtocolDataProvider)
+✅ Status: Success
+📦 Block: 76252
+🔗 https://purrsec.com/tx/0xb0d0159b429d7279337d931f9bd083f6a7dd0662ec414d10e2430122a7cc7567
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:37:00 UTC
+📝 Contract Created
+🏠 Address: 0x7f4b3cfb3d60ad390e813bc745a44b9030510056 (PoolConfigurator)
+✅ Status: Success
+📦 Block: 76283
+🔗 https://purrsec.com/tx/0x9c08f3be818707a91dd01fff7a5dac1e4afcfca6fa3fc898a379405d7b985d73
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:38:00 UTC
+📝 Function: initialize
+📋 Arguments: [{"arg":"0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594","name":"provider"}]
+To: 0x7f4b3cfb3d60ad390e813bc745a44b9030510056 (PoolConfigurator)
+✅ Status: Success
+📦 Block: 76314
+🔗 https://purrsec.com/tx/0x641929e52fb0ea355087f4aac579ccbff5baa1b57320a3b6f5347a475da76e48
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:39:00 UTC
+📝 Contract Created
+🏠 Address: 0x980bdd9cf1346800f6307e3b2301ffd3ce8c7523 (Pool)
+✅ Status: Success
+📦 Block: 76345
+🔗 https://purrsec.com/tx/0x3afb3225634d11af3433d811440b77bad4eee8aaba0e6c73ad00c7e66bbaaae2
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:40:00 UTC
+📝 Function: initialize
+📋 Arguments: [{"arg":"0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594","name":"provider"}]
+To: 0x980bdd9cf1346800f6307e3b2301ffd3ce8c7523 (Pool)
+✅ Status: Success
+📦 Block: 76376
+🔗 https://purrsec.com/tx/0x14a54931639a0745075341e5e80ff14747a53ae811b7aa4081fa3ee5e0473fac
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:41:00 UTC
+📝 Contract Created
+🏠 Address: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 76407
+🔗 https://purrsec.com/tx/0x97d22ee673999475a81ea627e5ae5b00d3296f8af30797ff10a8e4d4a57402a0
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleGranted
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "role": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:42:00 UTC
+📝 Function: addPoolAdmin
+📋 Arguments: [{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 76438
+🔗 https://purrsec.com/tx/0x641a3871ea1f38bc51532c2d2576f15b9862b8bd292bb566d0ffdb942e344625
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleGranted
+    Parameter: "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b"
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "role": "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:43:00 UTC
+📝 Function: registerAddressesProvider
+📋 Arguments: [{"arg":"0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594","name":"provider"},{"arg":1,"name":"id"}]
+To: 0x578ed836e04f7447559b1c7d4b10082c9e1d98c0 (PoolAddressesProviderRegistry)
+✅ Status: Success
+📦 Block: 76469
+🔗 https://purrsec.com/tx/0x1f5498e21743df0ef648bc04b0b3c6262d40a4c8eac557a8a4638719cb91c3cd
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x578ed836e04f7447559b1c7d4b10082c9e1d98c0 (PoolAddressesProviderRegistry)
+    Event: AddressesProviderRegistered(address,uint256)
+    Parameter: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+    Parameter: 0x0000000000000000000000000000000000000001 (Unknown)
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:44:00 UTC
+📝 Function: setPoolDataProvider
+📋 Arguments: [{"arg":"0x895c799a5bbdcb63b80bee5bd94e7b9138d977d6","name":"newDataProvider"}]
+To: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 76500
+🔗 https://purrsec.com/tx/0xfaea9db396a7f4dd1da644cad2f88e2f361590d0ca57b5a77227fba1cf6d9f94
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: PoolDataProviderUpdated
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x895c799a5bbdcb63b80bee5bd94e7b9138d977d6 (HyFiProtocolDataProvider)
+    Decoded Data:
+        {
+          "newAddress": "0x895c799a5bbdcb63b80bee5bd94e7b9138d977d6",
+          "oldAddress": "0x0000000000000000000000000000000000000000"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:45:00 UTC
+📝 Function: setPoolImpl
+📋 Arguments: [{"arg":"0x980bdd9cf1346800f6307e3b2301ffd3ce8c7523","name":"newPoolImpl"}]
+To: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 76531
+🔗 https://purrsec.com/tx/0x1c7c2b7b26bef7a444fca61de020074cdf35fa7589564c21f36addeb333bf190
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: ProxyCreated
+    Parameter: "0x504f4f4c00000000000000000000000000000000000000000000000000000000"
+    Parameter: 0xcecce0eb9dd2ef7996e01e25dd70e461f918a14b (InitializableImmutableAdminUpgradeabilityProxy)
+    Parameter: 0x980bdd9cf1346800f6307e3b2301ffd3ce8c7523 (Pool)
+    Decoded Data:
+        {
+          "id": "0x504f4f4c00000000000000000000000000000000000000000000000000000000",
+          "implementationAddress": "0x980bdd9cf1346800f6307e3b2301ffd3ce8c7523",
+          "proxyAddress": "0xcecce0eb9dd2ef7996e01e25dd70e461f918a14b"
+        }
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: PoolUpdated
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x980bdd9cf1346800f6307e3b2301ffd3ce8c7523 (Pool)
+    Decoded Data:
+        {
+          "newAddress": "0x980bdd9cf1346800f6307e3b2301ffd3ce8c7523",
+          "oldAddress": "0x0000000000000000000000000000000000000000"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:46:00 UTC
+📝 Function: setPoolConfiguratorImpl
+📋 Arguments: [{"arg":"0x7f4b3cfb3d60ad390e813bc745a44b9030510056","name":"newPoolConfiguratorImpl"}]
+To: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 76562
+🔗 https://purrsec.com/tx/0x27b646bf4a680f04add3ab15559d0ad6ef2f27f49874e5202749dbde07861bb4
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: ProxyCreated
+    Parameter: "0x504f4f4c5f434f4e464947555241544f52000000000000000000000000000000"
+    Parameter: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (InitializableImmutableAdminUpgradeabilityProxy)
+    Parameter: 0x7f4b3cfb3d60ad390e813bc745a44b9030510056 (PoolConfigurator)
+    Decoded Data:
+        {
+          "id": "0x504f4f4c5f434f4e464947555241544f52000000000000000000000000000000",
+          "implementationAddress": "0x7f4b3cfb3d60ad390e813bc745a44b9030510056",
+          "proxyAddress": "0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af"
+        }
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: PoolConfiguratorUpdated
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x7f4b3cfb3d60ad390e813bc745a44b9030510056 (PoolConfigurator)
+    Decoded Data:
+        {
+          "newAddress": "0x7f4b3cfb3d60ad390e813bc745a44b9030510056",
+          "oldAddress": "0x0000000000000000000000000000000000000000"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:47:00 UTC
+📝 Function: setACLManager
+📋 Arguments: [{"arg":"0x79cbf4832439554885e4bec9457c1427dfb9d0d3","name":"newAclManager"}]
+To: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 76593
+🔗 https://purrsec.com/tx/0x847c8982bf32e73c11206505a37cccbdc3b95abc54bf90c0109c1b8e1c878aef
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: ACLManagerUpdated
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+    Decoded Data:
+        {
+          "newAddress": "0x79cbf4832439554885e4bec9457c1427dfb9d0d3",
+          "oldAddress": "0x0000000000000000000000000000000000000000"
+        }
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:48:00 UTC
+📝 Contract Created
+🏠 Address: 0xa3703e1a77a23a92f21cd5565e5955e98a4faacc (HyToken)
+✅ Status: Success
+📦 Block: 76624
+🔗 https://purrsec.com/tx/0xfb3e8cdea15dfb95d477538b08976adbad120bd114a16cc97dab51ba59cb4862
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:49:00 UTC
+📝 Function: initialize
+📋 Arguments: [{"arg":"0xcecce0eb9dd2ef7996e01e25dd70e461f918a14b","name":"initializingPool"},{"arg":"0x0000000000000000000000000000000000000000","name":"treasury"},{"arg":"0x0000000000000000000000000000000000000000","name":"underlyingAsset"},{"arg":"0x0000000000000000000000000000000000000000","name":"incentivesController"},{"arg":0,"name":"aTokenDecimals"},{"arg":"0x5350544f4b454e5f494d504c","name":"aTokenName"},{"arg":"0x5350544f4b454e5f494d504c","name":"aTokenSymbol"},{"arg":"0x","name":"params"}]
+To: 0xa3703e1a77a23a92f21cd5565e5955e98a4faacc (HyToken)
+✅ Status: Success
+📦 Block: 76655
+🔗 https://purrsec.com/tx/0xb4b446b35deea97185aed2ff05a9543c46e9d2f484de2a073dde0982febd804a
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:50:00 UTC
+📝 Contract Created
+🏠 Address: 0x2d9c9f80e4da27d30835abd82c334f074e209eda (DisabledStableDebtToken)
+✅ Status: Success
+📦 Block: 76686
+🔗 https://purrsec.com/tx/0xfc1ad55625fed61a50b2310be3660bd5f5dc63498bb737c087a5dfc9aa61c63a
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:51:00 UTC
+📝 Function: initialize
+📋 Arguments: [{"arg":"0xcecce0eb9dd2ef7996e01e25dd70e461f918a14b","name":"initializingPool"},{"arg":"0x0000000000000000000000000000000000000000","name":"underlyingAsset"},{"arg":"0x0000000000000000000000000000000000000000","name":"incentivesController"},{"arg":0,"name":"debtTokenDecimals"},{"arg":"0x535441424c455f444542545f544f4b454e5f494d504c","name":"debtTokenName"},{"arg":"0x535441424c455f444542545f544f4b454e5f494d504c","name":"debtTokenSymbol"},{"arg":"0x","name":"params"}]
+To: 0x2d9c9f80e4da27d30835abd82c334f074e209eda (DisabledStableDebtToken)
+✅ Status: Success
+📦 Block: 76717
+🔗 https://purrsec.com/tx/0x5e26fff3043e0d65d6d0e6b291ee77012e0f16cb22f9ed0d15828f8bea76c887
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:52:00 UTC
+📝 Contract Created
+🏠 Address: 0xdbcf99e5202b2bb9c47182209c7a551524f7c690 (VariableDebtToken)
+✅ Status: Success
+📦 Block: 76748
+🔗 https://purrsec.com/tx/0x39b33037830f0df974b9b0fae3e04078aeb054626058bbfcad3437ab8a9ceb0f
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:53:00 UTC
+📝 Function: initialize
+📋 Arguments: [{"arg":"0xcecce0eb9dd2ef7996e01e25dd70e461f918a14b","name":"initializingPool"},{"arg":"0x0000000000000000000000000000000000000000","name":"underlyingAsset"},{"arg":"0x0000000000000000000000000000000000000000","name":"incentivesController"},{"arg":0,"name":"debtTokenDecimals"},{"arg":"0x5641524941424c455f444542545f544f4b454e5f494d504c","name":"debtTokenName"},{"arg":"0x5641524941424c455f444542545f544f4b454e5f494d504c","name":"debtTokenSymbol"},{"arg":"0x","name":"params"}]
+To: 0xdbcf99e5202b2bb9c47182209c7a551524f7c690 (VariableDebtToken)
+✅ Status: Success
+📦 Block: 76779
+🔗 https://purrsec.com/tx/0x8416dc862e75d927eba05c729b7b273e43dc49ba6b137df78932755326e9faa0
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:54:00 UTC
+📝 Contract Created
+🏠 Address: 0x9e6efa77192da81e22c8791ba65c5a5e9795e697 (CollectorController)
+✅ Status: Success
+📦 Block: 76810
+🔗 https://purrsec.com/tx/0x094b3e94922e4cdb9e45bc21141acd6aeaf107facc1bd3f47df293a03401c8e6
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x9e6efa77192da81e22c8791ba65c5a5e9795e697 (HypurrFi: TreasuryController	)
+    Event: OwnershipTransferred
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "newOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "previousOwner": "0x0000000000000000000000000000000000000000"
+        }
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x9e6efa77192da81e22c8791ba65c5a5e9795e697 (HypurrFi: TreasuryController	)
+    Event: OwnershipTransferred
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "newOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "previousOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:55:00 UTC
+📝 Contract Created
+🏠 Address: 0x2f268cf4730f17d00f7f2ce7f3b97cfe5845d862 (Collector)
+✅ Status: Success
+📦 Block: 76841
+🔗 https://purrsec.com/tx/0xdb7baf5b2274cc0aa713eb9bce560c7e668a7aa339d2e4c13f03b3440b905ea1
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:56:00 UTC
+📝 Function: initialize
+📋 Arguments: [{"arg":"0x0000000000000000000000000000000000000000","name":"reserveController"}]
+To: 0x2f268cf4730f17d00f7f2ce7f3b97cfe5845d862 (Collector)
+✅ Status: Success
+📦 Block: 76872
+🔗 https://purrsec.com/tx/0x3ab3c1a3d0fad86759bfc43fc0fc42955c4147712d9cbaa900ba396fa7b984de
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 13:57:00 UTC
+📝 Contract Created
+🏠 Address: 0xdc6e5b7aa6fcbdecc1fda2b1e337ed8569730288 (InitializableAdminUpgradeabilityProxy)
+✅ Status: Success
+📦 Block: 76903
+🔗 https://purrsec.com/tx/0xb8f30e37dc25ecb234bdf651a191290576ae07a05684c2318ce3cfc831bad571
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:58:00 UTC
+📝 Function: 0xcf7a1d77
+To: 0xdc6e5b7aa6fcbdecc1fda2b1e337ed8569730288 (InitializableAdminUpgradeabilityProxy)
+✅ Status: Success
+📦 Block: 76934
+🔗 https://purrsec.com/tx/0xe840bf77e833f19148e42a26f4928b6dd55ba6c66c1fdb954275ef859dde3ab3
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 13:59:00 UTC
+📝 Function: updateFlashloanPremiumTotal
+📋 Arguments: [{"arg":0,"name":"newFlashloanPremiumTotal"}]
+To: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (InitializableImmutableAdminUpgradeabilityProxy)
+✅ Status: Success
+📦 Block: 76965
+🔗 https://purrsec.com/tx/0xb36128a6d869a00fb62c67b9c3577ecb1612e393ce34de97acdcdcaa2ff95e39
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (HypurrFi: PoolConfigurator)
+    Event: FlashloanPremiumTotalUpdated
+    Parameter: 0x0000000000000000000000000000000000000009 (Unknown)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Decoded Data:
+        {
+          "newFlashloanPremiumTotal": 0,
+          "oldFlashloanPremiumTotal": 9
+        }
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 14:00:00 UTC
+📝 Contract Created
+🏠 Address: 0x8eba6fc4ff6ba4f12512dd56d0e4aac6081f5274 (UiIncentiveDataProviderV3)
+✅ Status: Success
+📦 Block: 76996
+🔗 https://purrsec.com/tx/0x012cfb17c336661f9ed23c733065cb0decaabc87030a352f079f6a47c9416cc4
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 14:01:00 UTC
+📝 Contract Created
+🏠 Address: 0xd1ef87fefa83154f83541b68bd09185e15463972 (WrappedHypeGateway)
+✅ Status: Success
+📦 Block: 77027
+🔗 https://purrsec.com/tx/0xe7df5c5ae1f61e68c775098d9c9aece2b81cf39bc35c5b9c4bb14cf89183ff70
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xd1ef87fefa83154f83541b68bd09185e15463972 (HypurrFi: WrappedHypeGateway)
+    Event: OwnershipTransferred
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "newOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "previousOwner": "0x0000000000000000000000000000000000000000"
+        }
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xd1ef87fefa83154f83541b68bd09185e15463972 (HypurrFi: WrappedHypeGateway)
+    Event: OwnershipTransferred
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "newOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "previousOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 14:02:00 UTC
+📝 Contract Created
+🏠 Address: 0xe913de89d8c868aef96d3b10daae1900273d7bb2 (WalletBalanceProvider)
+✅ Status: Success
+📦 Block: 77058
+🔗 https://purrsec.com/tx/0xd473666e40b82974ebc9615a3c4293737bcffbcab364c675c56bb70344aeab8f
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 14:03:00 UTC
+📝 Contract Created
+🏠 Address: 0x9be2ac1ff80950dceb816842834930887249d9a8 (HyFiOracle)
+✅ Status: Success
+📦 Block: 77089
+🔗 https://purrsec.com/tx/0x234bc3642be37e9e6d1bbe3417ea969d3055b8f069beb93487f285b8ca81086a
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 14:04:00 UTC
+📝 Function: setPriceOracle
+📋 Arguments: [{"arg":"0x9be2ac1ff80950dceb816842834930887249d9a8","name":"newPriceOracle"}]
+To: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 77120
+🔗 https://purrsec.com/tx/0x47d0bf9ca5891bfa94329270ce0efa7a3404b18c909ba8de9f0f0545b8938735
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: PriceOracleUpdated
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x9be2ac1ff80950dceb816842834930887249d9a8 (HyFiOracle)
+    Decoded Data:
+        {
+          "newAddress": "0x9be2ac1ff80950dceb816842834930887249d9a8",
+          "oldAddress": "0x0000000000000000000000000000000000000000"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 14:05:00 UTC
+📝 Function: addEmergencyAdmin
+📋 Arguments: [{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 77151
+🔗 https://purrsec.com/tx/0xc7f1f953f5cff4e6bd43642e522253a36d0b0fdfc15dc37260255e58ecbea1b3
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleGranted
+    Parameter: "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb"
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "role": "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 14:06:00 UTC
+📝 Function: addPoolAdmin
+📋 Arguments: [{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 77182
+🔗 https://purrsec.com/tx/0x3565a235b1d802603bd93403a2893e4d3ab2a0586583922788a88205abb0d4c0
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 14:07:00 UTC
+📝 Function: grantRole
+📋 Arguments: [{"arg":"0x0000000000000000000000000000000000000000000000000000000000000000","name":"role"},{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"account"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 77213
+🔗 https://purrsec.com/tx/0x8b67402060417b5688f8f19aacbe622520b82c8b4dc199777d6e39d9a3655bc7
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 14:08:00 UTC
+📝 Function: setACLAdmin
+📋 Arguments: [{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"newAclAdmin"}]
+To: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 77244
+🔗 https://purrsec.com/tx/0x864945804557bb683aed9b7904e3b1eae863b04abc69a00e5143225cb9300d25
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: ACLAdminUpdated
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "newAddress": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "oldAddress": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 14:09:00 UTC
+📝 Function: transferOwnership
+📋 Arguments: [{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"newOwner"}]
+To: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 77275
+🔗 https://purrsec.com/tx/0xb6d7d1e4c2ab0ee1d94c298355c10b455edc41c26704223512f4daf24e220145
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: OwnershipTransferred
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "newOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "previousOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 14:10:00 UTC
+📝 Function: transferOwnership
+📋 Arguments: [{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"newOwner"}]
+To: 0x578ed836e04f7447559b1c7d4b10082c9e1d98c0 (PoolAddressesProviderRegistry)
+✅ Status: Success
+📦 Block: 77306
+🔗 https://purrsec.com/tx/0x74ba93b89ab44305763a001e81b84101b219a84def2d66c778e84f55ce15e9d9
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x578ed836e04f7447559b1c7d4b10082c9e1d98c0 (PoolAddressesProviderRegistry)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 14:11:00 UTC
+📝 Contract Created
+🏠 Address: 0x701b26833a2dfa145b29ef1264de3a5240e17bbd (DefaultReserveInterestRateStrategy)
+✅ Status: Success
+📦 Block: 77337
+🔗 https://purrsec.com/tx/0x82fa6cb6bd3628251a52ba61e8c3ba39900b76b2c723ccb4643f936aa88f498d
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 14:14:00 UTC
+📝 Contract Created
+🏠 Address: 0x1d0e4ea616a749c1620118f7d97c111e8ec36e8b (PythAggregatorV3)
+✅ Status: Success
+📦 Block: 77430
+🔗 https://purrsec.com/tx/0x87ba1e4f69ba5e13377ad4a17070ce154d459f16332edc075b10d7c2a5f1e4df
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 14:16:00 UTC
+📝 Contract Created
+🏠 Address: 0x7b883191011aeae40581d3fa1b112413808c9c00 (UiPoolDataProviderV3)
+✅ Status: Success
+📦 Block: 77492
+🔗 https://purrsec.com/tx/0x5277923dbd77f31c982a4ea7720c6fac42e4be38252bf74a70c79fdfd1cbdb4d
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 15:19:00 UTC
+📝 Contract Created
+🏠 Address: 0x47743a77ef5e6675f4c022e643943ae7d8d58a43 (Unknown)
+✅ Status: Success
+📦 Block: 79445
+🔗 https://purrsec.com/tx/0xda1039349c671260e0a7c867bb0b2f15fac2dfe5fb09d4d5eaac81a9bd432867
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x47743a77ef5e6675f4c022e643943ae7d8d58a43 (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 15:29:00 UTC
+📝 Function: setAssetSources
+📋 Arguments: [{"arg":["0x5555555555555555555555555555555555555555"],"name":"assets"},{"arg":["0x1d0e4ea616a749c1620118f7d97c111e8ec36e8b"],"name":"sources"}]
+To: 0x9be2ac1ff80950dceb816842834930887249d9a8 (HyFiOracle)
+✅ Status: Success
+📦 Block: 79755
+🔗 https://purrsec.com/tx/0x2c0d06045dd282a446883b95bbf324f075eb12ae0f7f30fa15754a3edce29d19
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-19 15:30:00 UTC
+📝 Contract Created
+🏠 Address: 0xafe1b6f29217fc917e3f9c725de07fdf4506f786 (ReserveInitializer 1)
+✅ Status: Success
+📦 Block: 79786
+🔗 https://purrsec.com/tx/0x71267b504b58cdb75a83805f98d14ba1c0a352bcb5a57853851c7f738c1266ec
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xafe1b6f29217fc917e3f9c725de07fdf4506f786 (ReserveInitializer 1)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 15:31:00 UTC
+📝 Function: addPoolAdmin
+📋 Arguments: [{"arg":"0xafe1b6f29217fc917e3f9c725de07fdf4506f786","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 79817
+🔗 https://purrsec.com/tx/0x33dbca32badf84b9378a897f5306a3a90a5c3420fd1a4b80745ab97cb6c82337
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleGranted
+    Parameter: "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b"
+    Parameter: 0xafe1b6f29217fc917e3f9c725de07fdf4506f786 (ReserveInitializer 1)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0xafe1b6f29217fc917e3f9c725de07fdf4506f786",
+          "role": "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 15:32:00 UTC
+📝 Function: 0xad71afab
+To: 0xafe1b6f29217fc917e3f9c725de07fdf4506f786 (ReserveInitializer 1)
+Value: 0.1 ETH
+✅ Status: Success
+📦 Block: 79848
+🔗 https://purrsec.com/tx/0x1be8c90a0a7d254637164b1d8506040e57b4d01e39093559f26f2b3539a66edd
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (HypurrFi: PoolConfigurator)
+    Event: ReserveInitialized
+    Parameter: 0x5555555555555555555555555555555555555555 (WETH9)
+    Parameter: 0x7c97cd7b57b736c6ad74fae97c0e21e856251dcf (Unknown)
+    Parameter: 0x7938045b86812e51a3e01cd4afbcfbc4921f2ec3 (Unknown)
+    Parameter: 0x37e44f3070b5455f1f5d7aaad9fc8590229cc5cb (Unknown)
+    Parameter: 0x701b26833a2dfa145b29ef1264de3a5240e17bbd (DefaultReserveInterestRateStrategy)
+    Decoded Data:
+        {
+          "aToken": "0x7c97cd7b57b736c6ad74fae97c0e21e856251dcf",
+          "asset": "0x5555555555555555555555555555555555555555",
+          "interestRateStrategyAddress": "0x701b26833a2dfa145b29ef1264de3a5240e17bbd",
+          "stableDebtToken": "0x7938045b86812e51a3e01cd4afbcfbc4921f2ec3",
+          "variableDebtToken": "0x37e44f3070b5455f1f5d7aaad9fc8590229cc5cb"
+        }
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xcecce0eb9dd2ef7996e01e25dd70e461f918a14b (HypurrFi: LendingPool)
+    Event: ReserveDataUpdated
+    Parameter: 0x5555555555555555555555555555555555555555 (WHYPE)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x000000000000000000295be96e64066972000000 (Unknown)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x0000000000000000033b2e3c9fd0803ce8000000 (Unknown)
+    Parameter: 0x0000000000000000033b2e3c9fd0803ce8000000 (Unknown)
+    Decoded Data:
+        {
+          "liquidityIndex": 1000000000000000000000000000,
+          "liquidityRate": 0,
+          "reserve": "0x5555555555555555555555555555555555555555",
+          "stableBorrowRate": 50000000000000000000000000,
+          "variableBorrowIndex": 1000000000000000000000000000,
+          "variableBorrowRate": 0
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 15:33:00 UTC
+📝 Function: removePoolAdmin
+📋 Arguments: [{"arg":"0xafe1b6f29217fc917e3f9c725de07fdf4506f786","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 79879
+🔗 https://purrsec.com/tx/0x276089565065bba33c1edc57d4f854dec3dbe1405405e4c86f82c64f4b0d6eea
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleRevoked
+    Parameter: "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b"
+    Parameter: 0xafe1b6f29217fc917e3f9c725de07fdf4506f786 (ReserveInitializer 1)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0xafe1b6f29217fc917e3f9c725de07fdf4506f786",
+          "role": "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 15:34:00 UTC
+📝 Function: setReserveStableRateBorrowing
+📋 Arguments: [{"arg":"0x5555555555555555555555555555555555555555","name":"asset"},{"arg":false,"name":"enabled"}]
+To: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (InitializableImmutableAdminUpgradeabilityProxy)
+✅ Status: Success
+📦 Block: 79910
+🔗 https://purrsec.com/tx/0x60b16f848f5342c7fc453a564f541cf92aca6ab92e4e4c230d1495358ccd8b03
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (HypurrFi: PoolConfigurator)
+    Event: ReserveStableRateBorrowing
+    Parameter: 0x5555555555555555555555555555555555555555 (WETH9)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Decoded Data:
+        {
+          "asset": "0x5555555555555555555555555555555555555555",
+          "enabled": false
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 15:35:00 UTC
+📝 Function: configureReserveAsCollateral
+📋 Arguments: [{"arg":"0x5555555555555555555555555555555555555555","name":"asset"},{"arg":3000,"name":"ltv"},{"arg":4500,"name":"liquidationThreshold"},{"arg":10800,"name":"liquidationBonus"}]
+To: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (InitializableImmutableAdminUpgradeabilityProxy)
+✅ Status: Success
+📦 Block: 79941
+🔗 https://purrsec.com/tx/0xdded2521ad422f8476b3079f5562da13190f31fb44f61cd2c80802ebd3d2dd47
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (HypurrFi: PoolConfigurator)
+    Event: CollateralConfigurationChanged
+    Parameter: 0x5555555555555555555555555555555555555555 (WETH9)
+    Parameter: 0x0000000000000000000000000000000000000bb8 (Unknown)
+    Parameter: 0x0000000000000000000000000000000000001194 (Unknown)
+    Parameter: 0x0000000000000000000000000000000000002a30 (Unknown)
+    Decoded Data:
+        {
+          "asset": "0x5555555555555555555555555555555555555555",
+          "liquidationBonus": 10800,
+          "liquidationThreshold": 4500,
+          "ltv": 3000
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-19 15:36:00 UTC
+📝 Function: setReserveBorrowing
+📋 Arguments: [{"arg":"0x5555555555555555555555555555555555555555","name":"asset"},{"arg":true,"name":"enabled"}]
+To: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (InitializableImmutableAdminUpgradeabilityProxy)
+✅ Status: Success
+📦 Block: 79972
+🔗 https://purrsec.com/tx/0x067ca003f6dfbbde321c7ce0f8b6e1850a5f38574717a241bf053bb72bb977f1
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (HypurrFi: PoolConfigurator)
+    Event: ReserveBorrowing
+    Parameter: 0x5555555555555555555555555555555555555555 (WETH9)
+    Parameter: 0x0000000000000000000000000000000000000001 (Unknown)
+    Decoded Data:
+        {
+          "asset": "0x5555555555555555555555555555555555555555",
+          "enabled": true
+        }
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-20 09:31:00 UTC
+📝 Contract Created
+🏠 Address: 0x116fc5d96ede315c008c8c94672145f1a996d84f (PoolAddressesProviderRegistry)
+✅ Status: Success
+📦 Block: 113297
+🔗 https://purrsec.com/tx/0x734c426d4b3c4bc965518625f25f78a4a0e052bf411262fe653a7a99d5085ef8
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x116fc5d96ede315c008c8c94672145f1a996d84f (PoolAddressesProviderRegistry)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x116fc5d96ede315c008c8c94672145f1a996d84f (PoolAddressesProviderRegistry)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x1804c8ab1f12e6bbf3894d4083f33e07309d1f38 (Unknown)
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-20 09:32:00 UTC
+📝 Contract Created
+🏠 Address: 0xf3c70249af0370b0a3608dc118bcf9af10d0c383 (Unknown)
+✅ Status: Success
+📦 Block: 113328
+🔗 https://purrsec.com/tx/0x5a48c3ef6686086b71e999eb753a0759f0d61befd9adb2c4aa375507c4a87212
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xf3c70249af0370b0a3608dc118bcf9af10d0c383 (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xf3c70249af0370b0a3608dc118bcf9af10d0c383 (Unknown)
+    Event: MarketIdSet(string,string)
+    Parameter: "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+    Parameter: "0x85ef13710fbe49df81987c7807416db3a6849d3be48fc807b3bb5e5d0125178c"
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xf3c70249af0370b0a3608dc118bcf9af10d0c383 (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x1804c8ab1f12e6bbf3894d4083f33e07309d1f38 (Unknown)
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-20 09:33:00 UTC
+📝 Contract Created
+🏠 Address: 0xc517c350a6b597d58bc3852ba4f34cc1ffc7536c (Unknown)
+✅ Status: Success
+📦 Block: 113359
+🔗 https://purrsec.com/tx/0x741154ce39eb79b0f8819d319bdc5a18f9b058ac2f9aae3be422a0262cb9d66d
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xc517c350a6b597d58bc3852ba4f34cc1ffc7536c (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xc517c350a6b597d58bc3852ba4f34cc1ffc7536c (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x1804c8ab1f12e6bbf3894d4083f33e07309d1f38 (Unknown)
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-20 09:34:00 UTC
+📝 Contract Created
+🏠 Address: 0xc997ace3360909b82efed525e8e0ee07ba8f4053 (Unknown)
+✅ Status: Success
+📦 Block: 113390
+🔗 https://purrsec.com/tx/0x3b15de7c06d941955959e020bc6c5c08fe126ba68cff4bf9bd20f730a47ea354
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xc997ace3360909b82efed525e8e0ee07ba8f4053 (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xc997ace3360909b82efed525e8e0ee07ba8f4053 (Unknown)
+    Event: MarketIdSet(string,string)
+    Parameter: "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+    Parameter: "0x85ef13710fbe49df81987c7807416db3a6849d3be48fc807b3bb5e5d0125178c"
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xc997ace3360909b82efed525e8e0ee07ba8f4053 (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x1804c8ab1f12e6bbf3894d4083f33e07309d1f38 (Unknown)
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-20 09:36:00 UTC
+📝 Contract Created
+🏠 Address: 0x950a209d16b511679e5eeaf451439497c6f66fc3 (Unknown)
+✅ Status: Success
+📦 Block: 113452
+🔗 https://purrsec.com/tx/0x1fe761a1338637d4485beebd69ddf47be487f6a1e5968e3f089fa56bb631b7c1
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x950a209d16b511679e5eeaf451439497c6f66fc3 (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x950a209d16b511679e5eeaf451439497c6f66fc3 (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x1804c8ab1f12e6bbf3894d4083f33e07309d1f38 (Unknown)
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-20 09:37:00 UTC
+📝 Contract Created
+🏠 Address: 0xbf3d7590af77873647408c91b015177f9bfea482 (Unknown)
+✅ Status: Success
+📦 Block: 113483
+🔗 https://purrsec.com/tx/0xa8af5067817899d25b66558029517bf80421e0408188851c4375b4cba1e096cb
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xbf3d7590af77873647408c91b015177f9bfea482 (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xbf3d7590af77873647408c91b015177f9bfea482 (Unknown)
+    Event: MarketIdSet(string,string)
+    Parameter: "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+    Parameter: "0x85ef13710fbe49df81987c7807416db3a6849d3be48fc807b3bb5e5d0125178c"
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xbf3d7590af77873647408c91b015177f9bfea482 (Unknown)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x1804c8ab1f12e6bbf3894d4083f33e07309d1f38 (Unknown)
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-20 13:59:00 UTC
+📝 Contract Created
+🏠 Address: 0x5777a35eed45cfd605dad5d3d7b531ac2f409cd1 (WstHYPEOracle)
+✅ Status: Success
+📦 Block: 121605
+🔗 https://purrsec.com/tx/0xdf3fed453f44bb431fbed61bf2e69f4c9cbbf020eddb58a8b341ad338e32088f
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-20 19:30:00 UTC
+📝 Function: setAssetSources
+📋 Arguments: [{"arg":["0x94e8396e0869c9f2200760af0621afd240e1cf38"],"name":"assets"},{"arg":["0x5777a35eed45cfd605dad5d3d7b531ac2f409cd1"],"name":"sources"}]
+To: 0x9be2ac1ff80950dceb816842834930887249d9a8 (HyFiOracle)
+✅ Status: Success
+📦 Block: 131866
+🔗 https://purrsec.com/tx/0x3ee2fc97b6131440253e3eda5aa2a7596ed9939b5818570349c893d1e6a2d4ed
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-20 19:31:00 UTC
+📝 Contract Created
+🏠 Address: 0xa2d096e01b73048772c0fb3ad6a789af9788db08 (ReserveInitializer 2)
+✅ Status: Success
+📦 Block: 131897
+🔗 https://purrsec.com/tx/0x0d67ce4d0ab127515f4ed8fed5170fe1cfff234420f5f5dbb8aaf8b57fb3012d
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa2d096e01b73048772c0fb3ad6a789af9788db08 (ReserveInitializer 2)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-20 19:32:00 UTC
+📝 Function: transfer
+📋 Arguments: [{"arg":"0xa2d096e01b73048772c0fb3ad6a789af9788db08","name":"to"},{"arg":100000000000000000,"name":"value"}]
+To: 0x94e8396e0869c9f2200760af0621afd240e1cf38 (wstHYPE)
+✅ Status: Success
+📦 Block: 131928
+🔗 https://purrsec.com/tx/0x12f608dc517b68aaa968533ba941925bbb697e96cd8611ca7473b56c29b0d349
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-20 19:33:00 UTC
+📝 Function: addPoolAdmin
+📋 Arguments: [{"arg":"0xa2d096e01b73048772c0fb3ad6a789af9788db08","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 131959
+🔗 https://purrsec.com/tx/0x11cbcbeab21f7dc43c28070fcb943fc7e293d366a3bca7868cdf176693f7b4d5
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleGranted
+    Parameter: "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b"
+    Parameter: 0xa2d096e01b73048772c0fb3ad6a789af9788db08 (ReserveInitializer 2)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0xa2d096e01b73048772c0fb3ad6a789af9788db08",
+          "role": "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-20 19:34:00 UTC
+📝 Function: 0xad71afab
+To: 0xa2d096e01b73048772c0fb3ad6a789af9788db08 (ReserveInitializer 2)
+✅ Status: Success
+📦 Block: 131990
+🔗 https://purrsec.com/tx/0xcf0698246c4eef97124caa8d2eb496383553be6147d0761df3fca38d9232dad1
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (HypurrFi: PoolConfigurator)
+    Event: ReserveInitialized
+    Parameter: 0x94e8396e0869c9f2200760af0621afd240e1cf38 (wstHYPE)
+    Parameter: 0xc8b6e0acf159e058e22c564c0c513ec21f8a1bf5 (Unknown)
+    Parameter: 0x60583f5d2ca95d460a800aba936490ba63116a23 (Unknown)
+    Parameter: 0x699898383dfad4d134e3789f0ed3090bd1833df9 (Unknown)
+    Parameter: 0x701b26833a2dfa145b29ef1264de3a5240e17bbd (DefaultReserveInterestRateStrategy)
+    Decoded Data:
+        {
+          "aToken": "0xc8b6e0acf159e058e22c564c0c513ec21f8a1bf5",
+          "asset": "0x94e8396e0869c9f2200760af0621afd240e1cf38",
+          "interestRateStrategyAddress": "0x701b26833a2dfa145b29ef1264de3a5240e17bbd",
+          "stableDebtToken": "0x60583f5d2ca95d460a800aba936490ba63116a23",
+          "variableDebtToken": "0x699898383dfad4d134e3789f0ed3090bd1833df9"
+        }
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xcecce0eb9dd2ef7996e01e25dd70e461f918a14b (HypurrFi: LendingPool)
+    Event: ReserveDataUpdated
+    Parameter: 0x94e8396e0869c9f2200760af0621afd240e1cf38 (wstHYPE)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x000000000000000000295be96e64066972000000 (Unknown)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x0000000000000000033b2e3c9fd0803ce8000000 (Unknown)
+    Parameter: 0x0000000000000000033b2e3c9fd0803ce8000000 (Unknown)
+    Decoded Data:
+        {
+          "liquidityIndex": 1000000000000000000000000000,
+          "liquidityRate": 0,
+          "reserve": "0x94e8396e0869c9f2200760af0621afd240e1cf38",
+          "stableBorrowRate": 50000000000000000000000000,
+          "variableBorrowIndex": 1000000000000000000000000000,
+          "variableBorrowRate": 0
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-20 19:35:00 UTC
+📝 Function: removePoolAdmin
+📋 Arguments: [{"arg":"0xa2d096e01b73048772c0fb3ad6a789af9788db08","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 132021
+🔗 https://purrsec.com/tx/0x01722dcbdf9b060b3e6a20e7af35e02eb0200c937159bc740061523e78d54fbe
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleRevoked
+    Parameter: "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b"
+    Parameter: 0xa2d096e01b73048772c0fb3ad6a789af9788db08 (ReserveInitializer 2)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0xa2d096e01b73048772c0fb3ad6a789af9788db08",
+          "role": "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-20 19:36:00 UTC
+📝 Function: setReserveStableRateBorrowing
+📋 Arguments: [{"arg":"0x94e8396e0869c9f2200760af0621afd240e1cf38","name":"asset"},{"arg":false,"name":"enabled"}]
+To: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (InitializableImmutableAdminUpgradeabilityProxy)
+✅ Status: Success
+📦 Block: 132052
+🔗 https://purrsec.com/tx/0x2c56f96718c6e6eab2282cc0981fe6db04a77d97fa1227a069d8972775ec0d34
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (HypurrFi: PoolConfigurator)
+    Event: ReserveStableRateBorrowing
+    Parameter: 0x94e8396e0869c9f2200760af0621afd240e1cf38 (wstHYPE)
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Decoded Data:
+        {
+          "asset": "0x94e8396e0869c9f2200760af0621afd240e1cf38",
+          "enabled": false
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-20 19:37:00 UTC
+📝 Function: configureReserveAsCollateral
+📋 Arguments: [{"arg":"0x94e8396e0869c9f2200760af0621afd240e1cf38","name":"asset"},{"arg":3000,"name":"ltv"},{"arg":4500,"name":"liquidationThreshold"},{"arg":10800,"name":"liquidationBonus"}]
+To: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (InitializableImmutableAdminUpgradeabilityProxy)
+✅ Status: Success
+📦 Block: 132083
+🔗 https://purrsec.com/tx/0x0b92cdef43f8e5af123c884f9f21225220d84c8ccf6e83d363931087813f41be
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (HypurrFi: PoolConfigurator)
+    Event: CollateralConfigurationChanged
+    Parameter: 0x94e8396e0869c9f2200760af0621afd240e1cf38 (wstHYPE)
+    Parameter: 0x0000000000000000000000000000000000000bb8 (Unknown)
+    Parameter: 0x0000000000000000000000000000000000001194 (Unknown)
+    Parameter: 0x0000000000000000000000000000000000002a30 (Unknown)
+    Decoded Data:
+        {
+          "asset": "0x94e8396e0869c9f2200760af0621afd240e1cf38",
+          "liquidationBonus": 10800,
+          "liquidationThreshold": 4500,
+          "ltv": 3000
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-20 19:38:00 UTC
+📝 Function: setReserveBorrowing
+📋 Arguments: [{"arg":"0x94e8396e0869c9f2200760af0621afd240e1cf38","name":"asset"},{"arg":true,"name":"enabled"}]
+To: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (InitializableImmutableAdminUpgradeabilityProxy)
+✅ Status: Success
+📦 Block: 132114
+🔗 https://purrsec.com/tx/0x3bc271df8e3eadc61d513ff7733b2061f65ff6c6abd0adb8e4dc87b66798133f
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x532bb57de005edfd12e7d39a3e9bf8e8a8f544af (HypurrFi: PoolConfigurator)
+    Event: ReserveBorrowing
+    Parameter: 0x94e8396e0869c9f2200760af0621afd240e1cf38 (wstHYPE)
+    Parameter: 0x0000000000000000000000000000000000000001 (Unknown)
+    Decoded Data:
+        {
+          "asset": "0x94e8396e0869c9f2200760af0621afd240e1cf38",
+          "enabled": true
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:14:54 UTC
+📝 Function: addEmergencyAdmin
+📋 Arguments: [{"arg":"0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 181617
+🔗 https://purrsec.com/tx/0x5c72fe5f10d275f31d53c1d4c04e11b73660313eb93d0b7fbe09839cc66b3617
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleGranted
+    Parameter: "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb"
+    Parameter: 0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb (HypurrFi Team Multisig)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb",
+          "role": "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:14:56 UTC
+📝 Function: addPoolAdmin
+📋 Arguments: [{"arg":"0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 181618
+🔗 https://purrsec.com/tx/0xe5264de5c3d65bf1ba379897d98925842d938d95c877039fe8b03a52b0c33011
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleGranted
+    Parameter: "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b"
+    Parameter: 0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb (HypurrFi Team Multisig)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb",
+          "role": "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:15:00 UTC
+📝 Function: removePoolAdmin
+📋 Arguments: [{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 181620
+🔗 https://purrsec.com/tx/0xa1dcf1e220c69678654aa1af54913bb1e2c9f73b9d76a2de082b69c139060418
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleRevoked
+    Parameter: "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b"
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "role": "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:15:02 UTC
+📝 Function: removeEmergencyAdmin
+📋 Arguments: [{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"admin"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 181622
+🔗 https://purrsec.com/tx/0x93a8736712477495c578796ff776e87a14520e166624f6f92ab488584cf6ca30
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleRevoked
+    Parameter: "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb"
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "role": "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:15:04 UTC
+📝 Function: grantRole
+📋 Arguments: [{"arg":"0x0000000000000000000000000000000000000000000000000000000000000000","name":"role"},{"arg":"0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb","name":"account"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 181623
+🔗 https://purrsec.com/tx/0x7f6ed65eb17c1e881b3f3f7bba8d85ee27a1f343d9f395329a16247c670223b4
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleGranted
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb (HypurrFi Team Multisig)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb",
+          "role": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:15:06 UTC
+📝 Function: revokeRole
+📋 Arguments: [{"arg":"0x0000000000000000000000000000000000000000000000000000000000000000","name":"role"},{"arg":"0x096f03ae4c33e9c9c0ec0dcba29645382c38896b","name":"account"}]
+To: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (ACLManager)
+✅ Status: Success
+📦 Block: 181624
+🔗 https://purrsec.com/tx/0x37b9d2fb78aefa3107946674394395ab5fd9a4775962d3c9d13666cfa4e11425
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x79cbf4832439554885e4bec9457c1427dfb9d0d3 (HypurrFi: ACLManager)
+    Event: RoleRevoked
+    Parameter: 0x0000000000000000000000000000000000000000 (Burn Address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Decoded Data:
+        {
+          "account": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b",
+          "role": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "sender": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:15:08 UTC
+📝 Function: setACLAdmin
+📋 Arguments: [{"arg":"0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb","name":"newAclAdmin"}]
+To: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 181625
+🔗 https://purrsec.com/tx/0x5987709c403fdd3e5aeb2276c66aa67885a8f18344fc5dd939b6b72461fc66f4
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: ACLAdminUpdated
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb (HypurrFi Team Multisig)
+    Decoded Data:
+        {
+          "newAddress": "0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb",
+          "oldAddress": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:15:10 UTC
+📝 Function: transferOwnership
+📋 Arguments: [{"arg":"0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb","name":"newOwner"}]
+To: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (PoolAddressesProvider)
+✅ Status: Success
+📦 Block: 181626
+🔗 https://purrsec.com/tx/0x8e2c236a9851dbdad85df3663cc506f746de2cee47c2ab7a94d3b9467847ec98
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xa73ff12d177d8f1ec938c3ba0e87d33524dd5594 (HypurrFi: PoolAddressesProvider)
+    Event: OwnershipTransferred
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb (HypurrFi Team Multisig)
+    Decoded Data:
+        {
+          "newOwner": "0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb",
+          "previousOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:15:12 UTC
+📝 Function: transferOwnership
+📋 Arguments: [{"arg":"0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb","name":"newOwner"}]
+To: 0x578ed836e04f7447559b1c7d4b10082c9e1d98c0 (PoolAddressesProviderRegistry)
+✅ Status: Success
+📦 Block: 181627
+🔗 https://purrsec.com/tx/0x34c7d433e5008e6bc9f13d51ae69df932b083af71b300ada296576356d397901
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x578ed836e04f7447559b1c7d4b10082c9e1d98c0 (PoolAddressesProviderRegistry)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb (HypurrFi Team Multisig)
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:15:14 UTC
+📝 Function: transferOwnership
+📋 Arguments: [{"arg":"0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb","name":"newOwner"}]
+To: 0xd1ef87fefa83154f83541b68bd09185e15463972 (WrappedHypeGateway)
+✅ Status: Success
+📦 Block: 181628
+🔗 https://purrsec.com/tx/0x8f4878e3f74cd1f305397ba0461b0c62ef960d3be4c8a2c509aa9d9e8b4365ea
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xd1ef87fefa83154f83541b68bd09185e15463972 (HypurrFi: WrappedHypeGateway)
+    Event: OwnershipTransferred
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb (HypurrFi Team Multisig)
+    Decoded Data:
+        {
+          "newOwner": "0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb",
+          "previousOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:15:18 UTC
+📝 Function: 0x8f283970
+To: 0xdc6e5b7aa6fcbdecc1fda2b1e337ed8569730288 (InitializableAdminUpgradeabilityProxy)
+✅ Status: Success
+📦 Block: 181630
+🔗 https://purrsec.com/tx/0xe664b826ed498828f45e352e68945ecb3ac70d6ede9ab6c8a089df7e4c537429
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:15:20 UTC
+📝 Function: transferOwnership
+📋 Arguments: [{"arg":"0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb","name":"newOwner"}]
+To: 0x9e6efa77192da81e22c8791ba65c5a5e9795e697 (CollectorController)
+✅ Status: Success
+📦 Block: 181631
+🔗 https://purrsec.com/tx/0x5f98984d5cbbc0685aaab819eb5aa889024172dcfed213e2fae55aa32c2c386f
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0x9e6efa77192da81e22c8791ba65c5a5e9795e697 (HypurrFi: TreasuryController	)
+    Event: OwnershipTransferred
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb (HypurrFi Team Multisig)
+    Decoded Data:
+        {
+          "newOwner": "0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb",
+          "previousOwner": "0x096f03ae4c33e9c9c0ec0dcba29645382c38896b"
+        }
+
+════════════════════════════════════════
+TRANSACTION
+════════════════════════════════════════
+🕒 2025-02-21 22:33:32 UTC
+📝 Function: 0xf2fde38b
+To: 0xafe1b6f29217fc917e3f9c725de07fdf4506f786 (ReserveInitializer 1)
+✅ Status: Success
+📦 Block: 182195
+🔗 https://purrsec.com/tx/0x2fe68a2776143ca2903b27b7775ed3eeb273bb0820cd9168dd1c720da165b4b6
+
+    ▓▓▓▓▓▓▓▓▓▓ EVENT ▓▓▓▓▓▓▓▓▓▓
+
+    Contract: 0xafe1b6f29217fc917e3f9c725de07fdf4506f786 (ReserveInitializer 1)
+    Event: OwnershipTransferred(address,address)
+    Parameter: 0x096f03ae4c33e9c9c0ec0dcba29645382c38896b (HypurrFi Deployer)
+    Parameter: 0xc2b3075fb1ac9f5ecc1e2c07da8bccc43e7083fb (HypurrFi Team Multisig)
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-22 11:13:00 UTC
+📝 Contract Created
+🏠 Address: 0x48684a2316eac7b458ad22c459e12eb1c0fa28c4 (Unknown)
+✅ Status: Success
+📦 Block: 205739
+🔗 https://purrsec.com/tx/0xb5fac255a5a4f5adbf15e097d83083d5f0d3b0deb9a037bcda1f204b8dfa4fd8
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-27 10:47:00 UTC
+📝 Contract Created
+🏠 Address: 0x1b114a2d40d63225cb0bd33c4a059d6f2880cfc0 (DefaultReserveInterestRateStrategy)
+✅ Status: Success
+📦 Block: 428090
+🔗 https://purrsec.com/tx/0xc5163658805c7839a7eae28b94ac3bb2e396407ab0764c8d98029c1407f4d5ac
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-27 11:44:00 UTC
+📝 Contract Created
+🏠 Address: 0x7e5d78b6224b40441fce9172beaf544046473e23 (DefaultReserveInterestRateStrategy)
+✅ Status: Success
+📦 Block: 429857
+🔗 https://purrsec.com/tx/0xe02943f0abc6f0158f1c053756078466573e6df952e015065e9f93cc2576be66
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-02-27 11:49:00 UTC
+📝 Contract Created
+🏠 Address: 0x35bedd48b715cd14bc91ba4b76fa3a46118fe593 (DefaultReserveInterestRateStrategy)
+✅ Status: Success
+📦 Block: 430012
+🔗 https://purrsec.com/tx/0xf39d3680ddd3323f38e4d68b6b6de2a1e7b97fef33407fef636ba948588b97cf
+
+════════════════════════════════════════
+CONTRACT CREATION
+════════════════════════════════════════
+🕒 2025-03-03 08:23:00 UTC
+📝 Contract Created
+🏠 Address: 0xfdd35d972bf2b07eca609e9909498b0fd3b04720 (DefaultReserveInterestRateStrategy)
+✅ Status: Success
+📦 Block: 602136
+🔗 https://purrsec.com/tx/0xe2c6e91ccf5f506cc11eb35a17674d753c735df813b51ace74d0bb74683a5974
+
+════════════════════════════════════════
+
+🛑 Reached transaction limit (84)
+📊 Processed 84 transaction(s) (skipped first 13)

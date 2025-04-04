@@ -1,0 +1,9 @@
+{
+    "ltv": 3000,
+    "liquidationThreshold": 4500,
+    "liquidationBonus": 10800,
+    "tokenAddress": "0x34a70db6c0e3d5f93d7026fa6dcd6e11adfd56c5",
+    "tokenName": "flashHYPE",
+    "oracleAddress": "0x3ca9d299a474ccb0cbc23aa6e3a3b4f710a3daf5",
+    "expectedPrice": 12e8
+}
