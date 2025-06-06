@@ -70,5 +70,3 @@ This is the oracle for sDAI which will take the input of a standard DAI price fe
 ## Bug Bounty
 
 There is a bug bounty program at https://immunefi.com/bounty/sparklend/
-***
-*The IP in this repository was assigned to Mars SPC Limited in respect of the MarsOne SP*
