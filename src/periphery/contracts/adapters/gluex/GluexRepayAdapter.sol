@@ -79,7 +79,6 @@ contract GluexRepayAdapter is BaseGluexBuyAdapter, ReentrancyGuard {
    * @param debtAsset Address of debt asset
    * @param collateralAmount max Amount of the collateral to be swapped
    * @param debtRepayAmount Amount of the debt to be repaid, or maximum amount when repaying entire debt
-   * @param debtRateMode Rate mode of the debt to be repaid
    * @param gluexData Data for Gluex Router
    * @param permitSignature struct containing the permit signature
    */
@@ -88,13 +87,12 @@ contract GluexRepayAdapter is BaseGluexBuyAdapter, ReentrancyGuard {
     IERC20 debtAsset,
     uint256 collateralAmount,
     uint256 debtRepayAmount,
-    uint256 debtRateMode,
     bytes calldata gluexData,
     PermitSignature calldata permitSignature
   ) external nonReentrant {
     debtRepayAmount = getDebtRepayAmount(
       debtAsset,
-      debtRateMode,
+      2, // Variable rate mode only
       debtRepayAmount,
       msg.sender
     );
@@ -120,7 +118,7 @@ contract GluexRepayAdapter is BaseGluexBuyAdapter, ReentrancyGuard {
 
     // Repay debt. Approves 0 first to comply with tokens that implement the anti frontrunning approval fix
     IERC20(debtAsset).safeApprove(address(POOL), debtRepayAmount);
-    POOL.repay(address(debtAsset), debtRepayAmount, debtRateMode, msg.sender);
+    POOL.repay(address(debtAsset), debtRepayAmount, 2, msg.sender); // Variable rate mode only
     IERC20(debtAsset).safeApprove(address(POOL), 0);
 
     {
